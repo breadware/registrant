@@ -20,3 +20,11 @@ O projeto existente neste repositório visa melhorar o processo de cadastro de n
 Com isto, será possível reduzir a quantidade de etapas manuais necessárias para a conclusão do processo e também o tempo de resposta do cadastro ao novo associado.
 
 Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro do Trello da Praia de Porto Alegre](http://google.com).
+
+## Tecnologias utilizadas
+
+- Java 1.8 ou superior
+- Apache Maven 3.6.3
+
+**Observações:**
+- O sistema foi testado utilizando Oracle JVM versão 13.0.2 2020-01-14.
