@@ -1,0 +1,5 @@
+registrant:
+  google-cloud-platform:
+    project-id: register-272219
+    topic-id: gmail_inbox_topic
+    subscription-id: gmail_inbox_subscription
