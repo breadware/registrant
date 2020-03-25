@@ -1,0 +1,10 @@
+# Arquivos do IntelliJ.
+**/.idea
+**/*.iml
+
+# Arquivos do Eclipse.
+**/.settings
+**/.project
+**/target
+**/.classpath
+**/.metadata
