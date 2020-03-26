@@ -23,7 +23,7 @@ Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro 
 
 ## Tecnologias utilizadas
 
-- Java 1.8 ou superior
+- Java 11 ou superior
 - Apache Maven 3.6.3
 
 **Observações:**
