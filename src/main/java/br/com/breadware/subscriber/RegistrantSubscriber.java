@@ -38,7 +38,7 @@ public class RegistrantSubscriber {
 
     public void createSubscriber() {
 
-        // TODO Check "GOOGLE_APPLICATION_CREDENTIALS" environment variable.
+        // TODO Replace "GOOGLE_APPLICATION_CREDENTIALS" environment variable usage.
 
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getSubscriptionId());
 
@@ -47,7 +47,9 @@ public class RegistrantSubscriber {
             // TODO I don't think it should be executed this way.
             subscriber.startAsync().awaitRunning();
             subscriber.awaitTerminated();
+            // TODO Inform when subscriber has been successfully registered.
         } catch (IllegalStateException exception) {
+            // TODO Adjust exception treatment.
             LOGGER.error(ERROR_MESSAGE, exception);
             throw new RegistrantRuntimeException(ERROR_MESSAGE, exception);
         }
