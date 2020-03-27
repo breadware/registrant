@@ -16,6 +16,10 @@ public final class BeanNames {
 
     public static final String LOCALE = "locale";
 
+    public static final String ZONE_ID = "zoneId";
+
+    public static final String THREAD_POOL_TASK_SCHEDULER = "threadPoolTaskScheduler";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

@@ -4,9 +4,9 @@ import java.io.File;
 
 public enum ErrorMessage implements Message {
 
-    UNKNOWN_ERROR(1),
-    ERROR_RETRIEVING_GOOGLE_CLIENT_SECRETS(2),
-    ERROR_REQUESTING_AUTHORIZATION(3);
+    ERROR_RETRIEVING_GOOGLE_CLIENT_SECRETS(1),
+    ERROR_REQUESTING_AUTHORIZATION(2),
+    ERROR_REQUESTING_WATCH(3);
 
     public static final String FILE_PATH = "error/error".replace("/", File.separator);
 

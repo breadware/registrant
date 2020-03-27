@@ -1,4 +1,4 @@
-package br.com.breadware;
+package br.com.breadware.watch;
 
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;

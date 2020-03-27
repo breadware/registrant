@@ -1,6 +1,7 @@
 package br.com.breadware.configuration;
 
 import br.com.breadware.model.message.ErrorMessage;
+import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.MessagesProperties;
 import br.com.breadware.util.PathUtil;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -28,7 +29,7 @@ public class MessageSourceConfiguration {
     }
 
     private String[] retrieveMessageFilePaths(MessagesProperties messagesProperties, PathUtil pathUtil) {
-        List<String> messageFilePaths = new ArrayList<>(Arrays.asList(ErrorMessage.FILE_PATH));
+        List<String> messageFilePaths = new ArrayList<>(Arrays.asList(ErrorMessage.FILE_PATH, LoggerMessage.FILE_PATH));
 
         String messageFileBaseDirectoryPath = pathUtil.appendSeparatorIfNecessary(messagesProperties.getFileBaseDirectoryPath());
 
