@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class WatchRequester {
         this.loggerUtil = loggerUtil;
     }
 
-    public WatchResponse request() {
+    public void request() {
 
         final Gmail gmail = createGmailObject();
 
@@ -73,8 +72,6 @@ public class WatchRequester {
         logWatchResponse(watchResponse);
 
         scheduleNextExecution(watchResponse);
-
-        return watchResponse;
     }
 
     private void scheduleNextExecution(WatchResponse watchResponse) {
@@ -98,7 +95,10 @@ public class WatchRequester {
         }
     }
 
+
     private WatchRequest createWatchRequest() {
+
+        @SuppressWarnings("deprecation") // GCP Pub/sub API currently does not have an alternative for this deprecation (perhaps on next versions?).
         String topicName = ProjectTopicName.format(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getTopicId());
 
         return new WatchRequest()

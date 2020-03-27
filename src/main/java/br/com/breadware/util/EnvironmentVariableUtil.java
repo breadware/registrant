@@ -1,5 +1,7 @@
 package br.com.breadware.util;
 
+import br.com.breadware.exception.RegistrantRuntimeException;
+import br.com.breadware.model.message.ErrorMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -7,10 +9,8 @@ import java.util.Optional;
 @Component
 public class EnvironmentVariableUtil {
 
-    private static final String UNDEFINED_ENVIRONMENT_VARIABLE_EXCEPTION_MESSAGE_TEMPLATE = "Environment variable \"%s\" is not defined.";
-
-    public static void throwExceptionIfDoesNotExist(String name) {
+    public void throwExceptionIfDoesNotExist(String name) {
         Optional.ofNullable(System.getenv(name))
-                .orElseThrow(() -> new IllegalStateException(String.format(UNDEFINED_ENVIRONMENT_VARIABLE_EXCEPTION_MESSAGE_TEMPLATE, name)));
+                .orElseThrow(() -> new RegistrantRuntimeException(ErrorMessage.UNDEFINED_ENVIRONMENT_VARIABLE, name));
     }
 }

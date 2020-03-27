@@ -4,7 +4,6 @@ import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.MessagesProperties;
 import br.com.breadware.util.PathUtil;
-import com.google.cloud.pubsub.v1.MessageReceiver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

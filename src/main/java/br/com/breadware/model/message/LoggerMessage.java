@@ -12,7 +12,7 @@ public enum LoggerMessage implements Message{
 
     public static final String MESSAGE_PREFIX = "logger.";
 
-    private int value;
+    private final int value;
 
     LoggerMessage(int value) {
         this.value = value;
