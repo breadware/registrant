@@ -39,6 +39,7 @@ Antes de iniciar a instalação, certifique-se de que você possui instalado os 
 1. **Clonar o repositório git**
 
 Utilizando protocolo HTTPS: `git clone https://github.com/breadware/registrant.git`
+
 Utilizando protocolo SSH: `git clone git@github.com:breadware/registrant.git`
 
 2. **Criar ou solicitar as credenciais do programa no Google Cloud Platform**
