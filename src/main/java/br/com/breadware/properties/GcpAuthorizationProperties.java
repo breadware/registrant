@@ -23,17 +23,6 @@ public class GcpAuthorizationProperties {
     @NotBlank
     private String tokensDirectoryPath;
 
-    @NotBlank
-    private String credentialsFilePath;
-
-    public String getCredentialsFilePath() {
-        return credentialsFilePath;
-    }
-
-    public void setCredentialsFilePath(String credentialsFilePath) {
-        this.credentialsFilePath = credentialsFilePath;
-    }
-
     public Integer getLocalServerReceiverPort() {
         return localServerReceiverPort;
     }
