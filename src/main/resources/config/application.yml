@@ -12,6 +12,5 @@ registrant:
       local-server-receiver-port: 8888
       authorized-user: "tw.breadware@gmail.com"
       tokens-directory-path: "tokens"
-      credentials-file-path: "/Users/lamarceloleite2604/Documents/ThoughtWorks/Projetos/Breadware/Arquivos/client-id-registrant.json"
   messages:
     file-base-directory-path: "file:src/main/resources/i18n/messages"

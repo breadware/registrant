@@ -3,6 +3,7 @@ package br.com.breadware.watch;
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.properties.GcpAuthorizationProperties;
+import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.MessageRetriever;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,7 @@ public class AuthorizationRequester {
     private static final List<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/gmail.readonly");
 
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
+    public static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
 
     private final NetHttpTransport netHttpTransport;
 
@@ -43,12 +46,15 @@ public class AuthorizationRequester {
 
     private final MessageRetriever messageRetriever;
 
+    private final EnvironmentVariableUtil environmentVariableUtil;
+
     @Inject
-    public AuthorizationRequester(NetHttpTransport netHttpTransport, GcpAuthorizationProperties gcpAuthorizationProperties, JsonFactory jsonFactory, MessageRetriever messageRetriever) {
+    public AuthorizationRequester(NetHttpTransport netHttpTransport, GcpAuthorizationProperties gcpAuthorizationProperties, JsonFactory jsonFactory, MessageRetriever messageRetriever, EnvironmentVariableUtil environmentVariableUtil) {
         this.netHttpTransport = netHttpTransport;
         this.gcpAuthorizationProperties = gcpAuthorizationProperties;
         this.jsonFactory = jsonFactory;
         this.messageRetriever = messageRetriever;
+        this.environmentVariableUtil = environmentVariableUtil;
     }
 
     public Credential getCredential() {
@@ -57,8 +63,10 @@ public class AuthorizationRequester {
     }
 
     private GoogleClientSecrets retrieveGoogleClientSecrets() {
+        environmentVariableUtil.throwExceptionIfDoesNotExist(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
+        Path clientIdFilePath = Path.of(System.getenv(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE));
         try (
-                InputStream inputStream = Files.newInputStream(Paths.get(gcpAuthorizationProperties.getCredentialsFilePath()));
+                InputStream inputStream = Files.newInputStream(clientIdFilePath);
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
 
             return GoogleClientSecrets.load(jsonFactory, inputStreamReader);

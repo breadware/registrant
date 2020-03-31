@@ -1,6 +1,3 @@
 registrant:
   locale: "en"
   zone-id: "America/Sao_Paulo"
-  google-cloud-platform:
-    authorization:
-      credentials-file-path: "/Users/lamarceloleite2604/Documents/ThoughtWorks/Projetos/Breadware/Arquivos/client-id-registrant.json"

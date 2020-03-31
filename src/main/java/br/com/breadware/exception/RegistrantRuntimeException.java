@@ -5,12 +5,11 @@ import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.util.MessageRetriever;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContextAware;
 
 public class RegistrantRuntimeException extends RuntimeException {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrantRuntimeException.class);
-
-    private static final MessageRetriever MESSAGE_RETRIEVER = RegistrantApplicationContextAware.retrieveBean(MessageRetriever.class);
 
     public RegistrantRuntimeException(String message) {
         super(message);
@@ -29,11 +28,8 @@ public class RegistrantRuntimeException extends RuntimeException {
     }
 
     private static String retrieveMessage(ErrorMessage errorMessage, Object... parameters) {
-        try {
-            return MESSAGE_RETRIEVER.getMessage(errorMessage, parameters);
-        } catch (ApplicationContextRuntimeException exception) {
-            LOGGER.warn(exception.getMessage());
-            return errorMessage.name();
-        }
+        return RegistrantApplicationContextAware.retrieveMessageRetriever()
+                    .map(messageRetriever -> messageRetriever.getMessage(errorMessage, parameters))
+                    .orElseGet(errorMessage::name);
     }
 }
