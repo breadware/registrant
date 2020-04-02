@@ -1,5 +1,6 @@
 package br.com.breadware.subscriber;
 
+import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
@@ -21,8 +22,6 @@ public class SubscriberCreator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscriberCreator.class);
 
-    private static final String CREDENTIALS_ENVIRONMENT_VARIABLE_NAME = "GOOGLE_APPLICATION_CREDENTIALS";
-
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
     private final GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver;
@@ -41,7 +40,7 @@ public class SubscriberCreator {
 
     public void createAndStart() {
 
-        environmentVariableUtil.throwExceptionIfDoesNotExist(CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
+        environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
 
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getSubscriptionId());
 

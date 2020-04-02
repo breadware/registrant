@@ -24,20 +24,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
 @Component
 public class AuthorizationRequester {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
-
-    private static final List<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/gmail.readonly");
-
-    private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
     public static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
+    private static final List<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/gmail.readonly");
+    private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
     private final NetHttpTransport netHttpTransport;
 
     private final GcpAuthorizationProperties gcpAuthorizationProperties;

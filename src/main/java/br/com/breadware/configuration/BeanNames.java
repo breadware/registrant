@@ -24,6 +24,8 @@ public final class BeanNames {
 
     public static final String OBJECT_MAPPER = "objectMapper";
 
+    public static final String FIRESTORE = "firestore";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

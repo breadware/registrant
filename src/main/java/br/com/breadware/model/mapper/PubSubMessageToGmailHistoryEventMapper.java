@@ -24,7 +24,7 @@ public class PubSubMessageToGmailHistoryEventMapper implements Mapper<PubsubMess
         try {
             return objectMapper.readValue(messageContent, GmailHistoryEvent.class);
         } catch (IOException exception) {
-            throw new RegistrantRuntimeException(exception, ErrorMessage.ERROR_MAPPING_SUBSCRIPTION_MESSAGE);
+            throw new RegistrantRuntimeException(exception, ErrorMessage.ERROR_WHILE_MAPPING, PubsubMessage.class, GmailHistoryEvent.class);
         }
     }
 }

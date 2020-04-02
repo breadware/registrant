@@ -14,8 +14,7 @@ public class MessageToMimeMessageMapper implements Mapper<Message, MimeMessage> 
     @Override
     public MimeMessage map(Message message) throws MessagingException {
 
-        Base64 base64Url = new Base64(true);
-        byte[] emailBytes = base64Url.decodeBase64(message.getRaw());
+        byte[] emailBytes = Base64.decodeBase64(message.getRaw());
 
         return new MimeMessage(null, new ByteArrayInputStream(emailBytes));
     }

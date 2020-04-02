@@ -1,24 +1,20 @@
 package br.com.breadware.subscriber;
 
-import br.com.breadware.bo.GmailIdsBo;
+import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.configuration.GcpConfiguration;
+import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.GmailHistoryRetrievalException;
 import br.com.breadware.model.message.ErrorMessage;
-import br.com.breadware.model.message.LoggerMessage;
-import br.com.breadware.util.LoggerUtil;
 import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.model.History;
 import com.google.api.services.gmail.model.ListHistoryResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class GmailHistoryRetriever {
@@ -27,27 +23,31 @@ public class GmailHistoryRetriever {
 
     private final Gmail gmail;
 
-    private final GmailIdsBo gmailIdsBo;
+    private final LastHistoryEventBo lastHistoryEventBo;
 
     @Inject
-    public GmailHistoryRetriever(Gmail gmail, GmailIdsBo gmailIdsBo) {
+    public GmailHistoryRetriever(Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
         this.gmail = gmail;
-        this.gmailIdsBo = gmailIdsBo;
+        this.lastHistoryEventBo = lastHistoryEventBo;
     }
 
     public ListHistoryResponse retrieve() throws GmailHistoryRetrievalException {
 
-        BigInteger startHistoryId = gmailIdsBo.getLastHistoryId();
 
+        BigInteger startHistoryId = null;
         try {
+            startHistoryId = lastHistoryEventBo.get()
+                    .getId();
             return gmail.users()
                     .history()
                     .list(GcpConfiguration.USER_ID)
                     .setStartHistoryId(startHistoryId)
                     .setHistoryTypes(HISTORY_TYPES)
                     .execute();
-        } catch (IOException exception) {
-            throw new GmailHistoryRetrievalException(exception, ErrorMessage.ERROR_WHILE_REQUESTING_GMAIL_HISTORY, startHistoryId);
+        } catch (DataAccessException | IOException exception) {
+            throw new GmailHistoryRetrievalException(exception, ErrorMessage.ERROR_WHILE_REQUESTING_GMAIL_HISTORY, Optional.ofNullable(startHistoryId)
+                    .map(BigInteger::toString)
+                    .orElse("?"));
         }
     }
 }

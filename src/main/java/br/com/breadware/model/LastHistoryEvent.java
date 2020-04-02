@@ -3,36 +3,28 @@ package br.com.breadware.model;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class GmailHistoryEvent implements Serializable {
+public class LastHistoryEvent {
 
-
-    @JsonIgnore
-    private final Map<String, Object> additionalProperties;
-
-    @JsonProperty("historyId")
     private BigInteger id;
 
-    private String emailAddress;
-
-    public GmailHistoryEvent() {
+    public LastHistoryEvent(BigInteger id) {
+        this.id = id;
         additionalProperties = new HashMap<>();
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public LastHistoryEvent() {
+        this.id = BigInteger.ZERO;
+        additionalProperties = new HashMap<>();
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
+    @JsonIgnore
+    private final Map<String, Object> additionalProperties;
 
     public BigInteger getId() {
         return id;
@@ -43,7 +35,7 @@ public class GmailHistoryEvent implements Serializable {
     }
 
     @JsonAnyGetter
-    public final Map<String, Object> getAdditionalProperties() {
+    public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
@@ -56,23 +48,13 @@ public class GmailHistoryEvent implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GmailHistoryEvent that = (GmailHistoryEvent) o;
+        LastHistoryEvent that = (LastHistoryEvent) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(emailAddress, that.emailAddress) &&
                 Objects.equals(additionalProperties, that.additionalProperties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, emailAddress, additionalProperties);
-    }
-
-    @Override
-    public String toString() {
-        return "GmailHistoryEvent{" +
-                "id=" + id +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", additionalProperties=" + additionalProperties +
-                '}';
+        return Objects.hash(id, additionalProperties);
     }
 }

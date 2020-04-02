@@ -1,6 +1,5 @@
 package br.com.breadware.util;
 
-import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.model.message.Message;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,11 @@
 package br.com.breadware.watch;
 
-import br.com.breadware.bo.GmailIdsBo;
+import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.configuration.GcpConfiguration;
+import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.RegistrantRuntimeException;
+import br.com.breadware.model.LastHistoryEvent;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.GoogleCloudPlatformProperties;
@@ -41,16 +43,16 @@ public class WatchRequester {
 
     private final Gmail gmail;
 
-    private final GmailIdsBo gmailIdsBo;
+    private final LastHistoryEventBo lastHistoryEventBo;
 
     @Inject
-    public WatchRequester(GoogleCloudPlatformProperties googleCloudPlatformProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail, GmailIdsBo gmailIdsBo) {
+    public WatchRequester(GoogleCloudPlatformProperties googleCloudPlatformProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
         this.watchScheduler = watchScheduler;
         this.zonedDateTimeUtil = zonedDateTimeUtil;
         this.loggerUtil = loggerUtil;
         this.gmail = gmail;
-        this.gmailIdsBo = gmailIdsBo;
+        this.lastHistoryEventBo = lastHistoryEventBo;
     }
 
     public void request() {
@@ -74,12 +76,18 @@ public class WatchRequester {
         Instant expirationInstant = Instant.ofEpochMilli(watchResponse.getExpiration());
         ZonedDateTime expirationZonedDateTime = zonedDateTimeUtil.convertFromUtcInstant(expirationInstant);
         loggerUtil.info(LOGGER, LoggerMessage.EMAIL_WATCH_EXPIRATION_TIME, zonedDateTimeUtil.writeAsHumanReadableFormat(expirationZonedDateTime));
-        gmailIdsBo.setLastHistoryId(watchResponse.getHistoryId());
+        try {
+            lastHistoryEventBo.set(new LastHistoryEvent(watchResponse.getHistoryId()));
+        } catch (DataAccessException exception) {
+            throw new RegistrantRuntimeException(ErrorMessage.ERROR_UPDATING_LAST_HISTORY_EVENT, exception);
+        }
     }
 
     private WatchResponse sendWatchRequest(Gmail gmail, WatchRequest watchRequest) {
         try {
-            return gmail.users().watch(GcpConfiguration.USER_ID, watchRequest).execute();
+            return gmail.users()
+                    .watch(GcpConfiguration.USER_ID, watchRequest)
+                    .execute();
         } catch (IOException exception) {
             loggerUtil.error(LOGGER, exception, ErrorMessage.ERROR_REQUESTING_WATCH);
             throw new RegistrantRuntimeException(exception, ErrorMessage.ERROR_REQUESTING_WATCH);
@@ -89,7 +97,7 @@ public class WatchRequester {
 
     private WatchRequest createWatchRequest() {
 
-        @SuppressWarnings("deprecation") // GCP Pub/sub API currently does not have an alternative for this deprecation (perhaps on next versions?).
+        @SuppressWarnings({"deprecation", "java:S1874"}) /* GCP Pub/sub API currently does not have an alternative for this deprecation (perhaps on next versions?). */
                 String topicName = ProjectTopicName.format(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getTopicId());
 
         return new WatchRequest()

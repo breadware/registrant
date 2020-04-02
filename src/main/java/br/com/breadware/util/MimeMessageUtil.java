@@ -4,10 +4,8 @@ import br.com.breadware.exception.MimeMessageHandlingException;
 import br.com.breadware.model.message.ErrorMessage;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeType;
 
 import javax.mail.BodyPart;
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
@@ -39,7 +37,8 @@ public class MimeMessageUtil {
         for (int i = 0; i < mimeMultipart.getCount(); i++) {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType(MediaType.TEXT_PLAIN_VALUE) || bodyPart.isMimeType(MediaType.TEXT_HTML_VALUE)) {
-                stringBuffer.append("\n" + bodyPart.getContent());
+                stringBuffer.append("\n");
+                stringBuffer.append(bodyPart.getContent());
             } else if (bodyPart.getContent() instanceof MimeMultipart) {
                 getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent(), stringBuffer);
             }

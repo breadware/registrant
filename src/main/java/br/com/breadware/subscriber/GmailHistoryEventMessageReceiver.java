@@ -1,7 +1,11 @@
 package br.com.breadware.subscriber;
 
-import br.com.breadware.bo.GmailIdsBo;
+import br.com.breadware.bo.HandledGmailMessageBo;
+import br.com.breadware.bo.LastHistoryEventBo;
+import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.model.GmailHistoryEvent;
+import br.com.breadware.model.HandledGmailMessage;
+import br.com.breadware.model.LastHistoryEvent;
 import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.mapper.PubSubMessageToGmailHistoryEventMapper;
 import br.com.breadware.model.message.ErrorMessage;
@@ -22,8 +26,11 @@ import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,19 +46,22 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
     private final GmailMessageRetriever gmailMessageRetriever;
 
-    private final GmailIdsBo gmailIdsBo;
+    private final HandledGmailMessageBo handledGmailMessageBo;
+
+    private final LastHistoryEventBo lastHistoryEventBo;
 
     private final MessageToMimeMessageMapper messageToMimeMessageMapper;
 
     private final MimeMessageUtil mimeMessageUtil;
 
     @Inject
-    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, GmailIdsBo gmailIdsBo, MessageToMimeMessageMapper messageToMimeMessageMapper, MimeMessageUtil mimeMessageUtil) {
+    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageToMimeMessageMapper messageToMimeMessageMapper, MimeMessageUtil mimeMessageUtil) {
         this.pubSubMessageToGmailHistoryEventMapper = pubSubMessageToGmailHistoryEventMapper;
         this.loggerUtil = loggerUtil;
         this.gmailHistoryRetriever = gmailHistoryRetriever;
         this.gmailMessageRetriever = gmailMessageRetriever;
-        this.gmailIdsBo = gmailIdsBo;
+        this.handledGmailMessageBo = handledGmailMessageBo;
+        this.lastHistoryEventBo = lastHistoryEventBo;
         this.messageToMimeMessageMapper = messageToMimeMessageMapper;
         this.mimeMessageUtil = mimeMessageUtil;
     }
@@ -64,13 +74,16 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
         GmailHistoryEvent gmailHistoryEvent = pubSubMessageToGmailHistoryEventMapper.map(pubsubMessage);
 
-        if (gmailHistoryEvent.getId()
-                .compareTo(gmailIdsBo.getLastHistoryId()) < 0) {
-            loggerUtil.warn(LOGGER, LoggerMessage.EVENT_ID_RECEIVED_IS_PREVIOUS_TO_THE_LAST_ID, gmailHistoryEvent.getId(), gmailIdsBo.getLastHistoryId());
-            gmailIdsBo.setLastHistoryId(gmailHistoryEvent.getId());
-        }
 
         try {
+
+            LastHistoryEvent lastHistoryEvent = lastHistoryEventBo.get();
+
+            if (gmailHistoryEvent.getId()
+                    .compareTo(lastHistoryEvent.getId()) < 0) {
+                loggerUtil.warn(LOGGER, LoggerMessage.EVENT_ID_RECEIVED_IS_PREVIOUS_TO_THE_LAST_ID, gmailHistoryEvent.getId(), lastHistoryEvent.getId());
+                updateLastHistoryEvent(gmailHistoryEvent, lastHistoryEvent);
+            }
 
             ListHistoryResponse listHistoryResponse = gmailHistoryRetriever.retrieve();
 
@@ -84,14 +97,14 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
                 String messageContent = mimeMessageUtil.retrieveContentAsText(mimeMessage);
 
-                System.out.println(messageContent);
+                LOGGER.info("Initial mail content: " + messageContent.substring(0, (64 > messageContent.length() ? messageContent.length() : 64)));
 
-                gmailIdsBo.putMessageId(message.getId());
+                signalMessageAsHandled(message);
             }
 
-            gmailIdsBo.setLastHistoryId(gmailHistoryEvent.getId());
+            updateLastHistoryEvent(gmailHistoryEvent, lastHistoryEvent);
 
-            shouldAcknowledge = false;
+            shouldAcknowledge = true;
 
         } catch (Exception exception) {
             loggerUtil.error(LOGGER, exception, ErrorMessage.ERROR_WHILE_HANDLING_MESSAGE, pubsubMessage.getMessageId());
@@ -102,6 +115,21 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
         } else {
             ackReplyConsumer.nack();
         }
+    }
+
+    private void signalMessageAsHandled(Message message) throws DataAccessException {
+        HandledGmailMessage handledGmailMessage = HandledGmailMessage.Builder.aHandledGmailMessage()
+                .id(message.getId())
+                .time(LocalDateTime.now()
+                        .toEpochSecond(ZoneOffset.UTC))
+                .build();
+
+        handledGmailMessageBo.set(handledGmailMessage);
+    }
+
+    private void updateLastHistoryEvent(GmailHistoryEvent gmailHistoryEvent, LastHistoryEvent lastHistoryEvent) throws DataAccessException {
+        lastHistoryEvent.setId(gmailHistoryEvent.getId());
+        lastHistoryEventBo.set(lastHistoryEvent);
     }
 
 
@@ -116,7 +144,7 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
         return histories;
     }
 
-    private List<String> retrieveUnhandledMessageIds(ListHistoryResponse listHistoryResponse) {
+    private List<String> retrieveUnhandledMessageIds(ListHistoryResponse listHistoryResponse) throws DataAccessException {
 
         List<History> histories = retrieveHistories(listHistoryResponse);
 
@@ -132,14 +160,24 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
         return messageIds;
     }
 
-    private void removeAlreadyHandledMessageIds(List<String> messageIds) {
+    private void removeAlreadyHandledMessageIds(List<String> messageIds) throws DataAccessException {
+
+        Set<String> handledMessageIds = retrieveHandledMessageIds();
+
         List<String> alreadyHandledMessageIds = messageIds.stream()
-                .filter(gmailIdsBo::hasMessageId)
+                .filter(handledMessageIds::contains)
                 .collect(Collectors.toList());
 
         alreadyHandledMessageIds.forEach(this::logMessageAlreadyHandled);
 
         messageIds.removeAll(alreadyHandledMessageIds);
+    }
+
+    private Set<String> retrieveHandledMessageIds() throws DataAccessException {
+        return handledGmailMessageBo.getAll()
+                .stream()
+                .map(HandledGmailMessage::getId)
+                .collect(Collectors.toSet());
     }
 
     private void logMessageAlreadyHandled(String messageId) {
