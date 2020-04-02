@@ -9,8 +9,6 @@ import org.springframework.context.ApplicationContextAware;
 
 public class RegistrantRuntimeException extends RuntimeException {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrantRuntimeException.class);
-
     public RegistrantRuntimeException(String message) {
         super(message);
     }

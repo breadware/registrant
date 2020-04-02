@@ -6,6 +6,8 @@ import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.GoogleCloudPlatformProperties;
 import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.LoggerUtil;
+import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.pubsub.v1.ProjectSubscriptionName;
 import org.slf4j.Logger;
@@ -44,7 +46,16 @@ public class SubscriberCreator {
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getSubscriptionId());
 
         try {
-            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, newMailMessageReceiver).build();
+
+            ExecutorProvider executorProvider =
+                    InstantiatingExecutorProvider.newBuilder()
+                            .setExecutorThreadCount(1)
+                            .build();
+
+            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, newMailMessageReceiver)
+                    .setExecutorProvider(executorProvider)
+                    .build();
+
             subscriber.startAsync();
             loggerUtil.info(LOGGER, LoggerMessage.SUBSCRIBER_CREATED);
         } catch (IllegalStateException exception) {

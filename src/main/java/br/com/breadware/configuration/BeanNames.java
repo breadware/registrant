@@ -20,6 +20,10 @@ public final class BeanNames {
 
     public static final String THREAD_POOL_TASK_SCHEDULER = "threadPoolTaskScheduler";
 
+    public static final String GMAIL = "gmail";
+
+    public static final String OBJECT_MAPPER = "objectMapper";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

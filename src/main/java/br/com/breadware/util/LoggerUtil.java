@@ -1,5 +1,6 @@
 package br.com.breadware.util;
 
+import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.model.message.Message;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,14 @@ public class LoggerUtil {
     public void error(Logger logger, Throwable throwable, Message message, Object... parameters) {
         if (logger.isErrorEnabled()) {
             String messageContent = messageRetriever.getMessage(message, parameters);
-            logger.info(messageContent, throwable);
+            logger.error(messageContent, throwable);
+        }
+    }
+
+    public void warn(Logger logger, Message message, Object... parameters) {
+        if (logger.isErrorEnabled()) {
+            String messageContent = messageRetriever.getMessage(message, parameters);
+            logger.warn(messageContent);
         }
     }
 }
