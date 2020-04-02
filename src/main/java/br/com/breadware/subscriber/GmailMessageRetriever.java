@@ -21,6 +21,8 @@ public class GmailMessageRetriever {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageRetriever.class);
 
+    public static final String MESSAGE_FORMAT = "raw";
+
     private final Gmail gmail;
 
     private final LoggerUtil loggerUtil;
@@ -55,7 +57,7 @@ public class GmailMessageRetriever {
             return gmail.users()
                     .messages()
                     .get(GcpConfiguration.USER_ID, messageId)
-                    .setFormat("raw")
+                    .setFormat(MESSAGE_FORMAT)
                     .execute();
         } catch (IOException exception) {
             ErrorMessage errorMessage = ErrorMessage.ERROR_WHILE_REQUESTING_GMAIL_MESSAGE;

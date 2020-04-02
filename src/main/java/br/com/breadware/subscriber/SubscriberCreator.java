@@ -25,16 +25,16 @@ public class SubscriberCreator {
 
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
-    private final NewMailMessageReceiver newMailMessageReceiver;
+    private final GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver;
 
     private final LoggerUtil loggerUtil;
 
     private final EnvironmentVariableUtil environmentVariableUtil;
 
     @Inject
-    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, NewMailMessageReceiver newMailMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
-        this.newMailMessageReceiver = newMailMessageReceiver;
+        this.gmailHistoryEventMessageReceiver = gmailHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
         this.environmentVariableUtil = environmentVariableUtil;
     }
@@ -52,7 +52,7 @@ public class SubscriberCreator {
                             .setExecutorThreadCount(1)
                             .build();
 
-            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, newMailMessageReceiver)
+            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, gmailHistoryEventMessageReceiver)
                     .setExecutorProvider(executorProvider)
                     .build();
 

@@ -1,7 +1,10 @@
 package br.com.breadware.util;
 
+import br.com.breadware.exception.MimeMessageHandlingException;
+import br.com.breadware.model.message.ErrorMessage;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MimeType;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -13,21 +16,23 @@ import java.io.IOException;
 @Component
 public class MimeMessageUtil {
 
-    private String retrieveContentAsText(MimeMessage message) {
+    public static final String MIMETYPE_MULTIPART_ANY = "multipart/*";
+
+    public String retrieveContentAsText(MimeMessage message) throws MimeMessageHandlingException {
         StringBuffer contentStringBuffer = new StringBuffer();
+
         try {
             if (message.isMimeType(MediaType.TEXT_PLAIN_VALUE)) {
                 contentStringBuffer.append(message.getContent()
                         .toString());
-            } else if (message.isMimeType("multipart/*")) {
+            } else if (message.isMimeType(MIMETYPE_MULTIPART_ANY)) {
                 MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
                 getTextFromMimeMultipart(mimeMultipart, contentStringBuffer);
             }
         } catch (MessagingException | IOException exception) {
-            // TODO Correctly handle exception.
-            exception.printStackTrace();
-            return null;
+            throw new MimeMessageHandlingException(exception, ErrorMessage.ERROR_RETRIEVING_MIME_MESSAGE_CONTENT_AS_TEXT);
         }
+        return contentStringBuffer.toString();
     }
 
     private void getTextFromMimeMultipart(MimeMultipart mimeMultipart, StringBuffer stringBuffer) throws MessagingException, IOException {
