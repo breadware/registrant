@@ -1,8 +1,11 @@
 spring:
+  profiles:
+    active:
+      - "@spring.active-profile@"
   main:
     web-application-type: NONE
 registrant:
-  locale: "en"
+  locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
   google-cloud-platform:
     project-id: "register-272219"
@@ -13,4 +16,4 @@ registrant:
       authorized-user: "tw.breadware@gmail.com"
       tokens-directory-path: "tokens"
   messages:
-    file-base-directory-path: "file:src/main/resources/i18n/messages"
+    file-base-directory-path: "classpath:/i18n/messages"

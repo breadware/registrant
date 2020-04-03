@@ -1,3 +1,5 @@
 registrant:
   locale: "en"
   zone-id: "America/Sao_Paulo"
+  messages:
+    file-base-directory-path: "file:src/main/resources/i18n/messages"
