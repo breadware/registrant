@@ -1,6 +1,7 @@
 package br.com.breadware.configuration;
 
 import br.com.breadware.properties.RegistrantProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -25,5 +26,10 @@ public class RegistrantConfiguration {
         LOGGER.info("Operating system zone id is {}.", ZoneId.systemDefault());
         LOGGER.info("Program zone ID is {}.", zoneId);
         return zoneId;
+    }
+
+    @Bean(BeanNames.OBJECT_MAPPER)
+    public ObjectMapper createObjectMapper() {
+        return new ObjectMapper();
     }
 }

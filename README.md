@@ -35,7 +35,7 @@ Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro 
 
 ## Instalando o ambiente de desenvolvimento
 
-Algumas instruções abaixo referem-se a comandos a serem realizados no terminal por ser um ponto comum entre diversos sistemas operacionais. Fique a vontate em utilizar outro programa, mas esteja ciente de que resultados obtidos devem ser os mesmos. 
+Algumas instruções abaixo referem-se a comandos a serem realizados no terminal por ser um ponto comum entre diversos sistemas operacionais. Fique a vontade em utilizar outro programa, mas esteja ciente de que resultados obtidos devem ser os mesmos. 
 
 ### 1. Instalar os softwares necessários
 Antes de iniciar a instalação, certifique-se de que você possui instalado os programas indicados no item [tecnologias utilizadas](#tecnologias-utilizadas).
@@ -60,7 +60,7 @@ Para que o sistema possa trabalhar com os dados do usuário, o Google Cloud Plat
 <p align="center">
 <img width="400" alt="Localização do item &quot;Select a project&quot; na página." src="https://user-images.githubusercontent.com/13152452/77966063-b980db00-72b8-11ea-988c-ba356a247872.png">
 </p>
-</br></br>
+<br/><br/>
 <p align="center">
 <img width="600" alt="Localização do projeto &quot;Registrant&quot; na lista de projetos." src="https://user-images.githubusercontent.com/13152452/77966067-bc7bcb80-72b8-11ea-963f-3b2a3af8100f.png">
 </p>

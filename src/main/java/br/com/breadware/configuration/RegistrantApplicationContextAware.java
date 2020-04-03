@@ -82,7 +82,7 @@ public class RegistrantApplicationContextAware implements ApplicationContextAwar
     }
 
     public static Optional<MessageRetriever> retrieveMessageRetriever() {
-        Optional<MessageRetriever> optionalMessageRetriever = Optional.empty();
+        Optional<MessageRetriever> optionalMessageRetriever;
 
         if (applicationContext == null) {
             LOGGER.warn(CONTEXT_NOT_AVAILABLE_MESSAGE);
