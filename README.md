@@ -187,7 +187,7 @@ Clique em "Continue" para continuar a criação da credencial.
 Com o projeto aberto no IntelliJ, abra o menu `Run` e selecione a opção `Edit Configurations...`.
 
 <p align="center">
-<img width="600" alt="Tela &quot;Import Project&quot; com a opção &quot;Maven&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/78395192-6dd57680-75c3-11ea-9e42-dd2d3a175502.png">
+<img width="400" alt="Tela &quot;Import Project&quot; com a opção &quot;Maven&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/78395192-6dd57680-75c3-11ea-9e42-dd2d3a175502.png">
 </p>
 
 Na tela `Run/Debug Configurations`, clique no ícone `+` para criar uma nova configuração e selecione a opção `Application`.
