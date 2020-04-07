@@ -97,8 +97,6 @@ Para que o sistema possa trabalhar com os dados do usuário, o Google Cloud Plat
 
 3.8. Salve o arquivo JSON em um diretório do seu computador **não utilize o diretório de fontes do projeto para não correr o risco de fazer o upload destes dados para o repositório público. Caso isto ocorra, será necessário invalidar a chave e criar uma nova.**.
 
-[**TODO: Descrever como associar o arquivo de credenciais ao projeto após resolver a [issue #3](../../issues/3)**]
-
 ### 4. Criar ou solicitar as credenciais de conta de serviços no Google Cloud Platform
 
 **Observação**: Caso você seja apenas o contribuinte, solicite estas credenciais ao atual líder do projeto.
@@ -162,28 +160,77 @@ Clique em "Continue" para continuar a criação da credencial.
 
 4.9. Uma vez concluído, o GCP console lhe enviará a chave privada utilizada para a autenticação. Salve este arquivo em um diretório do seu computador **não utilize o diretório de fontes do projeto para não correr o risco de fazer o upload destes dados para o repositório público. Caso isto ocorra, será necessário invalidar a chave e criar uma nova.**.
 
-### 5. Definir variáveis de ambiente
-
-[**TODO: Descrever como associar o arquivo de credenciais ao projeto após resolver a [issue #3](../../issues/3)**]
-
-### 6. Importar o projeto no IntelliJ IDE
+### 5. Importar o projeto no IntelliJ IDE
 
 **Observação**: Não há problema nenhum em trabalhar em outro IDE como, por exemplo, o Eclipse. Apenas **cuide para não carregar para o projeto arquivos de configuração específicos**. Caso tenha dúvidas sobre como evitar isto entre em contato com o líder do projeto ou faça uma pesquisa no Google. 🙂
 
-6.1. Na tela inicial do IntelliJ, selecione a opção "Import project".
+5.1. Na tela inicial do IntelliJ, selecione a opção "Import project".
 
 <p align="center">
 <img width="600" alt="Tela Inicial do IntelliJ com a opção &quot;Import Project&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/77968849-b983d980-72be-11ea-97fd-0f81fcd2e523.png">
 </p>
 
-6.2. Selecione o diretório onde o projeto Git foi clonado e clique em "Open".
+5.2. Selecione o diretório onde o projeto Git foi clonado e clique em "Open".
 
 <p align="center">
 <img width="600" alt="Exemplo de localização do diretório que contém o projeto Git clonado." src="https://user-images.githubusercontent.com/13152452/77968861-bbe63380-72be-11ea-8334-2d210a031305.png">
 </p>
 
-6.3. Na tela "Import Project" selecione a opção "Maven" e clique em "Finish".
+5.3. Na tela "Import Project" selecione a opção "Maven" e clique em "Finish".
 
 <p align="center">
 <img width="600" alt="Tela &quot;Import Project&quot; com a opção &quot;Maven&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/77968868-be488d80-72be-11ea-9880-2a74a114cdfd.png">
 </p>
+
+### 6. Criar a configuração de execução do sistema
+
+Com o projeto aberto no IntelliJ, abra o menu `Run` e selecione a opção `Edit Configurations...`.
+
+<p align="center">
+<img width="600" alt="Tela &quot;Import Project&quot; com a opção &quot;Maven&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/78395192-6dd57680-75c3-11ea-9e42-dd2d3a175502.png">
+</p>
+
+Na tela `Run/Debug Configurations`, clique no ícone `+` para criar uma nova configuração e selecione a opção `Application`.
+
+<p align="center">
+<img width="600" alt="Tela &quot;Run/Debug Configurations&quot; com a opção &quot;Application&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/78395220-74fc8480-75c3-11ea-80f7-3db1fb002d27.png">
+</p>
+
+No campo `Name`, informe o nome da configuração (p. ex. Registrant).
+
+No campo `Main class` informe `br.com.breadware.Registrant`.
+
+<p align="center">
+<img width="600" alt="Tela &quot;Run/Debug Configurations&quot; com um exemplo de preenchimento dos campos &quot;Name&quot; e &quot;Main class&quot;." src="https://user-images.githubusercontent.com/13152452/78395221-75951b00-75c3-11ea-8b83-8a87e83479c3.png">
+</p>
+
+No campo `Environment variables`, crie as variáveis de ambientes necessárias conforme indicado no [item 7](#7.-definir-variaveis-de-ambiente). Utilize o botão `Browse` no final do campo para facilitar a visualização e preenchimento.
+
+<p align="center">
+<img width="600" alt="Tela &quot;Environment Variables&quot; com um exemplo de preenchimento das variáveis de ambiente." src="https://user-images.githubusercontent.com/13152452/78395223-76c64800-75c3-11ea-8c2a-21c561a7a9bc.png">
+</p>
+
+Clique em `Ok` para salvar a nova configuração.
+
+Na tela principal do IntelliJ, abra o menu de seleção de configuração de execução e selecione a nova configuração criada.
+
+<p align="center">
+<img width="600" alt="Localização do menu de seleção de configuração de execução na tela principal do IntelliJ." src="https://user-images.githubusercontent.com/13152452/78723491-e446e100-7901-11ea-991f-22ba373953be.png">
+</p>  
+
+Clique no botão ▶️ para executar o programa.
+
+### 7. Definir variáveis de ambiente
+
+As variáveis de ambiente são utilizadas para definir propriedades particulares de um ambiente de execução ou de informações sensíveis que não podem ficar expostas no servidor de controle de código. O sistema atualmente conta com a utilização das seguintes variáveis de ambiente:
+
+- GOOGLE_APPLICATION_CREDENTIALS
+- GOOGLE_CLIENT_ID
+
+7.1 A propriedade `GOOGLE_APPLICATION_CREDENTIALS` é utilizada pelas bibliotecas de API da Google para localizar o arquivo que contém as credenciais de conta de serviços criadas no [item 4](#4.-criar-ou-solicitar-as-credenciais-de-conta-de-servicos-no-google-cloud-platform).
+
+`GOOGLE_APPLICATION_CREDENTIALS=/Users/marceloleite2604/Documents/Breadware/Files/service-account-key.json`
+
+7.2 A propriedade `GOOGLE_CLIEND_ID` é utilizada pelo programa para localizar o arquivo criado no [item 3](3.-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform) que contém as credenciais as informações de identificação o cliente ao solicitar a chave de autorização para o servidor OAuth2.
+
+`GOOGLE_CLIEND_ID=/Users/marceloleite2604/Documents/Breadware/Files/client-id.json`
