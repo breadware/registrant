@@ -204,7 +204,7 @@ No campo `Main class` informe `br.com.breadware.Registrant`.
 <img width="600" alt="Tela &quot;Run/Debug Configurations&quot; com um exemplo de preenchimento dos campos &quot;Name&quot; e &quot;Main class&quot;." src="https://user-images.githubusercontent.com/13152452/78395221-75951b00-75c3-11ea-8b83-8a87e83479c3.png">
 </p>
 
-No campo `Environment variables`, crie as variáveis de ambientes necessárias conforme indicado no [item 7](#7.-definir-variaveis-de-ambiente). Utilize o botão `Browse` no final do campo para facilitar a visualização e preenchimento.
+No campo `Environment variables`, crie as variáveis de ambientes necessárias conforme indicado no [item 7](#7-definir-variáveis-de-ambiente). Utilize o botão `Browse` no final do campo para facilitar a visualização e preenchimento.
 
 <p align="center">
 <img width="600" alt="Tela &quot;Environment Variables&quot; com um exemplo de preenchimento das variáveis de ambiente." src="https://user-images.githubusercontent.com/13152452/78395223-76c64800-75c3-11ea-8c2a-21c561a7a9bc.png">
@@ -227,10 +227,10 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 - GOOGLE_APPLICATION_CREDENTIALS
 - GOOGLE_CLIENT_ID
 
-7.1 A propriedade `GOOGLE_APPLICATION_CREDENTIALS` é utilizada pelas bibliotecas de API da Google para localizar o arquivo que contém as credenciais de conta de serviços criadas no [item 4](#4.-criar-ou-solicitar-as-credenciais-de-conta-de-servicos-no-google-cloud-platform).
+7.1 A propriedade `GOOGLE_APPLICATION_CREDENTIALS` é utilizada pelas bibliotecas de API da Google para localizar o arquivo que contém as credenciais de conta de serviços criadas no [item 4](#4-criar-ou-solicitar-as-credenciais-de-conta-de-serviços-no-google-cloud-platform).
 
 `GOOGLE_APPLICATION_CREDENTIALS=/Users/marceloleite2604/Documents/Breadware/Files/service-account-key.json`
 
-7.2 A propriedade `GOOGLE_CLIEND_ID` é utilizada pelo programa para localizar o arquivo criado no [item 3](3.-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform) que contém as credenciais as informações de identificação o cliente ao solicitar a chave de autorização para o servidor OAuth2.
+7.2 A propriedade `GOOGLE_CLIEND_ID` é utilizada pelo programa para localizar o arquivo criado no [item 3](#3-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform) que contém as credenciais as informações de identificação o cliente ao solicitar a chave de autorização para o servidor OAuth2.
 
 `GOOGLE_CLIEND_ID=/Users/marceloleite2604/Documents/Breadware/Files/client-id.json`
