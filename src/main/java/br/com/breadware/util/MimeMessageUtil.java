@@ -36,7 +36,8 @@ public class MimeMessageUtil {
     private void getTextFromMimeMultipart(MimeMultipart mimeMultipart, StringBuffer stringBuffer) throws MessagingException, IOException {
         for (int i = 0; i < mimeMultipart.getCount(); i++) {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
-            if (bodyPart.isMimeType(MediaType.TEXT_PLAIN_VALUE) || bodyPart.isMimeType(MediaType.TEXT_HTML_VALUE)) {
+            // TODO Currently discarding HTML content.
+            if (bodyPart.isMimeType(MediaType.TEXT_PLAIN_VALUE) /* || bodyPart.isMimeType(MediaType.TEXT_HTML_VALUE)*/) {
                 stringBuffer.append("\n");
                 stringBuffer.append(bodyPart.getContent());
             } else if (bodyPart.getContent() instanceof MimeMultipart) {

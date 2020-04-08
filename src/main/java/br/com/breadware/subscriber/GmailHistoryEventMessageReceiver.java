@@ -50,20 +50,14 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
     private final LastHistoryEventBo lastHistoryEventBo;
 
-    private final MessageToMimeMessageMapper messageToMimeMessageMapper;
-
-    private final MimeMessageUtil mimeMessageUtil;
-
     @Inject
-    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageToMimeMessageMapper messageToMimeMessageMapper, MimeMessageUtil mimeMessageUtil) {
+    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo) {
         this.pubSubMessageToGmailHistoryEventMapper = pubSubMessageToGmailHistoryEventMapper;
         this.loggerUtil = loggerUtil;
         this.gmailHistoryRetriever = gmailHistoryRetriever;
         this.gmailMessageRetriever = gmailMessageRetriever;
         this.handledGmailMessageBo = handledGmailMessageBo;
         this.lastHistoryEventBo = lastHistoryEventBo;
-        this.messageToMimeMessageMapper = messageToMimeMessageMapper;
-        this.mimeMessageUtil = mimeMessageUtil;
     }
 
     @Override
@@ -93,11 +87,7 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
             for (Message message : messages) {
 
-                MimeMessage mimeMessage = messageToMimeMessageMapper.map(message);
 
-                String messageContent = mimeMessageUtil.retrieveContentAsText(mimeMessage);
-
-                LOGGER.info("Initial mail content: " + messageContent.substring(0, (64 > messageContent.length() ? messageContent.length() : 64)));
 
                 signalMessageAsHandled(message);
             }
