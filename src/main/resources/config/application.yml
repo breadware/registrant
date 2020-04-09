@@ -7,7 +7,8 @@ spring:
 registrant:
   locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
-  email-verification-uuid: 862d8907-cbab-4434-b367-74ad89808300
+  email:
+    sender: marcelo.leite@thoughtworks.com
   google-cloud-platform:
     project-id: "register-272219"
     topic-id: "gmail_inbox_topic"

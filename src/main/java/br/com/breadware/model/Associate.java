@@ -13,6 +13,8 @@ public class Associate {
     @JsonIgnore
     private final Map<String, Object> additionalProperties;
 
+    private Long cpf;
+
     private String firstName;
 
     private String lastName;
@@ -23,6 +25,14 @@ public class Associate {
 
     public Associate() {
         this.additionalProperties = new HashMap<>();
+    }
+
+    public Long getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(Long cpf) {
+        this.cpf = cpf;
     }
 
     public String getFirstName() {
@@ -72,12 +82,11 @@ public class Associate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Associate associate = (Associate) o;
-        return Objects.equals(firstName, associate.firstName) &&
-                Objects.equals(lastName, associate.lastName);
+        return Objects.equals(cpf, associate.cpf);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(cpf);
     }
 }

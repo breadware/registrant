@@ -6,12 +6,11 @@ import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.model.GmailHistoryEvent;
 import br.com.breadware.model.HandledGmailMessage;
 import br.com.breadware.model.LastHistoryEvent;
-import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.mapper.PubSubMessageToGmailHistoryEventMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
+import br.com.breadware.subscriber.message.analyser.MessageAnalyser;
 import br.com.breadware.util.LoggerUtil;
-import br.com.breadware.util.MimeMessageUtil;
 import com.google.api.services.gmail.model.History;
 import com.google.api.services.gmail.model.HistoryMessageAdded;
 import com.google.api.services.gmail.model.ListHistoryResponse;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
@@ -50,14 +48,17 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
     private final LastHistoryEventBo lastHistoryEventBo;
 
+    private final MessageAnalyser messageAnalyser;
+
     @Inject
-    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo) {
+    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageAnalyser messageAnalyser) {
         this.pubSubMessageToGmailHistoryEventMapper = pubSubMessageToGmailHistoryEventMapper;
         this.loggerUtil = loggerUtil;
         this.gmailHistoryRetriever = gmailHistoryRetriever;
         this.gmailMessageRetriever = gmailMessageRetriever;
         this.handledGmailMessageBo = handledGmailMessageBo;
         this.lastHistoryEventBo = lastHistoryEventBo;
+        this.messageAnalyser = messageAnalyser;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
             for (Message message : messages) {
 
-
+                messageAnalyser.analyse(message);
 
                 signalMessageAsHandled(message);
             }

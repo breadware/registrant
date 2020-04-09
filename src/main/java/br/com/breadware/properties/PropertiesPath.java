@@ -10,6 +10,8 @@ public final class PropertiesPath {
 
     public static final String GCP_AUTHORIZATION = GOOGLE_CLOUD_PLATFORM + ".authorization";
 
+    public static final String EMAIL = REGISTRANT + ".email";
+
     private PropertiesPath() {
         // Private constructor to avoid object instantiation.
     }
