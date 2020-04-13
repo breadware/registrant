@@ -1,6 +1,6 @@
 package br.com.breadware;
 
-import br.com.breadware.subscriber.SubscriberCreator;
+import br.com.breadware.google.cloud.pubsub.GmailInboxHistoryEventSubscriberCreator;
 import br.com.breadware.watch.WatchRequester;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,12 +15,12 @@ public class Registrant implements CommandLineRunner {
 
     private final WatchRequester watchRequester;
 
-    private final SubscriberCreator subscriberCreator;
+    private final GmailInboxHistoryEventSubscriberCreator gmailInboxHistoryEventSubscriberCreator;
 
     @Inject
-    public Registrant(WatchRequester watchRequester, SubscriberCreator subscriberCreator) {
+    public Registrant(WatchRequester watchRequester, GmailInboxHistoryEventSubscriberCreator gmailInboxHistoryEventSubscriberCreator) {
         this.watchRequester = watchRequester;
-        this.subscriberCreator = subscriberCreator;
+        this.gmailInboxHistoryEventSubscriberCreator = gmailInboxHistoryEventSubscriberCreator;
     }
 
     public static void main(String[] args) {
@@ -30,6 +30,6 @@ public class Registrant implements CommandLineRunner {
     @Override
     public void run(String... args) {
         watchRequester.request();
-        subscriberCreator.createAndStart();
+        gmailInboxHistoryEventSubscriberCreator.createAndStart();
     }
 }

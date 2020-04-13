@@ -1,4 +1,4 @@
-package br.com.breadware.subscriber.message.analyser;
+package br.com.breadware.google.mail.message.analyser.model;
 
 import br.com.breadware.model.Associate;
 import com.google.api.services.gmail.model.Message;

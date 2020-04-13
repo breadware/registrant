@@ -1,10 +1,12 @@
-package br.com.breadware.subscriber.message.analyser;
+package br.com.breadware.google.mail.message.analyser;
 
 import br.com.breadware.exception.MessageAnalysisException;
-import br.com.breadware.subscriber.message.analyser.link.MessageAnalyserCheckAssociateAlreadyExistsLink;
-import br.com.breadware.subscriber.message.analyser.link.MessageAnalyserAssociateExtractorLink;
-import br.com.breadware.subscriber.message.analyser.link.template.MessageAnalyserLink;
-import br.com.breadware.subscriber.message.analyser.link.MessageAnalyserValidatorLink;
+import br.com.breadware.google.mail.message.analyser.link.MessageAnalyserAssociateExtractorLink;
+import br.com.breadware.google.mail.message.analyser.link.MessageAnalyserCheckAssociateAlreadyExistsLink;
+import br.com.breadware.google.mail.message.analyser.link.MessageAnalyserValidatorLink;
+import br.com.breadware.google.mail.message.analyser.link.template.MessageAnalyserLink;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisResult;
 import com.google.api.services.gmail.model.Message;
 import org.springframework.stereotype.Component;
 

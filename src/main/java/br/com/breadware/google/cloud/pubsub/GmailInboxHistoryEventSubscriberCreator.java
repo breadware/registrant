@@ -1,4 +1,4 @@
-package br.com.breadware.subscriber;
+package br.com.breadware.google.cloud.pubsub;
 
 import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.RegistrantRuntimeException;
@@ -19,25 +19,25 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 
 @Component
-public class SubscriberCreator {
+public class GmailInboxHistoryEventSubscriberCreator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriberCreator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GmailInboxHistoryEventSubscriberCreator.class);
 
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
     private final GcpPubSubProperties gcpPubSubProperties;
 
-    private final GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver;
+    private final GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver;
 
     private final LoggerUtil loggerUtil;
 
     private final EnvironmentVariableUtil environmentVariableUtil;
 
     @Inject
-    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
         this.gcpPubSubProperties = gcpPubSubProperties;
-        this.gmailHistoryEventMessageReceiver = gmailHistoryEventMessageReceiver;
+        this.gmailInboxHistoryEventMessageReceiver = gmailInboxHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
         this.environmentVariableUtil = environmentVariableUtil;
     }
@@ -55,7 +55,7 @@ public class SubscriberCreator {
                             .setExecutorThreadCount(1)
                             .build();
 
-            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, gmailHistoryEventMessageReceiver)
+            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, gmailInboxHistoryEventMessageReceiver)
                     .setExecutorProvider(executorProvider)
                     .build();
 

@@ -1,9 +1,9 @@
-package br.com.breadware.subscriber.message.analyser.link.template;
+package br.com.breadware.google.mail.message.analyser.link.template;
 
 import br.com.breadware.exception.MessageAnalysisException;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisContext;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisResult;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisStatus;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisResult;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
 
 import java.util.Collections;
 import java.util.Set;

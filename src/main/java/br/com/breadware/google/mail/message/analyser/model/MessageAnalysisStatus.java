@@ -1,4 +1,4 @@
-package br.com.breadware.subscriber.message.analyser;
+package br.com.breadware.google.mail.message.analyser.model;
 
 public enum MessageAnalysisStatus {
     UNDEFINED,

@@ -1,11 +1,11 @@
-package br.com.breadware.subscriber.message.analyser.link;
+package br.com.breadware.google.mail.message.analyser.link;
 
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.exception.MessageAnalysisException;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.model.Associate;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisContext;
 import br.com.breadware.model.message.ErrorMessage;
-import br.com.breadware.subscriber.message.analyser.link.template.AbstractMessageAnalyserLink;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;

@@ -1,15 +1,15 @@
-package br.com.breadware.subscriber.message.analyser.link;
+package br.com.breadware.google.mail.message.analyser.link;
 
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.exception.MessageAnalysisException;
 import br.com.breadware.exception.MimeMessageHandlingException;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
 import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.EmailProperties;
-import br.com.breadware.subscriber.message.analyser.MessageAnalysisStatus;
-import br.com.breadware.subscriber.message.analyser.link.template.AbstractMessageAnalyserLink;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
+import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.MimeMessageUtil;
 import org.apache.commons.lang3.StringUtils;
