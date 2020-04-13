@@ -1,5 +1,6 @@
-package br.com.breadware.model;
+package br.com.breadware.subscriber.message.analyser;
 
+import br.com.breadware.model.Associate;
 import com.google.api.services.gmail.model.Message;
 
 import javax.mail.internet.MimeMessage;
@@ -15,11 +16,14 @@ public class MessageAnalysisContext {
 
     private Optional<Associate> associate;
 
+    private MessageAnalysisStatus status;
+
     public MessageAnalysisContext(Message message) {
         this.message = message;
         mimeMessage = Optional.empty();
         messageContent = Optional.empty();
         associate = Optional.empty();
+        status = MessageAnalysisStatus.UNDEFINED;
     }
 
     public Message getMessage() {
@@ -52,5 +56,13 @@ public class MessageAnalysisContext {
 
     public void setAssociate(Optional<Associate> associate) {
         this.associate = associate;
+    }
+
+    public MessageAnalysisStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MessageAnalysisStatus status) {
+        this.status = status;
     }
 }

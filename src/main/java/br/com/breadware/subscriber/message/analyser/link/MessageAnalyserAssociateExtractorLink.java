@@ -3,8 +3,9 @@ package br.com.breadware.subscriber.message.analyser.link;
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.exception.MessageAnalysisException;
 import br.com.breadware.model.Associate;
-import br.com.breadware.model.MessageAnalysisContext;
+import br.com.breadware.subscriber.message.analyser.MessageAnalysisContext;
 import br.com.breadware.model.message.ErrorMessage;
+import br.com.breadware.subscriber.message.analyser.link.template.AbstractMessageAnalyserLink;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class MessageAnalyserAssociateExtractorLink extends AbstractMessageAnalys
     }
 
     @Override
-    protected boolean doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
+    protected MessageAnalysisContext doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
         try {
             Optional<String> optionalMessageContent = messageAnalysisContext.getMessageContent();
             if (optionalMessageContent.isEmpty()) {
@@ -35,7 +36,7 @@ public class MessageAnalyserAssociateExtractorLink extends AbstractMessageAnalys
 
             messageAnalysisContext.setAssociate(Optional.of(associate));
 
-            return true;
+            return messageAnalysisContext;
         } catch (JsonProcessingException exception) {
             // TODO Handle exception correctly.
             // TODO Create correct ErrorMessage.

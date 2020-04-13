@@ -3,14 +3,15 @@ package br.com.breadware.subscriber.message.analyser.link;
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.exception.MessageAnalysisException;
 import br.com.breadware.exception.MimeMessageHandlingException;
-import br.com.breadware.model.MessageAnalysisContext;
+import br.com.breadware.subscriber.message.analyser.MessageAnalysisContext;
 import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.EmailProperties;
+import br.com.breadware.subscriber.message.analyser.MessageAnalysisStatus;
+import br.com.breadware.subscriber.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.MimeMessageUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,27 +50,29 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
     }
 
     @Override
-    public boolean doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
+    public MessageAnalysisContext doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
         try {
             MimeMessage mimeMessage = messageToMimeMessageMapper.map(messageAnalysisContext.getMessage());
             messageAnalysisContext.setMimeMessage(Optional.of(mimeMessage));
 
             if (!checkSender(mimeMessage)) {
-                return false;
+                messageAnalysisContext.setStatus(MessageAnalysisStatus.INVALID_MESSAGE);
+                return messageAnalysisContext;
             }
 
             String messageContent = mimeMessageUtil.retrieveContentAsText(mimeMessage);
+            messageAnalysisContext.setMessageContent(Optional.of(messageContent));
 
             if (!isValidJson(messageContent)) {
-                return false;
+                messageAnalysisContext.setStatus(MessageAnalysisStatus.INVALID_MESSAGE);
+                return messageAnalysisContext;
             }
-        } catch (MessagingException | MimeMessageHandlingException exception) {
-            // TODO Handle exception
-            // TODO Create correct ErrorMessage.
-            throw new MessageAnalysisException(exception, ErrorMessage.ERROR_WHILE_HANDLING_MESSAGE);
-        }
 
-        return true;
+            return messageAnalysisContext;
+
+        } catch (MessagingException | MimeMessageHandlingException exception) {
+            throw new MessageAnalysisException(exception, ErrorMessage.ERROR_WHILE_VALIDATING_MESSAGE);
+        }
     }
 
     private boolean checkSender(MimeMessage mimeMessage) throws MessagingException {
@@ -80,7 +83,7 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
 
         while (index < senders.length && !foundCorrectSender) {
             Address sender = senders[index];
-            if ( sender.getType().equals(InternetAddress.class.getName()) ) {
+            if ( sender instanceof InternetAddress ) {
                 InternetAddress internetAddress = (InternetAddress)sender;
                 foundCorrectSender = emailProperties.getSender().equals(internetAddress.getAddress());
             }

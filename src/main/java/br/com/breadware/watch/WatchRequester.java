@@ -8,6 +8,7 @@ import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.LastHistoryEvent;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
+import br.com.breadware.properties.GcpPubSubProperties;
 import br.com.breadware.properties.GoogleCloudPlatformProperties;
 import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.ZonedDateTimeUtil;
@@ -35,6 +36,8 @@ public class WatchRequester {
 
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
+    private final GcpPubSubProperties gcpPubSubProperties;
+
     private final WatchScheduler watchScheduler;
 
     private final ZonedDateTimeUtil zonedDateTimeUtil;
@@ -46,8 +49,9 @@ public class WatchRequester {
     private final LastHistoryEventBo lastHistoryEventBo;
 
     @Inject
-    public WatchRequester(GoogleCloudPlatformProperties googleCloudPlatformProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
+    public WatchRequester(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
+        this.gcpPubSubProperties = gcpPubSubProperties;
         this.watchScheduler = watchScheduler;
         this.zonedDateTimeUtil = zonedDateTimeUtil;
         this.loggerUtil = loggerUtil;
@@ -98,7 +102,7 @@ public class WatchRequester {
     private WatchRequest createWatchRequest() {
 
         @SuppressWarnings({"deprecation", "java:S1874"}) /* GCP Pub/sub API currently does not have an alternative for this deprecation (perhaps on next versions?). */
-                String topicName = ProjectTopicName.format(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getTopicId());
+                String topicName = ProjectTopicName.format(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getTopicId());
 
         return new WatchRequest()
                 .setTopicName(topicName)

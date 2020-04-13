@@ -89,4 +89,54 @@ public class Associate {
     public int hashCode() {
         return Objects.hash(cpf);
     }
+
+    public static final class Builder {
+        private Long cpf;
+        private String firstName;
+        private String lastName;
+        private String address;
+        private String phone;
+
+        private Builder() {
+        }
+
+        public static Builder anAssociate() {
+            return new Builder();
+        }
+
+        public Builder cpf(Long cpf) {
+            this.cpf = cpf;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Associate build() {
+            Associate associate = new Associate();
+            associate.setCpf(cpf);
+            associate.setFirstName(firstName);
+            associate.setLastName(lastName);
+            associate.setAddress(address);
+            associate.setPhone(phone);
+            return associate;
+        }
+    }
 }

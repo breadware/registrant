@@ -13,9 +13,6 @@ public class RegistrantProperties {
 
     private String zoneId = "UTC";
 
-    @NotBlank
-    private String emailVerificationUuid;
-
     public String getLocale() {
         return locale;
     }
@@ -30,13 +27,5 @@ public class RegistrantProperties {
 
     public void setZoneId(String zoneId) {
         this.zoneId = zoneId;
-    }
-
-    public String getEmailVerificationUuid() {
-        return emailVerificationUuid;
-    }
-
-    public void setEmailVerificationUuid(String emailVerificationUuid) {
-        this.emailVerificationUuid = emailVerificationUuid;
     }
 }

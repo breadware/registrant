@@ -4,6 +4,7 @@ import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
+import br.com.breadware.properties.GcpPubSubProperties;
 import br.com.breadware.properties.GoogleCloudPlatformProperties;
 import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.LoggerUtil;
@@ -24,6 +25,8 @@ public class SubscriberCreator {
 
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
+    private final GcpPubSubProperties gcpPubSubProperties;
+
     private final GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver;
 
     private final LoggerUtil loggerUtil;
@@ -31,8 +34,9 @@ public class SubscriberCreator {
     private final EnvironmentVariableUtil environmentVariableUtil;
 
     @Inject
-    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
+        this.gcpPubSubProperties = gcpPubSubProperties;
         this.gmailHistoryEventMessageReceiver = gmailHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
         this.environmentVariableUtil = environmentVariableUtil;
@@ -42,7 +46,7 @@ public class SubscriberCreator {
 
         environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
 
-        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getSubscriptionId());
+        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getSubscriptionId());
 
         try {
 
