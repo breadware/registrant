@@ -10,19 +10,19 @@ Sistema para cadastro automático das informações de novos associados da Bread
 
 [3. Instalando o ambiente de desenvolvimento][3]
 
-[3.1. Instalar os softwares necessários][3.1]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.1. Instalar os softwares necessários][3.1]
 
-[3.2. Clonar o repositório Git][3.2]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.2. Clonar o repositório Git][3.2]
 
-[3.3. Criar ou solicitar as credenciais do programa no Google Cloud Platform][3.3]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.3. Criar ou solicitar as credenciais do programa no Google Cloud Platform][3.3]
 
-[3.4. Criar ou solicitar as credenciais de conta de serviços no Google Cloud Platform][3.4]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.4. Criar ou solicitar as credenciais de conta de serviços no Google Cloud Platform][3.4]
 
-[3.5. Importar o projeto no IntelliJ IDE][3.5]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.5. Importar o projeto no IntelliJ IDE][3.5]
 
-[3.6. Criar a configuração de execução do sistema][3.6]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.6. Criar a configuração de execução do sistema][3.6]
 
-[3.7. Definir variáveis de ambiente][3.7]
+&nbsp;&nbsp;&nbsp;&nbsp;[3.7. Definir variáveis de ambiente][3.7]
 
 ## 1. Apresentação
 
