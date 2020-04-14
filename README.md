@@ -8,7 +8,7 @@ Sistema para cadastro automático das informações de novos associados da Bread
 
 [2. Tecnologias utilizadas][2]
 
-[3. Instalando o ambiente de desenvolvimento][3]
+[3. Como instalar o ambiente de desenvolvimento][3]
 
 &nbsp;&nbsp;&nbsp;&nbsp;[3.1. Instalar os softwares necessários][3.1]
 
