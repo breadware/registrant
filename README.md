@@ -5,14 +5,23 @@ Sistema para cadastro automático das informações de novos associados da Bread
 ## Índice
 
 [1. Apresentação][1]
+
 [2. Tecnologias utilizadas][2]
+
 [3. Instalando o ambiente de desenvolvimento][3]
+
 [3.1. Instalar os softwares necessários][3.1]
+
 [3.2. Clonar o repositório Git][3.2]
+
 [3.3. Criar ou solicitar as credenciais do programa no Google Cloud Platform][3.3]
+
 [3.4. Criar ou solicitar as credenciais de conta de serviços no Google Cloud Platform][3.4]
+
 [3.5. Importar o projeto no IntelliJ IDE][3.5]
+
 [3.6. Criar a configuração de execução do sistema][3.6]
+
 [3.7. Definir variáveis de ambiente][3.7]
 
 ## 1. Apresentação
@@ -248,13 +257,13 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 
 `GOOGLE_CLIEND_ID=/Users/marceloleite2604/Documents/Breadware/Files/client-id.json`
 
-[1]: #1.-apresentação
-[2]: #2.-tecnologias-utilizadas
-[3]: #3.-instalando-o-ambiente-de-desenvolvimento
-[3.1]: #3.1.-instalar-os-softwares-necessários
-[3.2]: #3.2.-clonar-o-repositório-git
-[3.3]: #3.3.-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform
-[3.4]: #3.4.-criar-ou-solicitar-as-credenciais-de-conta-de-serviços-no-google-cloud-platform
-[3.5]: #3.5.-importar-o-projeto-no-intellij-ide
-[3.6]: #3.6.-criar-a-configuração-de-execução-do-sistema
-[3.7]: #3.7.-definir-variáveis-de-ambiente
+[1]: #1-apresentação
+[2]: #2-tecnologias-utilizadas
+[3]: #3-instalando-o-ambiente-de-desenvolvimento
+[3.1]: #31-instalar-os-softwares-necessários
+[3.2]: #32-clonar-o-repositório-git
+[3.3]: #33-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform
+[3.4]: #34-criar-ou-solicitar-as-credenciais-de-conta-de-serviços-no-google-cloud-platform
+[3.5]: #35-importar-o-projeto-no-intellij-ide
+[3.6]: #36-criar-a-configuração-de-execução-do-sistema
+[3.7]: #37-definir-variáveis-de-ambiente
