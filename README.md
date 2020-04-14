@@ -55,7 +55,7 @@ Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro 
 **Observações:**
 - O sistema foi testado utilizando Oracle JVM versão 13.0.2 2020-01-14.
 
-## 3. Instalando o ambiente de desenvolvimento
+## 3. Como instalar o ambiente de desenvolvimento
 
 Algumas instruções abaixo referem-se a comandos a serem realizados no terminal por ser um ponto comum entre diversos sistemas operacionais. Fique a vontade em utilizar outro programa, mas esteja ciente de que resultados obtidos devem ser os mesmos. 
 
@@ -259,7 +259,7 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 
 [1]: #1-apresentação
 [2]: #2-tecnologias-utilizadas
-[3]: #3-instalando-o-ambiente-de-desenvolvimento
+[3]: #3-como-instalar-o-ambiente-de-desenvolvimento
 [3.1]: #31-instalar-os-softwares-necessários
 [3.2]: #32-clonar-o-repositório-git
 [3.3]: #33-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform
