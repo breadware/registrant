@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class MessageAnalyserCheckAssociateAlreadyExistsLink extends AbstractMessageAnalyserLink {
 
-    private AssociateBo associateBo;
+    private final AssociateBo associateBo;
 
     @Inject
     public MessageAnalyserCheckAssociateAlreadyExistsLink(AssociateBo associateBo) {

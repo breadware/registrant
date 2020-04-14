@@ -101,9 +101,7 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
                     case DUPLICATED_ASSOCIATE:
                     case NEW_ASSOCIATE:
                         // TODO Will be implemented on another Github issue.
-                        Associate associate = messageAnalysisResult.getAssociate()
-                                .get();
-
+                        Associate associate = messageAnalysisResult.getAssociate();
                         LOGGER.info("{} {} is a new associate.", associate.getFirstName(), associate.getLastName());
                         break;
                     case UNDEFINED:
@@ -148,7 +146,7 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
         List<History> histories = listHistoryResponse.getHistory();
 
         if (CollectionUtils.isEmpty(histories)) {
-            loggerUtil.warn(LOGGER, LoggerMessage.GMAIL_HISTORY_RETRIEVAL_RETURNED_AN_EMPTY_LIST);
+            loggerUtil.info(LOGGER, LoggerMessage.GMAIL_HISTORY_RETRIEVAL_RETURNED_AN_EMPTY_LIST);
             return Collections.emptyList();
         }
 

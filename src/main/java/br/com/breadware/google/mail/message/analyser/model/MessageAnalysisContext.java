@@ -4,25 +4,24 @@ import br.com.breadware.model.Associate;
 import com.google.api.services.gmail.model.Message;
 
 import javax.mail.internet.MimeMessage;
-import java.util.Optional;
 
 public class MessageAnalysisContext {
 
     private Message message;
 
-    private Optional<MimeMessage> mimeMessage;
+    private MimeMessage mimeMessage;
 
-    private Optional<String> messageContent;
+    private String messageContent;
 
-    private Optional<Associate> associate;
+    private Associate associate;
 
     private MessageAnalysisStatus status;
 
     public MessageAnalysisContext(Message message) {
         this.message = message;
-        mimeMessage = Optional.empty();
-        messageContent = Optional.empty();
-        associate = Optional.empty();
+        mimeMessage = null;
+        messageContent = null;
+        associate = null;
         status = MessageAnalysisStatus.UNDEFINED;
     }
 
@@ -34,27 +33,27 @@ public class MessageAnalysisContext {
         this.message = message;
     }
 
-    public Optional<MimeMessage> getMimeMessage() {
+    public MimeMessage getMimeMessage() {
         return mimeMessage;
     }
 
-    public void setMimeMessage(Optional<MimeMessage> mimeMessage) {
+    public void setMimeMessage(MimeMessage mimeMessage) {
         this.mimeMessage = mimeMessage;
     }
 
-    public Optional<String> getMessageContent() {
+    public String getMessageContent() {
         return messageContent;
     }
 
-    public void setMessageContent(Optional<String> messageContent) {
+    public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
     }
 
-    public Optional<Associate> getAssociate() {
+    public Associate getAssociate() {
         return associate;
     }
 
-    public void setAssociate(Optional<Associate> associate) {
+    public void setAssociate(Associate associate) {
         this.associate = associate;
     }
 

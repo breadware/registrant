@@ -5,5 +5,5 @@ public enum MessageAnalysisStatus {
     INVALID_MESSAGE,
     DUPLICATED_ASSOCIATE,
     NEW_ASSOCIATE
-};
+}
 

@@ -12,7 +12,7 @@ public abstract class AbstractMessageAnalyserLink implements MessageAnalyserLink
 
     private MessageAnalyserLink next;
 
-    private static Set<MessageAnalysisStatus> INTERRUPT_CHAIN_STATUSES;
+    private static final Set<MessageAnalysisStatus> INTERRUPT_CHAIN_STATUSES;
 
     static {
         INTERRUPT_CHAIN_STATUSES = Collections.singleton(MessageAnalysisStatus.INVALID_MESSAGE);

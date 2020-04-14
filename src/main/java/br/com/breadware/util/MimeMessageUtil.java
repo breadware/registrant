@@ -17,31 +17,30 @@ public class MimeMessageUtil {
     public static final String MIMETYPE_MULTIPART_ANY = "multipart/*";
 
     public String retrieveContentAsText(MimeMessage message) throws MimeMessageHandlingException {
-        StringBuffer contentStringBuffer = new StringBuffer();
+        StringBuilder contentStringBuilder = new StringBuilder();
 
         try {
             if (message.isMimeType(MediaType.TEXT_PLAIN_VALUE)) {
-                contentStringBuffer.append(message.getContent()
+                contentStringBuilder.append(message.getContent()
                         .toString());
             } else if (message.isMimeType(MIMETYPE_MULTIPART_ANY)) {
                 MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
-                getTextFromMimeMultipart(mimeMultipart, contentStringBuffer);
+                getTextFromMimeMultipart(mimeMultipart, contentStringBuilder);
             }
         } catch (MessagingException | IOException exception) {
             throw new MimeMessageHandlingException(exception, ErrorMessage.ERROR_RETRIEVING_MIME_MESSAGE_CONTENT_AS_TEXT);
         }
-        return contentStringBuffer.toString();
+        return contentStringBuilder.toString();
     }
 
-    private void getTextFromMimeMultipart(MimeMultipart mimeMultipart, StringBuffer stringBuffer) throws MessagingException, IOException {
+    private void getTextFromMimeMultipart(MimeMultipart mimeMultipart, StringBuilder stringBuilder) throws MessagingException, IOException {
         for (int i = 0; i < mimeMultipart.getCount(); i++) {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
-            // TODO Currently discarding HTML content.
-            if (bodyPart.isMimeType(MediaType.TEXT_PLAIN_VALUE) /* || bodyPart.isMimeType(MediaType.TEXT_HTML_VALUE)*/) {
-                stringBuffer.append("\n");
-                stringBuffer.append(bodyPart.getContent());
+            if (bodyPart.isMimeType(MediaType.TEXT_PLAIN_VALUE)) {
+                stringBuilder.append("\n");
+                stringBuilder.append(bodyPart.getContent());
             } else if (bodyPart.getContent() instanceof MimeMultipart) {
-                getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent(), stringBuffer);
+                getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent(), stringBuilder);
             }
         }
     }

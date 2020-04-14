@@ -3,13 +3,13 @@ package br.com.breadware.google.mail.message.analyser.link;
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.exception.MessageAnalysisException;
 import br.com.breadware.exception.MimeMessageHandlingException;
+import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
 import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.EmailProperties;
-import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
-import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.MimeMessageUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -24,15 +24,12 @@ import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Optional;
 
 @Component(BeanNames.MESSAGE_VALIDATOR)
 public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageAnalyserValidatorLink.class);
-
     public static final int MAX_MESSAGE_SIZE = 64;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageAnalyserValidatorLink.class);
     private final MessageToMimeMessageMapper messageToMimeMessageMapper;
 
     private final MimeMessageUtil mimeMessageUtil;
@@ -53,7 +50,7 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
     public MessageAnalysisContext doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
         try {
             MimeMessage mimeMessage = messageToMimeMessageMapper.map(messageAnalysisContext.getMessage());
-            messageAnalysisContext.setMimeMessage(Optional.of(mimeMessage));
+            messageAnalysisContext.setMimeMessage(mimeMessage);
 
             if (!checkSender(mimeMessage)) {
                 messageAnalysisContext.setStatus(MessageAnalysisStatus.INVALID_MESSAGE);
@@ -61,7 +58,7 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
             }
 
             String messageContent = mimeMessageUtil.retrieveContentAsText(mimeMessage);
-            messageAnalysisContext.setMessageContent(Optional.of(messageContent));
+            messageAnalysisContext.setMessageContent(messageContent);
 
             if (!isValidJson(messageContent)) {
                 messageAnalysisContext.setStatus(MessageAnalysisStatus.INVALID_MESSAGE);
@@ -83,9 +80,10 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
 
         while (index < senders.length && !foundCorrectSender) {
             Address sender = senders[index];
-            if ( sender instanceof InternetAddress ) {
-                InternetAddress internetAddress = (InternetAddress)sender;
-                foundCorrectSender = emailProperties.getSender().equals(internetAddress.getAddress());
+            if (sender instanceof InternetAddress) {
+                InternetAddress internetAddress = (InternetAddress) sender;
+                foundCorrectSender = emailProperties.getSender()
+                        .equals(internetAddress.getAddress());
             }
             index++;
         }

@@ -2,29 +2,27 @@ package br.com.breadware.google.mail.message.analyser.model;
 
 import br.com.breadware.model.Associate;
 
-import java.util.Optional;
-
 public class MessageAnalysisResult {
 
     private MessageAnalysisStatus status;
 
-    private Optional<Associate> associate;
+    private Associate associate;
 
     public MessageAnalysisStatus getStatus() {
         return status;
     }
 
-    public Optional<Associate> getAssociate() {
+    public Associate getAssociate() {
         return associate;
     }
 
-    public void setAssociate(Optional<Associate> associate) {
+    public void setAssociate(Associate associate) {
         this.associate = associate;
     }
 
     public static final class Builder {
         private MessageAnalysisStatus status;
-        private Optional<Associate> associate;
+        private Associate associate;
 
         private Builder() {
         }
@@ -38,7 +36,7 @@ public class MessageAnalysisResult {
             return this;
         }
 
-        public Builder associate(Optional<Associate> associate) {
+        public Builder associate(Associate associate) {
             this.associate = associate;
             return this;
         }
