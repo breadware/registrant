@@ -13,9 +13,9 @@ Atualmente o cadastro de informações de novos associados são realizados manua
 Através do fluxo, é possível perceber que:
 - O processo depende de uma pessoa voluntária para ser realizado.
 - Nem sempre a pessoa voluntária estará disponível. É necessário aguardá-la pra que o processo tenha continuidade.
-- Existem muitas etapas manuais sujeitos a falha humana no processo.
+- Existem muitas etapas manuais sujeitas a falha humana no processo.
 
-O projeto existente neste repositório visa melhorar o processo de cadastro de novos associados substituindo a necessidade de intervenção de um voluntário por um sistema de cadastro automático atendendo o seguinte fluxo:
+O projeto existente neste repositório visa melhorar o processo de ingresso de novos associados substituindo a necessidade de intervenção de um voluntário por um sistema de cadastro automático atendendo o seguinte fluxo:
 
 <p align="center">
 <img alt="Processo desejado de cadastro de novos associados" src="https://user-images.githubusercontent.com/13152452/77569209-9a451080-6ea8-11ea-9a57-9e7cb5fe5334.png">
@@ -95,7 +95,7 @@ Para que o sistema possa trabalhar com os dados do usuário, o Google Cloud Plat
 <img alt="Localização do botão de download de informações da nova chave criada" src="https://user-images.githubusercontent.com/13152452/77966101-c8678d80-72b8-11ea-9eda-10e60e4ebdb2.png">
 </p>
 
-3.8. Salve o arquivo JSON em um diretório do seu computador **não utilize o diretório de fontes do projeto para não correr o risco de fazer o upload destes dados para o repositório público. Caso isto ocorra, será necessário invalidar a chave e criar uma nova.**.
+3.8. Salve o arquivo JSON em um diretório do seu computador **não utilize o diretório de fontes do projeto para não correr o risco de fazer o _upload_ destes dados para o repositório público. Caso isto ocorra, será necessário invalidar a chave e criar uma nova.**.
 
 ### 4. Criar ou solicitar as credenciais de conta de serviços no Google Cloud Platform
 

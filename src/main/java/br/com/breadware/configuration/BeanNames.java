@@ -26,6 +26,12 @@ public final class BeanNames {
 
     public static final String FIRESTORE = "firestore";
 
+    public static final String MESSAGE_VALIDATOR = "messageValidator";
+
+    public static final String ASSOCIATE_EXTRACTOR = "associateExtractor";
+
+    public static final String SHEETS = "sheets";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

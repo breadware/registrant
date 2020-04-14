@@ -1,4 +1,4 @@
-package br.com.breadware.subscriber;
+package br.com.breadware.google.mail.message;
 
 import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.GmailMessageRetrievalException;

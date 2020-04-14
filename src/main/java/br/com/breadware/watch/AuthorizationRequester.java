@@ -13,6 +13,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.gmail.GmailScopes;
+import com.google.api.services.sheets.v4.SheetsScopes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -32,16 +33,13 @@ public class AuthorizationRequester {
 
     public static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
-    private static final List<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/gmail.readonly");
+    private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_READONLY, SheetsScopes.SPREADSHEETS);
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
+
     private final NetHttpTransport netHttpTransport;
-
     private final GcpAuthorizationProperties gcpAuthorizationProperties;
-
     private final JsonFactory jsonFactory;
-
     private final MessageRetriever messageRetriever;
-
     private final EnvironmentVariableUtil environmentVariableUtil;
 
     @Inject

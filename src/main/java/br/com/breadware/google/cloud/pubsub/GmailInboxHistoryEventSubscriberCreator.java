@@ -1,9 +1,10 @@
-package br.com.breadware.subscriber;
+package br.com.breadware.google.cloud.pubsub;
 
 import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
+import br.com.breadware.properties.GcpPubSubProperties;
 import br.com.breadware.properties.GoogleCloudPlatformProperties;
 import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.LoggerUtil;
@@ -18,22 +19,25 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 
 @Component
-public class SubscriberCreator {
+public class GmailInboxHistoryEventSubscriberCreator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriberCreator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GmailInboxHistoryEventSubscriberCreator.class);
 
     private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
 
-    private final GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver;
+    private final GcpPubSubProperties gcpPubSubProperties;
+
+    private final GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver;
 
     private final LoggerUtil loggerUtil;
 
     private final EnvironmentVariableUtil environmentVariableUtil;
 
     @Inject
-    public SubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GmailHistoryEventMessageReceiver gmailHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
-        this.gmailHistoryEventMessageReceiver = gmailHistoryEventMessageReceiver;
+        this.gcpPubSubProperties = gcpPubSubProperties;
+        this.gmailInboxHistoryEventMessageReceiver = gmailInboxHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
         this.environmentVariableUtil = environmentVariableUtil;
     }
@@ -42,7 +46,7 @@ public class SubscriberCreator {
 
         environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
 
-        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), googleCloudPlatformProperties.getSubscriptionId());
+        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getSubscriptionId());
 
         try {
 
@@ -51,7 +55,7 @@ public class SubscriberCreator {
                             .setExecutorThreadCount(1)
                             .build();
 
-            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, gmailHistoryEventMessageReceiver)
+            Subscriber subscriber = Subscriber.newBuilder(subscriptionName, gmailInboxHistoryEventMessageReceiver)
                     .setExecutorProvider(executorProvider)
                     .build();
 

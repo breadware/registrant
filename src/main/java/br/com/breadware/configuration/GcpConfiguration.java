@@ -9,6 +9,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.gmail.Gmail;
+import com.google.api.services.sheets.v4.Sheets;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import org.springframework.context.annotation.Bean;
@@ -55,5 +56,12 @@ public class GcpConfiguration {
                 .build();
 
         return firestoreOptions.getService();
+    }
+
+    @Bean(BeanNames.SHEETS)
+    public Sheets createSheets(NetHttpTransport netHttpTransport, JsonFactory jsonFactory, Credential credential) {
+        return new Sheets.Builder(netHttpTransport, jsonFactory, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
     }
 }

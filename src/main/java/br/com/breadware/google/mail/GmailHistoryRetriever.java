@@ -1,4 +1,4 @@
-package br.com.breadware.subscriber;
+package br.com.breadware.google.mail;
 
 import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.configuration.GcpConfiguration;

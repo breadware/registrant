@@ -1,17 +1,21 @@
-package br.com.breadware.subscriber;
+package br.com.breadware.google.cloud.pubsub;
 
 import br.com.breadware.bo.HandledGmailMessageBo;
 import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.exception.DataAccessException;
+import br.com.breadware.exception.RegistrantException;
+import br.com.breadware.google.mail.GmailHistoryRetriever;
+import br.com.breadware.google.mail.message.GmailMessageRetriever;
+import br.com.breadware.model.Associate;
 import br.com.breadware.model.GmailHistoryEvent;
 import br.com.breadware.model.HandledGmailMessage;
 import br.com.breadware.model.LastHistoryEvent;
-import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
 import br.com.breadware.model.mapper.PubSubMessageToGmailHistoryEventMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
+import br.com.breadware.google.mail.message.analyser.MessageAnalyser;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisResult;
 import br.com.breadware.util.LoggerUtil;
-import br.com.breadware.util.MimeMessageUtil;
 import com.google.api.services.gmail.model.History;
 import com.google.api.services.gmail.model.HistoryMessageAdded;
 import com.google.api.services.gmail.model.ListHistoryResponse;
@@ -25,7 +29,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
@@ -34,9 +37,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class GmailHistoryEventMessageReceiver implements MessageReceiver {
+public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GmailHistoryEventMessageReceiver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GmailInboxHistoryEventMessageReceiver.class);
 
     private final PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper;
 
@@ -50,20 +53,17 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
     private final LastHistoryEventBo lastHistoryEventBo;
 
-    private final MessageToMimeMessageMapper messageToMimeMessageMapper;
-
-    private final MimeMessageUtil mimeMessageUtil;
+    private final MessageAnalyser messageAnalyser;
 
     @Inject
-    public GmailHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageToMimeMessageMapper messageToMimeMessageMapper, MimeMessageUtil mimeMessageUtil) {
+    public GmailInboxHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageAnalyser messageAnalyser) {
         this.pubSubMessageToGmailHistoryEventMapper = pubSubMessageToGmailHistoryEventMapper;
         this.loggerUtil = loggerUtil;
         this.gmailHistoryRetriever = gmailHistoryRetriever;
         this.gmailMessageRetriever = gmailMessageRetriever;
         this.handledGmailMessageBo = handledGmailMessageBo;
         this.lastHistoryEventBo = lastHistoryEventBo;
-        this.messageToMimeMessageMapper = messageToMimeMessageMapper;
-        this.mimeMessageUtil = mimeMessageUtil;
+        this.messageAnalyser = messageAnalyser;
     }
 
     @Override
@@ -73,7 +73,6 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
         loggerUtil.info(LOGGER, LoggerMessage.SUBSCRIPTION_MESSAGE_RECEIVED, pubsubMessage.getMessageId());
 
         GmailHistoryEvent gmailHistoryEvent = pubSubMessageToGmailHistoryEventMapper.map(pubsubMessage);
-
 
         try {
 
@@ -93,11 +92,21 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
 
             for (Message message : messages) {
 
-                MimeMessage mimeMessage = messageToMimeMessageMapper.map(message);
+                MessageAnalysisResult messageAnalysisResult = messageAnalyser.analyse(message);
 
-                String messageContent = mimeMessageUtil.retrieveContentAsText(mimeMessage);
-
-                LOGGER.info("Initial mail content: " + messageContent.substring(0, (64 > messageContent.length() ? messageContent.length() : 64)));
+                switch (messageAnalysisResult.getStatus()) {
+                    case INVALID_MESSAGE:
+                        loggerUtil.info(LOGGER, LoggerMessage.MESSAGE_IS_NOT_ASSOCIATE_INFORMATION, message.getId());
+                        break;
+                    case DUPLICATED_ASSOCIATE:
+                    case NEW_ASSOCIATE:
+                        // TODO Will be implemented on another Github issue.
+                        Associate associate = messageAnalysisResult.getAssociate();
+                        LOGGER.info("{} {} is a new associate.", associate.getFirstName(), associate.getLastName());
+                        break;
+                    case UNDEFINED:
+                        throw new RegistrantException(ErrorMessage.INVALID_MESSAGE_ANALYSIS_STATUS_RESULT, messageAnalysisResult.getStatus());
+                }
 
                 signalMessageAsHandled(message);
             }
@@ -137,7 +146,7 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
         List<History> histories = listHistoryResponse.getHistory();
 
         if (CollectionUtils.isEmpty(histories)) {
-            loggerUtil.warn(LOGGER, LoggerMessage.GMAIL_HISTORY_RETRIEVAL_RETURNED_AN_EMPTY_LIST);
+            loggerUtil.info(LOGGER, LoggerMessage.GMAIL_HISTORY_RETRIEVAL_RETURNED_AN_EMPTY_LIST);
             return Collections.emptyList();
         }
 
@@ -181,7 +190,7 @@ public class GmailHistoryEventMessageReceiver implements MessageReceiver {
     }
 
     private void logMessageAlreadyHandled(String messageId) {
-        LOGGER.warn("Message {} has already been handled.", messageId);
+        loggerUtil.info(LOGGER, LoggerMessage.GMAIL_MESSAGE_HAS_ALREADY_BEEN_HANDLED, messageId);
     }
 
 }

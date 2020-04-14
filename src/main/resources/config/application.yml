@@ -7,13 +7,20 @@ spring:
 registrant:
   locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
-  google-cloud-platform:
-    project-id: "register-272219"
-    topic-id: "gmail_inbox_topic"
-    subscription-id: "gmail_inbox_subscription"
-    authorization:
-      local-server-receiver-port: 8888
-      authorized-user: "tw.breadware@gmail.com"
-      tokens-directory-path: "tokens"
   messages:
     file-base-directory-path: "classpath:/i18n/messages"
+  email:
+    sender: "marcelo.leite@thoughtworks.com"
+  google:
+    cloud-platform:
+      project-id: "register-272219"
+      pub-sub:
+        topic-id: "gmail_inbox_topic"
+        subscription-id: "gmail_inbox_subscription"
+      authorization:
+        local-server-receiver-port: 8888
+        authorized-user: "tw.breadware@gmail.com"
+        tokens-directory-path: "tokens"
+    sheets:
+      sheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
+      data-range: "Dados!A:E"

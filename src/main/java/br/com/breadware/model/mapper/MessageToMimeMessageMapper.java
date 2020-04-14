@@ -1,5 +1,7 @@
 package br.com.breadware.model.mapper;
 
+import br.com.breadware.exception.MapperException;
+import br.com.breadware.model.message.ErrorMessage;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,14 @@ import java.io.ByteArrayInputStream;
 public class MessageToMimeMessageMapper implements Mapper<Message, MimeMessage> {
 
     @Override
-    public MimeMessage map(Message message) throws MessagingException {
+    public MimeMessage map(Message message) {
 
         byte[] emailBytes = Base64.decodeBase64(message.getRaw());
 
-        return new MimeMessage(null, new ByteArrayInputStream(emailBytes));
+        try {
+            return new MimeMessage(null, new ByteArrayInputStream(emailBytes));
+        } catch (MessagingException exception) {
+            throw new MapperException(exception, ErrorMessage.ERROR_MAPPING_OBJECT, Message.class, MimeMessage.class);
+        }
     }
 }
