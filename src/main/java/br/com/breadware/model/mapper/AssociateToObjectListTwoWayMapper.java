@@ -1,19 +1,25 @@
 package br.com.breadware.model.mapper;
 
+import br.com.breadware.exception.MappingException;
+import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.Associate;
+import br.com.breadware.model.AssociateFieldOrder;
+import br.com.breadware.model.annotation.SkipOnMapping;
+import br.com.breadware.model.message.ErrorMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.beans.PropertyDescriptor;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Component
 public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate, List<Object>> {
+
+    private static final String PROPERTY_DESCRIPTOR_CLASS_NAME = "class";
 
     @Override
     public List<Object> mapTo(Associate associate) {
@@ -26,14 +32,39 @@ public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate
 
         PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
 
-        List<Object> values = new ArrayList<>(propertyDescriptors.length);
+        Object[] values = new Object[AssociateFieldOrder.values().length];
 
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-            values.add(propertyDescriptor.getValue(propertyDescriptor.getName())
-                    .toString());
+
+            if (shouldSkipProperty(propertyDescriptor)) {
+                continue;
+            }
+
+            Object propertyValue = beanWrapper.getPropertyValue(propertyDescriptor.getName());
+            String propertyValueText = Optional.ofNullable(propertyValue)
+                    .map(Object::toString)
+                    .orElse(StringUtils.EMPTY);
+
+            int index = AssociateFieldOrder.findByFieldName(propertyDescriptor.getName())
+                    .ordinal();
+
+            values[index] = propertyValueText;
         }
 
-        return values;
+        return Arrays.asList(values);
+    }
+
+    private boolean shouldSkipProperty(PropertyDescriptor propertyDescriptor) {
+        if (PROPERTY_DESCRIPTOR_CLASS_NAME.equals(propertyDescriptor.getName())) {
+            return true;
+        }
+
+        try {
+            Field field = Associate.class.getDeclaredField(propertyDescriptor.getName());
+            return field.isAnnotationPresent(SkipOnMapping.class);
+        } catch (NoSuchFieldException exception) {
+            throw new MappingException(exception, ErrorMessage.ERROR_WHILE_MAPPING, Associate.class, List.class);
+        }
     }
 
     @Override
@@ -47,36 +78,21 @@ public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate
             return new Associate();
         }
 
-        long cpf = Long.parseLong(objects.get(FieldOrder.CPF.ordinal())
-                .toString());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(new Associate());
 
-        String firstName = objects.get(FieldOrder.FIRST_NAME.ordinal())
-                .toString();
+        for (AssociateFieldOrder associateFieldOrder : AssociateFieldOrder.values()) {
+            String propertyName = associateFieldOrder.getFieldName();
+            String propertyValue = objects.get(AssociateFieldOrder.findByFieldName(propertyName).ordinal())
+                    .toString();
+            beanWrapper.setPropertyValue(propertyName, propertyValue);
+        }
 
-        String lastName = objects.get(FieldOrder.LAST_NAME.ordinal())
-                .toString();
+        Object wrappedInstance = beanWrapper.getWrappedInstance();
 
-        String address = objects.get(FieldOrder.ADDRESS.ordinal())
-                .toString();
+        if (!(wrappedInstance instanceof Associate)) {
+            throw new RegistrantRuntimeException(ErrorMessage.WRAPPED_OBJECT_IS_NOT_OF_EXPECTED_TYPE, Associate.class);
+        }
 
-        String phone = objects.get(FieldOrder.PHONE.ordinal())
-                .toString();
-
-        return Associate.Builder.anAssociate()
-                .cpf(cpf)
-                .firstName(firstName)
-                .lastName(lastName)
-                .address(address)
-                .phone(phone)
-                .build();
-
-    }
-
-    private enum FieldOrder {
-        CPF,
-        FIRST_NAME,
-        LAST_NAME,
-        ADDRESS,
-        PHONE
+        return (Associate) wrappedInstance;
     }
 }

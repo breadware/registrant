@@ -1,5 +1,6 @@
 package br.com.breadware.model;
 
+import br.com.breadware.model.annotation.SkipOnMapping;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,10 +11,11 @@ import java.util.Objects;
 
 public class Associate {
 
+    @SkipOnMapping
     @JsonIgnore
     private final Map<String, Object> additionalProperties;
 
-    private Long cpf;
+    private String cpf;
 
     private String firstName;
 
@@ -23,15 +25,17 @@ public class Associate {
 
     private String phone;
 
+    private String email;
+
     public Associate() {
         this.additionalProperties = new HashMap<>();
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -67,6 +71,14 @@ public class Associate {
         this.phone = phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @JsonAnyGetter
     public final Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -88,55 +100,5 @@ public class Associate {
     @Override
     public int hashCode() {
         return Objects.hash(cpf);
-    }
-
-    public static final class Builder {
-        private Long cpf;
-        private String firstName;
-        private String lastName;
-        private String address;
-        private String phone;
-
-        private Builder() {
-        }
-
-        public static Builder anAssociate() {
-            return new Builder();
-        }
-
-        public Builder cpf(Long cpf) {
-            this.cpf = cpf;
-            return this;
-        }
-
-        public Builder firstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder address(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder phone(String phone) {
-            this.phone = phone;
-            return this;
-        }
-
-        public Associate build() {
-            Associate associate = new Associate();
-            associate.setCpf(cpf);
-            associate.setFirstName(firstName);
-            associate.setLastName(lastName);
-            associate.setAddress(address);
-            associate.setPhone(phone);
-            return associate;
-        }
     }
 }

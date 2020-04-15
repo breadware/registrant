@@ -1,5 +1,6 @@
-package br.com.breadware.properties;
+package br.com.breadware.properties.google;
 
+import br.com.breadware.properties.PropertiesPath;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
