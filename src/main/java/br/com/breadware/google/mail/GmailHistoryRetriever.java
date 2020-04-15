@@ -1,9 +1,8 @@
 package br.com.breadware.google.mail;
 
-import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.configuration.GcpConfiguration;
-import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.GmailHistoryRetrievalException;
+import br.com.breadware.model.GmailHistoryEvent;
 import br.com.breadware.model.message.ErrorMessage;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListHistoryResponse;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class GmailHistoryRetriever {
@@ -23,31 +21,25 @@ public class GmailHistoryRetriever {
 
     private final Gmail gmail;
 
-    private final LastHistoryEventBo lastHistoryEventBo;
-
     @Inject
-    public GmailHistoryRetriever(Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
+    public GmailHistoryRetriever(Gmail gmail) {
         this.gmail = gmail;
-        this.lastHistoryEventBo = lastHistoryEventBo;
     }
 
-    public ListHistoryResponse retrieve() throws GmailHistoryRetrievalException {
+    public ListHistoryResponse retrieve(GmailHistoryEvent gmailHistoryEvent) throws GmailHistoryRetrievalException {
 
-
-        BigInteger startHistoryId = null;
         try {
-            startHistoryId = lastHistoryEventBo.get()
-                    .getId();
+            BigInteger startHistoryId = gmailHistoryEvent.getId();
+
             return gmail.users()
                     .history()
                     .list(GcpConfiguration.USER_ID)
                     .setStartHistoryId(startHistoryId)
                     .setHistoryTypes(HISTORY_TYPES)
                     .execute();
-        } catch (DataAccessException | IOException exception) {
-            throw new GmailHistoryRetrievalException(exception, ErrorMessage.ERROR_WHILE_REQUESTING_GMAIL_HISTORY, Optional.ofNullable(startHistoryId)
-                    .map(BigInteger::toString)
-                    .orElse("?"));
+
+        } catch (IOException exception) {
+            throw new GmailHistoryRetrievalException(exception, ErrorMessage.ERROR_WHILE_RETRIEVING_GMAIL_HISTORY, gmailHistoryEvent.getId());
         }
     }
 }

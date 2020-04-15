@@ -1,4 +1,4 @@
-package br.com.breadware.watch;
+package br.com.breadware.google.mail.watch;
 
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.util.LoggerUtil;

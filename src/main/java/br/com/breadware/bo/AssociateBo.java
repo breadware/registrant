@@ -44,7 +44,7 @@ public class AssociateBo {
                 .collect(Collectors.toList());
     }
 
-    public Associate put(final Associate associate) throws DataAccessException {
+    public void put(final Associate associate) throws DataAccessException {
 
         List<Associate> associates = getAll();
 
@@ -71,8 +71,6 @@ public class AssociateBo {
 
         ValueRange valueRange = new ValueRange().setValues(dataList);
         associateDao.replace(valueRange);
-
-        return associateToPersist;
     }
 
     private Associate merge(Associate first, Associate second) {

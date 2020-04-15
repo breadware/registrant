@@ -12,7 +12,6 @@ import java.util.Objects;
 
 public class GmailHistoryEvent {
 
-
     @JsonIgnore
     private final Map<String, Object> additionalProperties;
 
@@ -22,7 +21,7 @@ public class GmailHistoryEvent {
     private String emailAddress;
 
     public GmailHistoryEvent() {
-        additionalProperties = new HashMap<>();
+        this.additionalProperties = new HashMap<>();
     }
 
     public String getEmailAddress() {
@@ -73,5 +72,34 @@ public class GmailHistoryEvent {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", additionalProperties=" + additionalProperties +
                 '}';
+    }
+
+    public static final class Builder {
+        private BigInteger id;
+        private String emailAddress;
+
+        private Builder() {
+        }
+
+        public static Builder aGmailHistoryEvent() {
+            return new Builder();
+        }
+
+        public Builder id(BigInteger id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder emailAddress(String emailAddress) {
+            this.emailAddress = emailAddress;
+            return this;
+        }
+
+        public GmailHistoryEvent build() {
+            GmailHistoryEvent gmailHistoryEvent = new GmailHistoryEvent();
+            gmailHistoryEvent.setId(id);
+            gmailHistoryEvent.setEmailAddress(emailAddress);
+            return gmailHistoryEvent;
+        }
     }
 }

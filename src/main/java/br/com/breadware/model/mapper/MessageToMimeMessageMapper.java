@@ -1,6 +1,6 @@
 package br.com.breadware.model.mapper;
 
-import br.com.breadware.exception.MapperException;
+import br.com.breadware.exception.MappingException;
 import br.com.breadware.model.message.ErrorMessage;
 import com.google.api.services.gmail.model.Message;
 import org.apache.commons.codec.binary.Base64;
@@ -21,7 +21,7 @@ public class MessageToMimeMessageMapper implements Mapper<Message, MimeMessage> 
         try {
             return new MimeMessage(null, new ByteArrayInputStream(emailBytes));
         } catch (MessagingException exception) {
-            throw new MapperException(exception, ErrorMessage.ERROR_MAPPING_OBJECT, Message.class, MimeMessage.class);
+            throw new MappingException(exception, ErrorMessage.ERROR_MAPPING_OBJECT, Message.class, MimeMessage.class);
         }
     }
 }

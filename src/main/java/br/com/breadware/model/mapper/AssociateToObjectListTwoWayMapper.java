@@ -1,6 +1,6 @@
 package br.com.breadware.model.mapper;
 
-import br.com.breadware.exception.MapperException;
+import br.com.breadware.exception.MappingException;
 import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.Associate;
 import br.com.breadware.model.AssociateFieldOrder;
@@ -63,7 +63,7 @@ public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate
             Field field = Associate.class.getDeclaredField(propertyDescriptor.getName());
             return field.isAnnotationPresent(SkipOnMapping.class);
         } catch (NoSuchFieldException exception) {
-            throw new MapperException(exception, ErrorMessage.ERROR_WHILE_MAPPING, Associate.class, List.class);
+            throw new MappingException(exception, ErrorMessage.ERROR_WHILE_MAPPING, Associate.class, List.class);
         }
     }
 
@@ -82,7 +82,7 @@ public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate
 
         for (AssociateFieldOrder associateFieldOrder : AssociateFieldOrder.values()) {
             String propertyName = associateFieldOrder.getFieldName();
-            String propertyValue = objects.get(AssociateFieldOrder.CPF.ordinal())
+            String propertyValue = objects.get(AssociateFieldOrder.findByFieldName(propertyName).ordinal())
                     .toString();
             beanWrapper.setPropertyValue(propertyName, propertyValue);
         }

@@ -13,7 +13,8 @@ public enum LoggerMessage implements Message {
     EVENT_ID_RECEIVED_IS_PREVIOUS_TO_THE_LAST_ID(7),
     MESSAGE_BODY_IS_INVALID_JSON(8),
     MESSAGE_IS_NOT_ASSOCIATE_INFORMATION(9),
-    GMAIL_MESSAGE_HAS_ALREADY_BEEN_HANDLED(10);
+    GMAIL_MESSAGE_HAS_ALREADY_BEEN_HANDLED(10),
+    GMAIL_MESSAGE_HAS_BEEN_HANDLED(11);
 
     public static final String FILE_PATH = "logger/logger".replace("/", File.separator);
 

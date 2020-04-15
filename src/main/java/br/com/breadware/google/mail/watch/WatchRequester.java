@@ -1,15 +1,11 @@
-package br.com.breadware.watch;
+package br.com.breadware.google.mail.watch;
 
-import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.configuration.GcpConfiguration;
-import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.RegistrantRuntimeException;
-import br.com.breadware.model.LastHistoryEvent;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
-import br.com.breadware.properties.GcpPubSubProperties;
-import br.com.breadware.properties.GoogleCloudPlatformProperties;
+import br.com.breadware.properties.google.GoogleProperties;
 import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.ZonedDateTimeUtil;
 import com.google.api.services.gmail.Gmail;
@@ -34,9 +30,7 @@ public class WatchRequester {
 
     private static final List<String> LABEL_IDS = Collections.singletonList("INBOX");
 
-    private final GoogleCloudPlatformProperties googleCloudPlatformProperties;
-
-    private final GcpPubSubProperties gcpPubSubProperties;
+    private final GoogleProperties googleProperties;
 
     private final WatchScheduler watchScheduler;
 
@@ -46,17 +40,13 @@ public class WatchRequester {
 
     private final Gmail gmail;
 
-    private final LastHistoryEventBo lastHistoryEventBo;
-
     @Inject
-    public WatchRequester(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail, LastHistoryEventBo lastHistoryEventBo) {
-        this.googleCloudPlatformProperties = googleCloudPlatformProperties;
-        this.gcpPubSubProperties = gcpPubSubProperties;
+    public WatchRequester(GoogleProperties googleProperties, WatchScheduler watchScheduler, ZonedDateTimeUtil zonedDateTimeUtil, LoggerUtil loggerUtil, Gmail gmail) {
+        this.googleProperties = googleProperties;
         this.watchScheduler = watchScheduler;
         this.zonedDateTimeUtil = zonedDateTimeUtil;
         this.loggerUtil = loggerUtil;
         this.gmail = gmail;
-        this.lastHistoryEventBo = lastHistoryEventBo;
     }
 
     public void request() {
@@ -80,11 +70,6 @@ public class WatchRequester {
         Instant expirationInstant = Instant.ofEpochMilli(watchResponse.getExpiration());
         ZonedDateTime expirationZonedDateTime = zonedDateTimeUtil.convertFromUtcInstant(expirationInstant);
         loggerUtil.info(LOGGER, LoggerMessage.EMAIL_WATCH_EXPIRATION_TIME, zonedDateTimeUtil.writeAsHumanReadableFormat(expirationZonedDateTime));
-        try {
-            lastHistoryEventBo.set(new LastHistoryEvent(watchResponse.getHistoryId()));
-        } catch (DataAccessException exception) {
-            throw new RegistrantRuntimeException(ErrorMessage.ERROR_UPDATING_LAST_HISTORY_EVENT, exception);
-        }
     }
 
     private WatchResponse sendWatchRequest(Gmail gmail, WatchRequest watchRequest) {
@@ -101,8 +86,14 @@ public class WatchRequester {
 
     private WatchRequest createWatchRequest() {
 
+        String projectId = googleProperties.getGoogleCloudPlatformProperties()
+                .getProjectId();
+
+        String topicId = googleProperties.getGcpPubSubProperties()
+                .getTopicId();
+
         @SuppressWarnings({"deprecation", "java:S1874"}) /* GCP Pub/sub API currently does not have an alternative for this deprecation (perhaps on next versions?). */
-                String topicName = ProjectTopicName.format(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getTopicId());
+                String topicName = ProjectTopicName.format(projectId, topicId);
 
         return new WatchRequest()
                 .setTopicName(topicName)

@@ -1,8 +1,8 @@
-package br.com.breadware.watch;
+package br.com.breadware.google;
 
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
-import br.com.breadware.properties.GcpAuthorizationProperties;
+import br.com.breadware.properties.google.GcpAuthorizationProperties;
 import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.MessageRetriever;
 import com.google.api.client.auth.oauth2.Credential;

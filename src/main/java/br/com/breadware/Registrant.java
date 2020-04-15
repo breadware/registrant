@@ -1,7 +1,7 @@
 package br.com.breadware;
 
 import br.com.breadware.google.cloud.pubsub.GmailInboxHistoryEventSubscriberCreator;
-import br.com.breadware.watch.WatchRequester;
+import br.com.breadware.google.mail.watch.WatchRequester;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

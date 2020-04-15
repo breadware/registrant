@@ -3,7 +3,7 @@ package br.com.breadware.dao;
 import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.model.AssociateFieldOrder;
 import br.com.breadware.model.message.ErrorMessage;
-import br.com.breadware.properties.GoogleSheetsProperties;
+import br.com.breadware.properties.google.GoogleSheetsProperties;
 import br.com.breadware.util.SpreadsheetUtil;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;

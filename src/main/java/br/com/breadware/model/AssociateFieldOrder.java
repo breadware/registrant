@@ -8,9 +8,7 @@ public enum AssociateFieldOrder {
     PHONE("phone"),
     EMAIL("email");
 
-    private String fieldName;
-
-    private String label;
+    private final String fieldName;
 
     AssociateFieldOrder(String fieldName) {
         this.fieldName = fieldName;
