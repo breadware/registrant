@@ -3,7 +3,7 @@ spring:
     active:
       - "@spring.active-profile@"
   main:
-    web-application-type: NONE
+    web-application-type: "NONE"
 registrant:
   locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
@@ -22,5 +22,5 @@ registrant:
         authorized-user: "tw.breadware@gmail.com"
         tokens-directory-path: "tokens"
     sheets:
-      sheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
-      data-range: "Dados!A:E"
+      spreadsheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
+      sheet-name: "Dados"

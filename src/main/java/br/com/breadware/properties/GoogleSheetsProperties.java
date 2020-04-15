@@ -10,24 +10,24 @@ import javax.validation.constraints.NotBlank;
 public class GoogleSheetsProperties {
 
     @NotBlank
-    private String sheetId;
+    private String spreadsheetId;
 
     @NotBlank
-    private String dataRange;
+    private String sheetName;
 
-    public String getSheetId() {
-        return sheetId;
+    public String getSpreadsheetId() {
+        return spreadsheetId;
     }
 
-    public void setSheetId(String sheetId) {
-        this.sheetId = sheetId;
+    public void setSpreadsheetId(String spreadsheetId) {
+        this.spreadsheetId = spreadsheetId;
     }
 
-    public String getDataRange() {
-        return dataRange;
+    public String getSheetName() {
+        return sheetName;
     }
 
-    public void setDataRange(String dataRange) {
-        this.dataRange = dataRange;
+    public void setSheetName(String sheetName) {
+        this.sheetName = sheetName;
     }
 }

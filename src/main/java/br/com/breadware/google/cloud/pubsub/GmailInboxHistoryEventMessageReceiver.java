@@ -1,5 +1,6 @@
 package br.com.breadware.google.cloud.pubsub;
 
+import br.com.breadware.bo.AssociateBo;
 import br.com.breadware.bo.HandledGmailMessageBo;
 import br.com.breadware.bo.LastHistoryEventBo;
 import br.com.breadware.exception.DataAccessException;
@@ -55,8 +56,10 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
 
     private final MessageAnalyser messageAnalyser;
 
+    private final AssociateBo associateBo;
+
     @Inject
-    public GmailInboxHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageAnalyser messageAnalyser) {
+    public GmailInboxHistoryEventMessageReceiver(PubSubMessageToGmailHistoryEventMapper pubSubMessageToGmailHistoryEventMapper, LoggerUtil loggerUtil, GmailHistoryRetriever gmailHistoryRetriever, GmailMessageRetriever gmailMessageRetriever, HandledGmailMessageBo handledGmailMessageBo, LastHistoryEventBo lastHistoryEventBo, MessageAnalyser messageAnalyser, AssociateBo associateBo) {
         this.pubSubMessageToGmailHistoryEventMapper = pubSubMessageToGmailHistoryEventMapper;
         this.loggerUtil = loggerUtil;
         this.gmailHistoryRetriever = gmailHistoryRetriever;
@@ -64,6 +67,7 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
         this.handledGmailMessageBo = handledGmailMessageBo;
         this.lastHistoryEventBo = lastHistoryEventBo;
         this.messageAnalyser = messageAnalyser;
+        this.associateBo = associateBo;
     }
 
     @Override
@@ -94,15 +98,20 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
 
                 MessageAnalysisResult messageAnalysisResult = messageAnalyser.analyse(message);
 
+                Associate associate;
                 switch (messageAnalysisResult.getStatus()) {
                     case INVALID_MESSAGE:
                         loggerUtil.info(LOGGER, LoggerMessage.MESSAGE_IS_NOT_ASSOCIATE_INFORMATION, message.getId());
                         break;
                     case DUPLICATED_ASSOCIATE:
+                        associate = messageAnalysisResult.getAssociate();
+                        LOGGER.info("{} {} is an existing associate.", associate.getFirstName(), associate.getLastName());
+                        associateBo.put(associate);
+                        break;
                     case NEW_ASSOCIATE:
-                        // TODO Will be implemented on another Github issue.
-                        Associate associate = messageAnalysisResult.getAssociate();
+                        associate = messageAnalysisResult.getAssociate();
                         LOGGER.info("{} {} is a new associate.", associate.getFirstName(), associate.getLastName());
+                        associateBo.put(associate);
                         break;
                     case UNDEFINED:
                         throw new RegistrantException(ErrorMessage.INVALID_MESSAGE_ANALYSIS_STATUS_RESULT, messageAnalysisResult.getStatus());
