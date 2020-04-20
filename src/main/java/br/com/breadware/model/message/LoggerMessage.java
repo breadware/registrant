@@ -14,7 +14,8 @@ public enum LoggerMessage implements Message {
     MESSAGE_BODY_IS_INVALID_JSON(8),
     MESSAGE_IS_NOT_ASSOCIATE_INFORMATION(9),
     GMAIL_MESSAGE_HAS_ALREADY_BEEN_HANDLED(10),
-    GMAIL_MESSAGE_HAS_BEEN_HANDLED(11);
+    GMAIL_MESSAGE_HAS_BEEN_HANDLED(11),
+    SKIPPING_ENVIRONMENT_VARIABLE_CHECK_ON_APP_ENGINE(12);
 
     public static final String FILE_PATH = "logger/logger".replace("/", File.separator);
 

@@ -2,8 +2,10 @@ package br.com.breadware.google;
 
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
+import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.google.GcpAuthorizationProperties;
 import br.com.breadware.util.EnvironmentVariableUtil;
+import br.com.breadware.util.LoggerUtil;
 import br.com.breadware.util.MessageRetriever;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -31,24 +33,31 @@ import java.util.List;
 @Component
 public class AuthorizationRequester {
 
-    public static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
+
+    private static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
+
     private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_READONLY, SheetsScopes.SPREADSHEETS);
+
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
+
+    private static final String GOOGLE_CLOUD_PROJECT_ENVIRONMENT_VARIABLE_NAME = "GOOGLE_CLOUD_PROJECT";
 
     private final NetHttpTransport netHttpTransport;
     private final GcpAuthorizationProperties gcpAuthorizationProperties;
     private final JsonFactory jsonFactory;
     private final MessageRetriever messageRetriever;
     private final EnvironmentVariableUtil environmentVariableUtil;
+    private final LoggerUtil loggerUtil;
 
     @Inject
-    public AuthorizationRequester(NetHttpTransport netHttpTransport, GcpAuthorizationProperties gcpAuthorizationProperties, JsonFactory jsonFactory, MessageRetriever messageRetriever, EnvironmentVariableUtil environmentVariableUtil) {
+    public AuthorizationRequester(NetHttpTransport netHttpTransport, GcpAuthorizationProperties gcpAuthorizationProperties, JsonFactory jsonFactory, MessageRetriever messageRetriever, EnvironmentVariableUtil environmentVariableUtil, LoggerUtil loggerUtil) {
         this.netHttpTransport = netHttpTransport;
         this.gcpAuthorizationProperties = gcpAuthorizationProperties;
         this.jsonFactory = jsonFactory;
         this.messageRetriever = messageRetriever;
         this.environmentVariableUtil = environmentVariableUtil;
+        this.loggerUtil = loggerUtil;
     }
 
     public Credential getCredential() {
@@ -57,7 +66,7 @@ public class AuthorizationRequester {
     }
 
     private GoogleClientSecrets retrieveGoogleClientSecrets() {
-        environmentVariableUtil.throwExceptionIfDoesNotExist(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
+        checkEnvironmentVariables();
         Path clientIdFilePath = Path.of(System.getenv(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE));
         try (
                 InputStream inputStream = Files.newInputStream(clientIdFilePath);
@@ -66,6 +75,14 @@ public class AuthorizationRequester {
             return GoogleClientSecrets.load(jsonFactory, inputStreamReader);
         } catch (IOException exception) {
             throw logAndCreateAuthorizationRequestRuntimeException(ErrorMessage.ERROR_RETRIEVING_GOOGLE_CLIENT_SECRETS, exception);
+        }
+    }
+
+    private void checkEnvironmentVariables() {
+        if (environmentVariableUtil.isDefined(GOOGLE_CLOUD_PROJECT_ENVIRONMENT_VARIABLE_NAME)) {
+            loggerUtil.info(LOGGER, LoggerMessage.SKIPPING_ENVIRONMENT_VARIABLE_CHECK_ON_APP_ENGINE, CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
+        } else {
+            environmentVariableUtil.throwExceptionIfDoesNotExist(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
         }
     }
 
