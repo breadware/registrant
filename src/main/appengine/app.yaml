@@ -1,0 +1,7 @@
+runtime: java11
+instance_class: B1
+manual_scaling:
+  instances: 1
+
+env_variables:
+  JAVA_TOOL_OPTIONS: "-XX:MaxRAM=256m -XX:ActiveProcessorCount=2 -Xmx32m"
