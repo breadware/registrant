@@ -2,14 +2,21 @@ package br.com.breadware;
 
 import br.com.breadware.google.cloud.pubsub.GmailInboxHistoryEventSubscriberCreator;
 import br.com.breadware.google.mail.watch.WatchRequester;
+import br.com.breadware.model.Associate;
+import br.com.breadware.model.ThymeleafTemplates;
+import br.com.breadware.properties.RegistrantProperties;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.inject.Inject;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {ThymeleafAutoConfiguration.class})
 @ConfigurationPropertiesScan("br.com.breadware.properties")
 public class Registrant implements CommandLineRunner {
 

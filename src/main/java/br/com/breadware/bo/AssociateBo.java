@@ -9,6 +9,8 @@ import br.com.breadware.model.message.ErrorMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.stereotype.Component;
@@ -110,5 +112,13 @@ public class AssociateBo {
         return associates.stream()
                 .sorted(Comparator.comparing(Associate::getCpf))
                 .collect(Collectors.toList());
+    }
+
+    public String elaborateFullName(Associate associate) {
+        StringBuilder fullNameStringBuilder = new StringBuilder();
+        fullNameStringBuilder.append(associate.getFirstName());
+        fullNameStringBuilder.append(StringUtil.SPACE);
+        fullNameStringBuilder.append(associate.getLastName());
+        return WordUtils.capitalize(fullNameStringBuilder.toString().toLowerCase());
     }
 }
