@@ -31,20 +31,17 @@ public class GmailInboxHistoryEventSubscriberCreator {
 
     private final LoggerUtil loggerUtil;
 
-    private final EnvironmentVariableUtil environmentVariableUtil;
-
     @Inject
-    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
         this.gcpPubSubProperties = gcpPubSubProperties;
         this.gmailInboxHistoryEventMessageReceiver = gmailInboxHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
-        this.environmentVariableUtil = environmentVariableUtil;
     }
 
     public void createAndStart() {
 
-        environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
+        // environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
 
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getSubscriptionId());
 

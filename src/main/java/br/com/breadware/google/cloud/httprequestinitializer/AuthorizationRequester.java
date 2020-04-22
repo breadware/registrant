@@ -1,5 +1,9 @@
-package br.com.breadware.google;
+package br.com.breadware.google.cloud.httprequestinitializer;
 
+import br.com.breadware.configuration.BeanNames;
+import br.com.breadware.configuration.GcpConfiguration;
+import br.com.breadware.configuration.condition.NotRunningOnAppEngine;
+import br.com.breadware.configuration.condition.RunningOnAppEngine;
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
@@ -15,10 +19,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.sheets.v4.SheetsScopes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -28,16 +31,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-@Component
-public class AuthorizationRequester {
+@Component(BeanNames.HTTP_REQUEST_INITIALIZER_CREATOR)
+@Conditional(NotRunningOnAppEngine.class)
+public class AuthorizationRequester implements HttpRequestInitializerCreator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
 
     private static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
-
-    private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_READONLY, SheetsScopes.SPREADSHEETS);
 
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
 
@@ -60,13 +61,13 @@ public class AuthorizationRequester {
         this.loggerUtil = loggerUtil;
     }
 
-    public Credential getCredential() {
+    public Credential create() {
         GoogleClientSecrets googleClientSecrets = retrieveGoogleClientSecrets();
         return requestAuthorization(netHttpTransport, googleClientSecrets);
     }
 
     private GoogleClientSecrets retrieveGoogleClientSecrets() {
-        checkEnvironmentVariables();
+        environmentVariableUtil.throwExceptionIfDoesNotExist(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
         Path clientIdFilePath = Path.of(System.getenv(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE));
         try (
                 InputStream inputStream = Files.newInputStream(clientIdFilePath);
@@ -78,19 +79,11 @@ public class AuthorizationRequester {
         }
     }
 
-    private void checkEnvironmentVariables() {
-        if (environmentVariableUtil.isDefined(GOOGLE_CLOUD_PROJECT_ENVIRONMENT_VARIABLE_NAME)) {
-            loggerUtil.info(LOGGER, LoggerMessage.SKIPPING_ENVIRONMENT_VARIABLE_CHECK_ON_APP_ENGINE, CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
-        } else {
-            environmentVariableUtil.throwExceptionIfDoesNotExist(CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE);
-        }
-    }
-
     private Credential requestAuthorization(NetHttpTransport netHttpTransport, GoogleClientSecrets googleClientSecrets) {
         try {
             FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(gcpAuthorizationProperties.getTokensDirectoryPath()));
             GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow = new GoogleAuthorizationCodeFlow.Builder(
-                    netHttpTransport, jsonFactory, googleClientSecrets, SCOPES)
+                    netHttpTransport, jsonFactory, googleClientSecrets, GcpConfiguration.SCOPES)
                     .setDataStoreFactory(fileDataStoreFactory)
                     .setAccessType(AUTHORIZATION_CODE_FLOW_ACCESS_TYPE)
                     .build();

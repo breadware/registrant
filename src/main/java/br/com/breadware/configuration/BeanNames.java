@@ -8,7 +8,9 @@ public final class BeanNames {
 
     public static final String JSON_FACTORY = "jsonFactory";
 
-    public static final String CREDENTIAL = "credential";
+    public static final String HTTP_REQUEST_INITIALIZER = "httpRequestInitializer";
+
+    public static final String HTTP_REQUEST_INITIALIZER_CREATOR = "httpRequestInitializerCreator";
 
     public static final String MESSAGE_SOURCE = "messageSource";
 
