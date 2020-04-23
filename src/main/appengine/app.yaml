@@ -5,3 +5,4 @@ manual_scaling:
 
 env_variables:
   JAVA_TOOL_OPTIONS: "-XX:MaxRAM=256m -XX:ActiveProcessorCount=2 -Xmx32m"
+  IS_APPENGINE: "true"
