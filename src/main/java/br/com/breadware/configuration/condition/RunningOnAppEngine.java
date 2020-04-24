@@ -11,7 +11,7 @@ public class RunningOnAppEngine implements Condition {
 
   @Override
   public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    String appEngineVersion = System.getProperty(ENVIRONMENT_VARIABLE_IS_APPENGINE);
+    String appEngineVersion = System.getenv(ENVIRONMENT_VARIABLE_IS_APPENGINE);
     return Objects.nonNull(appEngineVersion);
   }
 }

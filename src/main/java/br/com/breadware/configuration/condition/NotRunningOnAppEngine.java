@@ -7,7 +7,7 @@ public class NotRunningOnAppEngine extends NoneNestedConditions {
 
 
   public NotRunningOnAppEngine() {
-    super(ConfigurationPhase.REGISTER_BEAN);
+    super(ConfigurationPhase.PARSE_CONFIGURATION);
   }
 
   @Conditional(RunningOnAppEngine.class)
