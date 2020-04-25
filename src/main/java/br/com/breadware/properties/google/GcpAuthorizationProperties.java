@@ -22,7 +22,7 @@ public class GcpAuthorizationProperties {
     private String authorizedUser;
 
     @NotBlank
-    private String tokensDirectoryPath;
+    private String tokensStoragePath;
 
     public Integer getLocalServerReceiverPort() {
         return localServerReceiverPort;
@@ -40,11 +40,11 @@ public class GcpAuthorizationProperties {
         this.authorizedUser = authorizedUser;
     }
 
-    public String getTokensDirectoryPath() {
-        return tokensDirectoryPath;
+    public String getTokensStoragePath() {
+        return tokensStoragePath;
     }
 
-    public void setTokensDirectoryPath(String tokensDirectoryPath) {
-        this.tokensDirectoryPath = tokensDirectoryPath;
+    public void setTokensStoragePath(String tokensStoragePath) {
+        this.tokensStoragePath = tokensStoragePath;
     }
 }

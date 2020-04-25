@@ -8,12 +8,12 @@ import com.google.api.client.http.HttpRequestInitializer;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
-@Component(BeanNames.HTTP_REQUEST_INITIALIZER_CREATOR)
-@Conditional(RunningOnAppEngine.class)
+// @Component(BeanNames.HTTP_REQUEST_INITIALIZER_CREATOR)
+// @Conditional(RunningOnAppEngine.class)
 public class AppEngineHttpRequestInitializerCreator implements HttpRequestInitializerCreator {
 
-  @Override
-  public HttpRequestInitializer create() {
-    return new AppIdentityCredential(GcpConfiguration.SCOPES);
-  }
+    @Override
+    public HttpRequestInitializer create() {
+        return new AppIdentityCredential(GcpConfiguration.SCOPES);
+    }
 }

@@ -34,6 +34,10 @@ public final class BeanNames {
 
     public static final String SHEETS = "sheets";
 
+    public static final String STORAGE = "storage";
+
+    public static final String DATA_STORE_FACTORY = "cloudStorageDataFactory";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

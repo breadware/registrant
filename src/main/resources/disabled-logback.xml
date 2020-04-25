@@ -1,0 +1,17 @@
+<configuration>
+    <appender
+            name="GCP"
+            class="com.google.cloud.logging.logback.LoggingAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <log>application.log</log> <!-- Optional : default java.log -->
+        <resourceType>gae_app</resourceType>
+        <enhancer>com.example.logging.logback.enhancers.ExampleEnhancer</enhancer>
+        <flushLevel>WARN</flushLevel>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="GCP"/>
+    </root>
+</configuration>

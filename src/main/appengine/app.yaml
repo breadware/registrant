@@ -6,3 +6,4 @@ manual_scaling:
 env_variables:
   JAVA_TOOL_OPTIONS: "-XX:MaxRAM=256m -XX:ActiveProcessorCount=2 -Xmx32m"
   APPENGINE_ENVIRONMENT: "true"
+  GOOGLE_CLIENT_ID: "gs://register-272219.appspot.com/authentication/client-id-registrant.json"
