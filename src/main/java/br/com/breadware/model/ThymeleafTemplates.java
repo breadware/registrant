@@ -20,7 +20,7 @@ public enum ThymeleafTemplates {
     ThymeleafTemplates(String templateName) {
         this.htmlTemplateName = templateName + HTML_SUFFIX;
         this.textTemplateName = templateName + TEXT_SUFFIX;
-        this.htmlTemplateFragment= Set.of(templateName);
+        this.htmlTemplateFragment = Set.of(templateName);
     }
 
     public String getHtmlTemplateName() {

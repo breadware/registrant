@@ -22,6 +22,7 @@ class SpreadsheetUtilTest {
 
         String actual = spreadsheetUtil.convertToRange(sheetName, startIndex, endIndex);
 
-        Assertions.assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
     }
 }

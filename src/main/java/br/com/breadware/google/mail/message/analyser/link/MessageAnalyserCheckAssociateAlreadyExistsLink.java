@@ -3,11 +3,11 @@ package br.com.breadware.google.mail.message.analyser.link;
 import br.com.breadware.bo.AssociateBo;
 import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.MessageAnalysisException;
-import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
 import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
 import br.com.breadware.model.Associate;
 import br.com.breadware.model.message.ErrorMessage;
-import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

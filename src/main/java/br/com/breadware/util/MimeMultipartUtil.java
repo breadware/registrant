@@ -15,9 +15,9 @@ public class MimeMultipartUtil {
 
     private static final String MIME_MULTIPART_SUBTYPE_ALTERNATIVE = "alternative";
 
-    private static final String MEDIA_TYPE_TEXT_PLAIN_UTF8 = new MediaType("text", "plain",StandardCharsets.UTF_8).toString();
+    private static final String MEDIA_TYPE_TEXT_PLAIN_UTF8 = new MediaType("text", "plain", StandardCharsets.UTF_8).toString();
 
-    private static final String MEDIA_TYPE_TEXT_HTML_UTF8 = new MediaType("text", "html",StandardCharsets.UTF_8).toString();
+    private static final String MEDIA_TYPE_TEXT_HTML_UTF8 = new MediaType("text", "html", StandardCharsets.UTF_8).toString();
 
 
     public MimeMultipart create(String textContent, String htmlContent) {

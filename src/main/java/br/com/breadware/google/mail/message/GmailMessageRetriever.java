@@ -19,10 +19,8 @@ import java.util.List;
 @Component
 public class GmailMessageRetriever {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageRetriever.class);
-
     public static final String MESSAGE_FORMAT = "raw";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageRetriever.class);
     private final Gmail gmail;
 
     private final LoggerUtil loggerUtil;
