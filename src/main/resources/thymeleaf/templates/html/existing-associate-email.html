@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Existing associate email body template</title>
+</head>
+<body>
+<div th:fragment="existing-associate-email">
+    <p>
+        Muito obrigado por se inscrever na <span th:text="${association}">Associação</span>,
+        <span th:text="${associate.firstName}">Fulano</span>.
+    </p>
+    <p>
+        Nosso clube produz toda semana dois deliciosos pães artesanais de 500 gramas: um tradicional e um
+        diferenciado. Nosso pão tradicional é elaborado com farinha de trigo orgânica, fermentação natural, água e
+        sal marinho. O nosso pão diferenciado é uma experimentação com novos sabores. Já produzimos pães de batata
+        doce, de aipim, de milho, de chocolate, com multigrãos, integral com linhaça e muitos outros. Toda semana
+        uma novidade.
+    </p>
+    <p>
+        Para concluir o seu cadastro, basta escolher um dos planos abaixo.
+    </p>
+    <p>
+        <strong>Coleta em um dos nossos pontos de distribuição:</strong>
+        <br/>
+        Toda quinta-feira seus pães estarão disponíveis em um dos nossos pontos de distribuição (a combinar). Basta
+        ir lá, se apresentar e receber os pães.
+        <br/>
+        Investimento mensal: R$ 45,00
+    </p>
+    <p>
+        <strong>Entrega na sua porta:</strong>
+        <br/>
+        Semanalmente um dos nossos colaboradores irá em um ponto de entrega (a combinar) lhe entregar os pães da
+        semana. Uma facilidade para o seu dia-a-dia.
+        <br/>
+        Investimento mensal: R$ 55,00
+    </p>
+    <p>
+        Os pagamentos podem ser realizados através de depósito no
+        <span th:text="${receiverBankAccount.bankName}">banco</span>,
+        <span th:text="${receiverBankAccount.bankAgency}">agência 1</span>, conta
+        <span th:text="${receiverBankAccount.accountNumber}">12.345-6</span> em nome de
+        <span th:text="${receiverBankAccount.accountOwner}">pessoa</span>, detentor do CPF
+        <span th:text="${receiverBankAccount.cpf}">123.456.789-10</span>.
+    </p>
+    <br/>
+    <p>A <span th:text="${association}">Associação</span> e todo o seu time agradece o seu apoio. Bem-vindo ao clube!
+    </p>
+</div>
+</body>
+</html>

@@ -15,17 +15,9 @@ import java.util.Optional;
 @Component
 public class RegistrantApplicationContextAware implements ApplicationContextAware {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrantApplicationContextAware.class);
     public static final String CONTEXT_NOT_AVAILABLE_MESSAGE = "System context is not available yet.";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrantApplicationContextAware.class);
     private static ApplicationContext applicationContext;
-
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
-        synchronized (RegistrantApplicationContextAware.class) {
-            RegistrantApplicationContextAware.applicationContext = applicationContext;
-        }
-    }
 
     public static <T> T retrieveBean(Class<T> beanClass) {
         return retrieveBean(beanClass, null);
@@ -92,5 +84,12 @@ public class RegistrantApplicationContextAware implements ApplicationContextAwar
         }
 
         return optionalMessageRetriever;
+    }
+
+    @Override
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) {
+        synchronized (RegistrantApplicationContextAware.class) {
+            RegistrantApplicationContextAware.applicationContext = applicationContext;
+        }
     }
 }

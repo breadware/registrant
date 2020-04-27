@@ -36,6 +36,16 @@ public final class BeanNames {
 
     public static final String CREDENTIAL = "credential";
 
+    public static final String TEMPLATE_ENGINE = "templateEngine";
+
+    public static final String THYMELEAF_HTML_TEMPLATE_RESOLVER = "thymeleafHtmlTemplateResolver";
+
+    public static final String THYMELEAF_TEXT_TEMPLATE_RESOLVER = "thymeleafTextTemplateResolver";
+
+    public static final String MESSAGE_RESOLVER = "messageResolver";
+
+    public static final String ASSOCIATION_EMAIL_INTERNET_ADDRESS = "associationEmailInternetAddress";
+
     private BeanNames() {
         // Private constructor to avoid object instantiation.
     }

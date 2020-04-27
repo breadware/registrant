@@ -20,7 +20,8 @@ public class PubSubMessageToGmailHistoryEventMapper implements Mapper<PubsubMess
 
     @Override
     public GmailHistoryEvent map(PubsubMessage pubsubMessage) {
-        String messageContent = pubsubMessage.getData().toStringUtf8();
+        String messageContent = pubsubMessage.getData()
+                .toStringUtf8();
         try {
             return objectMapper.readValue(messageContent, GmailHistoryEvent.class);
         } catch (IOException exception) {

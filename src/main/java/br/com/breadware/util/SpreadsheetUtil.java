@@ -23,7 +23,7 @@ public class SpreadsheetUtil {
             throw new RegistrantRuntimeException(ErrorMessage.INVALID_SHEETS_RANGE, startIndex, endIndex);
         }
 
-         String alphabeticStartIndex = numericToAlphabeticIndex(startIndex);
+        String alphabeticStartIndex = numericToAlphabeticIndex(startIndex);
         String alphabeticEndIndex = numericToAlphabeticIndex(endIndex);
 
         return String.format(RANGE_FORMAT, sheetName, alphabeticStartIndex, alphabeticEndIndex);
@@ -32,14 +32,14 @@ public class SpreadsheetUtil {
 
     private String numericToAlphabeticIndex(int index) {
         StringBuilder stringBuilder = new StringBuilder();
-        int modulo = index%ENGLISH_ALPHABET_SIZE;
-        int quotient = (index-modulo)/ENGLISH_ALPHABET_SIZE;
+        int modulo = index % ENGLISH_ALPHABET_SIZE;
+        int quotient = (index - modulo) / ENGLISH_ALPHABET_SIZE;
 
         if (quotient > 0) {
-            stringBuilder.append(numericToAlphabeticIndex(quotient-1));
+            stringBuilder.append(numericToAlphabeticIndex(quotient - 1));
         }
 
-        char character = (char)((int)FIRST_LETTER + modulo);
+        char character = (char) ((int) FIRST_LETTER + modulo);
         stringBuilder.append(character);
 
         return stringBuilder.toString();

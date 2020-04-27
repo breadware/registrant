@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 public class AuthorizationRequester {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
-
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
 
     private final NetHttpTransport netHttpTransport;

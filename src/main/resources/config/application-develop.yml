@@ -7,3 +7,6 @@ registrant:
     cloud-platform:
       authorization:
         tokens-storage-path: "tokens/"
+  thymeleaf:
+    cache: false
+    template-prefix: "file:src/main/resources/thymeleaf/templates/"

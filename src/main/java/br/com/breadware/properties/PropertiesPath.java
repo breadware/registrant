@@ -18,6 +18,12 @@ public final class PropertiesPath {
 
     public static final String GOOGLE_SHEETS = GOOGLE + ".sheets";
 
+    public static final String THYMELEAF = REGISTRANT + ".thymeleaf";
+
+    public static final String THYMELEAF_TEMPLATE_RESOLVERS = THYMELEAF + ".template-resolvers";
+
+    public static final String RECEIVER_BANK_ACCOUNT = REGISTRANT + ".receiver-bank-account";
+
     private PropertiesPath() {
         // Private constructor to avoid object instantiation.
     }

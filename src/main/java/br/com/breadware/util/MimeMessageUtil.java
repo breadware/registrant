@@ -6,7 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.mail.BodyPart;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
@@ -43,5 +46,17 @@ public class MimeMessageUtil {
                 getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent(), stringBuilder);
             }
         }
+    }
+
+    public MimeMessage create(InternetAddress to, InternetAddress from, String subject, MimeMultipart body) throws MessagingException {
+
+        // TODO Is this correct?
+        MimeMessage mimeMessage = new MimeMessage((Session) null);
+
+        mimeMessage.setFrom(from);
+        mimeMessage.addRecipient(Message.RecipientType.TO, to);
+        mimeMessage.setSubject(subject);
+        mimeMessage.setContent(body);
+        return mimeMessage;
     }
 }

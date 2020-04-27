@@ -10,13 +10,13 @@ import java.util.Set;
 
 public abstract class AbstractMessageAnalyserLink implements MessageAnalyserLink {
 
-    private MessageAnalyserLink next;
-
     private static final Set<MessageAnalysisStatus> INTERRUPT_CHAIN_STATUSES;
 
     static {
         INTERRUPT_CHAIN_STATUSES = Collections.singleton(MessageAnalysisStatus.INVALID_MESSAGE);
     }
+
+    private MessageAnalyserLink next;
 
     @Override
     public MessageAnalysisResult analyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {

@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.mail.internet.InternetAddress;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.ZoneId;
 import java.util.Locale;
 
@@ -40,5 +42,11 @@ public class RegistrantConfiguration {
     @Bean(BeanNames.DATA_STORE_FACTORY)
     public DataStoreFactory createDataStoreFactory(DataStoreFactoryCreator dataStoreFactoryCreator, GcpAuthorizationProperties gcpAuthorizationProperties) throws IOException {
         return dataStoreFactoryCreator.create(gcpAuthorizationProperties.getTokensStoragePath());
+    }
+
+    @Bean(BeanNames.ASSOCIATION_EMAIL_INTERNET_ADDRESS)
+    public InternetAddress createAssociationEmailInternetAddress(GcpAuthorizationProperties gcpAuthorizationProperties, RegistrantProperties registrantProperties) throws UnsupportedEncodingException {
+        return new InternetAddress(gcpAuthorizationProperties
+                .getAuthorizedUser(), registrantProperties.getAssociationName());
     }
 }

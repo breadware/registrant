@@ -82,7 +82,8 @@ public class AssociateToObjectListTwoWayMapper implements TwoWayMapper<Associate
 
         for (AssociateFieldOrder associateFieldOrder : AssociateFieldOrder.values()) {
             String propertyName = associateFieldOrder.getFieldName();
-            String propertyValue = objects.get(AssociateFieldOrder.findByFieldName(propertyName).ordinal())
+            String propertyValue = objects.get(AssociateFieldOrder.findByFieldName(propertyName)
+                    .ordinal())
                     .toString();
             beanWrapper.setPropertyValue(propertyName, propertyValue);
         }
