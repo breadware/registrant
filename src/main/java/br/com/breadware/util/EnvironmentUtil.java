@@ -28,6 +28,6 @@ public class EnvironmentUtil {
   }
 
   public boolean isAppEngine() {
-      return isDefined(EnvironmentVariables.APPENGINE_ENVIRONMENT);
+      return isDefined(EnvironmentVariables.APP_ENGINE_ENVIRONMENT);
   }
 }

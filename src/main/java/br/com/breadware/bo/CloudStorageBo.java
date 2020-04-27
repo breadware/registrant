@@ -1,6 +1,6 @@
 package br.com.breadware.bo;
 
-import br.com.breadware.google.cloud.storage.CloudStorageDao;
+import br.com.breadware.dao.CloudStorageDao;
 import br.com.breadware.model.CloudStorageLocation;
 import br.com.breadware.model.mapper.StringToCloudStorageMapper;
 import com.google.cloud.storage.Blob;

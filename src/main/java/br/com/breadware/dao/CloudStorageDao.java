@@ -1,4 +1,4 @@
-package br.com.breadware.google.cloud.storage;
+package br.com.breadware.dao;
 
 import br.com.breadware.model.CloudStorageLocation;
 import com.google.cloud.storage.Blob;

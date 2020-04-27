@@ -1,6 +1,5 @@
-package br.com.breadware.google.cloud.httprequestinitializer;
+package br.com.breadware.google.cloud.authorization;
 
-import br.com.breadware.configuration.BeanNames;
 import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.AuthorizationRequestRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
@@ -22,8 +21,8 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Component(BeanNames.HTTP_REQUEST_INITIALIZER_CREATOR)
-public class AuthorizationRequester implements HttpRequestInitializerCreator {
+@Component
+public class AuthorizationRequester {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
 
@@ -75,7 +74,6 @@ public class AuthorizationRequester implements HttpRequestInitializerCreator {
 
             return new AuthorizationCodeInstalledApp(googleAuthorizationCodeFlow, localServerReceiver).authorize(gcpAuthorizationProperties.getAuthorizedUser());
         } catch (IOException exception) {
-            System.out.println(exception.getMessage());
             throw logAndCreateAuthorizationRequestRuntimeException(ErrorMessage.ERROR_REQUESTING_AUTHORIZATION, exception);
         }
     }

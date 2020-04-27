@@ -1,4 +1,4 @@
-package br.com.breadware.google.cloud.httprequestinitializer;
+package br.com.breadware.google.cloud.authorization;
 
 import br.com.breadware.bo.CloudStorageBo;
 import br.com.breadware.exception.RegistrantRuntimeException;

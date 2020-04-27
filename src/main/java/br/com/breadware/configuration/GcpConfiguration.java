@@ -1,8 +1,9 @@
 package br.com.breadware.configuration;
 
-import br.com.breadware.google.cloud.httprequestinitializer.HttpRequestInitializerCreator;
+import br.com.breadware.google.cloud.authorization.AuthorizationRequester;
 import br.com.breadware.properties.google.GoogleCloudPlatformProperties;
 import br.com.breadware.util.EnvironmentUtil;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -16,8 +17,6 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,9 +28,10 @@ import java.util.List;
 public class GcpConfiguration {
 
     public static final String USER_ID = "me";
+
     public static final List<String> SCOPES = List
             .of(GmailScopes.GMAIL_READONLY, SheetsScopes.SPREADSHEETS);
-    private static final Logger LOGGER = LoggerFactory.getLogger(GcpConfiguration.class);
+
     private static final String APPLICATION_NAME = "registrant";
 
     @Bean(BeanNames.NET_HTTP_TRANSPORT)
@@ -44,13 +44,9 @@ public class GcpConfiguration {
         return JacksonFactory.getDefaultInstance();
     }
 
-    @Bean(BeanNames.HTTP_REQUEST_INITIALIZER)
-    public HttpRequestInitializer createHttpRequestInitializer(
-            HttpRequestInitializerCreator httpRequestInitializerCreator) {
-        LOGGER.info("Using \"{}\" class as HTTP request initializer creator.",
-                httpRequestInitializerCreator.getClass()
-                        .getName());
-        return httpRequestInitializerCreator.create();
+    @Bean(BeanNames.CREDENTIAL)
+    public Credential createCredential(AuthorizationRequester authorizationRequester) {
+        return authorizationRequester.create();
     }
 
     @Bean(BeanNames.GMAIL)

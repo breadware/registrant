@@ -6,4 +6,4 @@ registrant:
   google:
     cloud-platform:
       authorization:
-        tokens-storage-path: "tokens"
+        tokens-storage-path: "tokens/"
