@@ -14,10 +14,6 @@ public enum AssociateFieldOrder {
         this.fieldName = fieldName;
     }
 
-    public String getFieldName() {
-        return fieldName;
-    }
-
     public static AssociateFieldOrder findByFieldName(String fieldName) {
         for (AssociateFieldOrder associateFieldOrder : AssociateFieldOrder.values()) {
             if (associateFieldOrder.fieldName.equals(fieldName)) {
@@ -25,5 +21,9 @@ public enum AssociateFieldOrder {
             }
         }
         throw new IllegalArgumentException("Unknown field \"" + fieldName + "\".");
+    }
+
+    public String getFieldName() {
+        return fieldName;
     }
 }

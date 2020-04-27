@@ -1,5 +1,6 @@
 package br.com.breadware.configuration;
 
+import br.com.breadware.model.message.EmailMessage;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.MessagesProperties;
@@ -28,7 +29,7 @@ public class MessageSourceConfiguration {
     }
 
     private String[] retrieveMessageFilePaths(MessagesProperties messagesProperties, PathUtil pathUtil) {
-        List<String> messageFilePaths = new ArrayList<>(Arrays.asList(ErrorMessage.FILE_PATH, LoggerMessage.FILE_PATH));
+        List<String> messageFilePaths = new ArrayList<>(Arrays.asList(ErrorMessage.FILE_PATH, LoggerMessage.FILE_PATH, EmailMessage.FILE_PATH));
 
         String messageFileBaseDirectoryPath = pathUtil.appendSeparatorIfNecessary(messagesProperties.getFileBaseDirectoryPath());
 

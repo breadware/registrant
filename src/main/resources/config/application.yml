@@ -7,6 +7,7 @@ spring:
 registrant:
   locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
+  association-name: "Breadware"
   messages:
     file-base-directory-path: "classpath:/i18n/messages"
   email:
@@ -24,3 +25,23 @@ registrant:
     sheets:
       spreadsheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
       sheet-name: "Dados"
+  thymeleaf:
+    cache: true
+    template-prefix: "classpath:/thymeleaf/templates/"
+    template-resolvers:
+      html:
+        mode: "HTML"
+        prefix: "html/"
+        resolvable-patterns:
+          - "*.html"
+      text:
+        mode: "TEXT"
+        prefix: "text/"
+        resolvable-patterns:
+          - "*.txt"
+  receiver-bank-account:
+    bank-name: Banco do Brasil
+    bank-agency: Agência 001
+    account-number: 11.222-3
+    account-owner: Marcelo de Moraes Leite
+    cpf: 123.456.789-10

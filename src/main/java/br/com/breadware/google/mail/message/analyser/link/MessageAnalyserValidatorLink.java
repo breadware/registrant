@@ -6,7 +6,7 @@ import br.com.breadware.exception.MimeMessageHandlingException;
 import br.com.breadware.google.mail.message.analyser.link.template.AbstractMessageAnalyserLink;
 import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisContext;
 import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
-import br.com.breadware.model.mapper.MessageToMimeMessageMapper;
+import br.com.breadware.model.mapper.MessageToMimeMessageTwoWayMapper;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.EmailProperties;
@@ -30,7 +30,7 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
 
     public static final int MAX_MESSAGE_SIZE = 64;
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageAnalyserValidatorLink.class);
-    private final MessageToMimeMessageMapper messageToMimeMessageMapper;
+    private final MessageToMimeMessageTwoWayMapper messageToMimeMessageTwoWayMapper;
 
     private final MimeMessageUtil mimeMessageUtil;
 
@@ -39,8 +39,8 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
     private final EmailProperties emailProperties;
 
     @Inject
-    public MessageAnalyserValidatorLink(MessageToMimeMessageMapper messageToMimeMessageMapper, MimeMessageUtil mimeMessageUtil, LoggerUtil loggerUtil, EmailProperties emailProperties) {
-        this.messageToMimeMessageMapper = messageToMimeMessageMapper;
+    public MessageAnalyserValidatorLink(MessageToMimeMessageTwoWayMapper messageToMimeMessageTwoWayMapper, MimeMessageUtil mimeMessageUtil, LoggerUtil loggerUtil, EmailProperties emailProperties) {
+        this.messageToMimeMessageTwoWayMapper = messageToMimeMessageTwoWayMapper;
         this.mimeMessageUtil = mimeMessageUtil;
         this.loggerUtil = loggerUtil;
         this.emailProperties = emailProperties;
@@ -49,7 +49,7 @@ public class MessageAnalyserValidatorLink extends AbstractMessageAnalyserLink {
     @Override
     public MessageAnalysisContext doAnalyse(MessageAnalysisContext messageAnalysisContext) throws MessageAnalysisException {
         try {
-            MimeMessage mimeMessage = messageToMimeMessageMapper.map(messageAnalysisContext.getMessage());
+            MimeMessage mimeMessage = messageToMimeMessageTwoWayMapper.mapTo(messageAnalysisContext.getMessage());
             messageAnalysisContext.setMimeMessage(mimeMessage);
 
             if (!checkSender(mimeMessage)) {

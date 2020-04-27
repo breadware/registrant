@@ -33,7 +33,7 @@ public class AuthorizationRequester {
 
     public static final String CLIENT_ID_FILE_LOCATION_ENVIRONMENT_VARIABLE = "GOOGLE_CLIENT_ID";
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationRequester.class);
-    private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_READONLY, SheetsScopes.SPREADSHEETS);
+    private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_READONLY, GmailScopes.GMAIL_COMPOSE, SheetsScopes.SPREADSHEETS);
     private static final String AUTHORIZATION_CODE_FLOW_ACCESS_TYPE = "offline";
 
     private final NetHttpTransport netHttpTransport;

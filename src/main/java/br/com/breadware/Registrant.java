@@ -5,11 +5,12 @@ import br.com.breadware.google.mail.watch.WatchRequester;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 import javax.inject.Inject;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {ThymeleafAutoConfiguration.class})
 @ConfigurationPropertiesScan("br.com.breadware.properties")
 public class Registrant implements CommandLineRunner {
 

@@ -9,13 +9,17 @@ import br.com.breadware.model.message.ErrorMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import org.apache.commons.text.WordUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.beans.PropertyDescriptor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -110,5 +114,10 @@ public class AssociateBo {
         return associates.stream()
                 .sorted(Comparator.comparing(Associate::getCpf))
                 .collect(Collectors.toList());
+    }
+
+    public String elaborateFullName(Associate associate) {
+        String fulName = associate.getFirstName() + " " + associate.getLastName();
+        return WordUtils.capitalize(fulName.toLowerCase());
     }
 }

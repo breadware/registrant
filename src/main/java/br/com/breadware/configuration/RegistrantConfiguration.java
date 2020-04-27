@@ -1,12 +1,15 @@
 package br.com.breadware.configuration;
 
 import br.com.breadware.properties.RegistrantProperties;
+import br.com.breadware.properties.google.GcpAuthorizationProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.mail.internet.InternetAddress;
+import java.io.UnsupportedEncodingException;
 import java.time.ZoneId;
 import java.util.Locale;
 
@@ -31,5 +34,11 @@ public class RegistrantConfiguration {
     @Bean(BeanNames.OBJECT_MAPPER)
     public ObjectMapper createObjectMapper() {
         return new ObjectMapper();
+    }
+
+    @Bean(BeanNames.ASSOCIATION_EMAIL_INTERNET_ADDRESS)
+    public InternetAddress createAssociationEmailInternetAddress(GcpAuthorizationProperties gcpAuthorizationProperties, RegistrantProperties registrantProperties) throws UnsupportedEncodingException {
+        return new InternetAddress(gcpAuthorizationProperties
+                .getAuthorizedUser(), registrantProperties.getAssociationName());
     }
 }

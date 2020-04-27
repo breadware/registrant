@@ -4,7 +4,10 @@ import br.com.breadware.bo.AssociateBo;
 import br.com.breadware.exception.RegistrantException;
 import br.com.breadware.google.mail.message.analyser.MessageAnalyser;
 import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisResult;
+import br.com.breadware.google.mail.message.analyser.model.MessageAnalysisStatus;
+import br.com.breadware.google.mail.message.composer.GmailMessageComposer;
 import br.com.breadware.model.Associate;
+import br.com.breadware.model.Email;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.util.LoggerUtil;
@@ -26,15 +29,20 @@ public class GmailMessageHandler {
 
     private final AssociateBo associateBo;
 
+    private final GmailMessageComposer gmailMessageComposer;
+
+    private final GmailMessageSender gmailMessageSender;
+
     @Inject
-    public GmailMessageHandler(LoggerUtil loggerUtil, MessageAnalyser messageAnalyser, AssociateBo associateBo) {
+    public GmailMessageHandler(LoggerUtil loggerUtil, MessageAnalyser messageAnalyser, AssociateBo associateBo, GmailMessageComposer gmailMessageComposer, GmailMessageSender gmailMessageSender) {
         this.loggerUtil = loggerUtil;
         this.messageAnalyser = messageAnalyser;
         this.associateBo = associateBo;
+        this.gmailMessageComposer = gmailMessageComposer;
+        this.gmailMessageSender = gmailMessageSender;
     }
 
     public void handle(Message message) throws RegistrantException {
-
 
         MessageAnalysisResult messageAnalysisResult = messageAnalyser.analyse(message);
 
@@ -45,10 +53,21 @@ public class GmailMessageHandler {
             case DUPLICATED_ASSOCIATE:
             case NEW_ASSOCIATE:
                 Associate associate = messageAnalysisResult.getAssociate();
+                Email email = retrieveEmail(messageAnalysisResult.getStatus());
                 associateBo.put(associate);
+                Message answerEmail = gmailMessageComposer.compose(email, associate);
+                gmailMessageSender.send(answerEmail);
                 break;
             case UNDEFINED:
                 throw new RegistrantException(ErrorMessage.INVALID_MESSAGE_ANALYSIS_STATUS_RESULT, messageAnalysisResult.getStatus());
+        }
+    }
+
+    private Email retrieveEmail(MessageAnalysisStatus messageAnalysisStatus) {
+        if (MessageAnalysisStatus.DUPLICATED_ASSOCIATE.equals(messageAnalysisStatus)) {
+            return Email.EXISTING_ASSOCIATE;
+        } else {
+            return Email.NEW_ASSOCIATE;
         }
     }
 }
