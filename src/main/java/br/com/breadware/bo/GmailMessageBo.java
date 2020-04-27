@@ -4,10 +4,8 @@ import br.com.breadware.dao.HandledGmailMessageDao;
 import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.MessageHandlingException;
 import br.com.breadware.exception.RegistrantException;
-import br.com.breadware.google.mail.message.composer.GmailMessageComposer;
 import br.com.breadware.google.mail.message.GmailMessageHandler;
 import br.com.breadware.google.mail.message.GmailMessageRetriever;
-import br.com.breadware.google.mail.message.GmailMessageSender;
 import br.com.breadware.model.HandledGmailMessage;
 import br.com.breadware.model.mapper.ObjectToDataMapMapper;
 import br.com.breadware.model.message.ErrorMessage;
@@ -40,19 +38,13 @@ public class GmailMessageBo {
 
     private final LoggerUtil loggerUtil;
 
-    private final GmailMessageComposer gmailMessageComposer;
-
-    private final GmailMessageSender gmailMessageSender;
-
     @Inject
-    public GmailMessageBo(HandledGmailMessageDao handledGmailMessageDao, ObjectToDataMapMapper objectToDataMapMapper, GmailMessageHandler gmailMessageHandler, GmailMessageRetriever gmailMessageRetriever, LoggerUtil loggerUtil, GmailMessageComposer gmailMessageComposer, GmailMessageSender gmailMessageSender) {
+    public GmailMessageBo(HandledGmailMessageDao handledGmailMessageDao, ObjectToDataMapMapper objectToDataMapMapper, GmailMessageHandler gmailMessageHandler, GmailMessageRetriever gmailMessageRetriever, LoggerUtil loggerUtil) {
         this.handledGmailMessageDao = handledGmailMessageDao;
         this.objectToDataMapMapper = objectToDataMapMapper;
         this.gmailMessageHandler = gmailMessageHandler;
         this.gmailMessageRetriever = gmailMessageRetriever;
         this.loggerUtil = loggerUtil;
-        this.gmailMessageComposer = gmailMessageComposer;
-        this.gmailMessageSender = gmailMessageSender;
     }
 
     public void addHandledGmailMessage(HandledGmailMessage handledGmailMessage) throws DataAccessException {

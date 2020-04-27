@@ -2,10 +2,12 @@ package br.com.breadware.google.mail.message.composer;
 
 import br.com.breadware.bo.AssociateBo;
 import br.com.breadware.configuration.BeanNames;
+import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.Associate;
 import br.com.breadware.model.Email;
 import br.com.breadware.model.mapper.MessageToMimeMessageTwoWayMapper;
 import br.com.breadware.model.message.EmailMessage;
+import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.properties.RegistrantProperties;
 import br.com.breadware.util.MessageRetriever;
 import br.com.breadware.util.MimeMessageUtil;
@@ -59,10 +61,8 @@ public class GmailMessageComposer {
             MimeMessage mimeMessage = mimeMessageUtil.create(toInternetAddress, associationEmailInternetAddress, subject, messageBody);
             return messageToMimeMessageTwoWayMapper.mapFrom(mimeMessage);
         } catch (UnsupportedEncodingException | MessagingException exception) {
-            // TODO Correctly handle exception.
-            exception.printStackTrace();
+            throw new RegistrantRuntimeException(exception, ErrorMessage.ERROR_COMPOSING_GMAIL_MESSAGE);
         }
-        return null;
     }
 
     private String elaborateSubject(EmailMessage subjectEmailMessage, String associateFullName) {

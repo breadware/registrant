@@ -9,7 +9,6 @@ import br.com.breadware.model.message.ErrorMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 import org.apache.commons.text.WordUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -17,7 +16,10 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.beans.PropertyDescriptor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -115,10 +117,7 @@ public class AssociateBo {
     }
 
     public String elaborateFullName(Associate associate) {
-        StringBuilder fullNameStringBuilder = new StringBuilder();
-        fullNameStringBuilder.append(associate.getFirstName());
-        fullNameStringBuilder.append(StringUtil.SPACE);
-        fullNameStringBuilder.append(associate.getLastName());
-        return WordUtils.capitalize(fullNameStringBuilder.toString().toLowerCase());
+        String fulName = associate.getFirstName() + " " + associate.getLastName();
+        return WordUtils.capitalize(fulName.toLowerCase());
     }
 }
