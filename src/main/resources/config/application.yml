@@ -21,7 +21,7 @@ registrant:
       authorization:
         local-server-receiver-port: 8888
         authorized-user: "tw.breadware@gmail.com"
-        tokens-storage-path: "gs://register-272219.appspot.com/authentication/tokens"
+        tokens-storage-path: "gs://breadware-registrant/authentication/tokens"
     sheets:
       spreadsheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
       sheet-name: "Dados"
