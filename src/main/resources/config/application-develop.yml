@@ -3,6 +3,10 @@ registrant:
   zone-id: "America/Sao_Paulo"
   messages:
     file-base-directory-path: "file:src/main/resources/i18n/messages"
+  google:
+    cloud-platform:
+      authorization:
+        tokens-storage-path: "tokens/"
   thymeleaf:
     cache: false
     template-prefix: "file:src/main/resources/thymeleaf/templates/"

@@ -1,12 +1,10 @@
 package br.com.breadware.google.cloud.pubsub;
 
-import br.com.breadware.configuration.GcpConfiguration;
 import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.google.GcpPubSubProperties;
 import br.com.breadware.properties.google.GoogleCloudPlatformProperties;
-import br.com.breadware.util.EnvironmentVariableUtil;
 import br.com.breadware.util.LoggerUtil;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -31,20 +29,17 @@ public class GmailInboxHistoryEventSubscriberCreator {
 
     private final LoggerUtil loggerUtil;
 
-    private final EnvironmentVariableUtil environmentVariableUtil;
-
     @Inject
-    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil, EnvironmentVariableUtil environmentVariableUtil) {
+    public GmailInboxHistoryEventSubscriberCreator(GoogleCloudPlatformProperties googleCloudPlatformProperties, GcpPubSubProperties gcpPubSubProperties, GmailInboxHistoryEventMessageReceiver gmailInboxHistoryEventMessageReceiver, LoggerUtil loggerUtil) {
         this.googleCloudPlatformProperties = googleCloudPlatformProperties;
         this.gcpPubSubProperties = gcpPubSubProperties;
         this.gmailInboxHistoryEventMessageReceiver = gmailInboxHistoryEventMessageReceiver;
         this.loggerUtil = loggerUtil;
-        this.environmentVariableUtil = environmentVariableUtil;
     }
 
     public void createAndStart() {
 
-        environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
+        // environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
 
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getSubscriptionId());
 

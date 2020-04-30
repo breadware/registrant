@@ -38,6 +38,22 @@
                 <spring.active-profile>prod</spring.active-profile>
             </properties>
         </profile>
+        <profile>
+            <id>appengine</id>
+            <properties>
+                <app.deploy.projectId>register-272219</app.deploy.projectId>
+                <app.deploy.version>registrant</app.deploy.version>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>appengine-maven-plugin</artifactId>
+                        <version>2.2.0</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencyManagement>
@@ -131,6 +147,14 @@
             <artifactId>google-cloud-firestore</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-appengine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
         </dependency>
@@ -138,7 +162,6 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

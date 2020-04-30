@@ -8,8 +8,6 @@ public final class BeanNames {
 
     public static final String JSON_FACTORY = "jsonFactory";
 
-    public static final String CREDENTIAL = "credential";
-
     public static final String MESSAGE_SOURCE = "messageSource";
 
     public static final String MESSAGE_RETRIEVER = "messageRetriever";
@@ -31,6 +29,12 @@ public final class BeanNames {
     public static final String ASSOCIATE_EXTRACTOR = "associateExtractor";
 
     public static final String SHEETS = "sheets";
+
+    public static final String STORAGE = "storage";
+
+    public static final String DATA_STORE_FACTORY = "cloudStorageDataFactory";
+
+    public static final String CREDENTIAL = "credential";
 
     public static final String TEMPLATE_ENGINE = "templateEngine";
 
