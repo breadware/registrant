@@ -10,3 +10,5 @@ registrant:
   thymeleaf:
     cache: false
     template-prefix: "file:src/main/resources/thymeleaf/templates/"
+  email:
+    sender: "${REGISTRANT_EMAIL_SENDER:marcelo.leite@thoughtworks.com}"
