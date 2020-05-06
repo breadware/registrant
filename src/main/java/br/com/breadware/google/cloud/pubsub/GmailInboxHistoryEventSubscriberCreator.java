@@ -39,8 +39,6 @@ public class GmailInboxHistoryEventSubscriberCreator {
 
     public void createAndStart() {
 
-        // environmentVariableUtil.throwExceptionIfDoesNotExist(GcpConfiguration.CREDENTIALS_ENVIRONMENT_VARIABLE_NAME);
-
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(googleCloudPlatformProperties.getProjectId(), gcpPubSubProperties.getSubscriptionId());
 
         try {

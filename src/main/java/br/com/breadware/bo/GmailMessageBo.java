@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 @Component
 public class GmailMessageBo {
 
+    public static final String LABEL_ID_SENT = "SENT";
     private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageBo.class);
-
     private final HandledGmailMessageDao handledGmailMessageDao;
 
     private final ObjectToDataMapMapper objectToDataMapMapper;
@@ -37,6 +37,7 @@ public class GmailMessageBo {
     private final GmailMessageRetriever gmailMessageRetriever;
 
     private final LoggerUtil loggerUtil;
+
 
     @Inject
     public GmailMessageBo(HandledGmailMessageDao handledGmailMessageDao, ObjectToDataMapMapper objectToDataMapMapper, GmailMessageHandler gmailMessageHandler, GmailMessageRetriever gmailMessageRetriever, LoggerUtil loggerUtil) {
@@ -58,6 +59,11 @@ public class GmailMessageBo {
         return messages.stream()
                 .filter(message -> handledGmailMessageIds.contains(message.getId()))
                 .collect(Collectors.toSet());
+    }
+
+    public void removeSentMessages(Set<Message> messages) {
+        messages.removeIf(message -> message.getLabelIds()
+                .contains(LABEL_ID_SENT));
     }
 
     private Set<String> getHandledGmailMessageIds() throws DataAccessException {
