@@ -51,8 +51,9 @@ public class GcpConfiguration {
 
     @Bean(BeanNames.GMAIL)
     public Gmail createGmail(NetHttpTransport netHttpTransport, JsonFactory jsonFactory,
-                             HttpRequestInitializer httpRequestInitializer) {
+                             HttpRequestInitializer httpRequestInitializer, EnvironmentUtil environmentUtil) {
 
+        environmentUtil.checkGoogleApplicationCredentialsEnvironmentVariable();
         return new Gmail.Builder(netHttpTransport, jsonFactory, httpRequestInitializer)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
@@ -61,6 +62,7 @@ public class GcpConfiguration {
     @Bean(BeanNames.FIRESTORE)
     public Firestore createFirestore(GoogleCloudPlatformProperties googleCloudPlatformProperties,
                                      EnvironmentUtil environmentUtil) {
+        environmentUtil.checkGoogleApplicationCredentialsEnvironmentVariable();
         return FirestoreOptions.getDefaultInstance()
                 .toBuilder()
                 .setProjectId(googleCloudPlatformProperties.getProjectId())
@@ -69,14 +71,16 @@ public class GcpConfiguration {
     }
 
     @Bean(BeanNames.STORAGE)
-    public Storage createStorage() {
+    public Storage createStorage(EnvironmentUtil environmentUtil) {
+        environmentUtil.checkGoogleApplicationCredentialsEnvironmentVariable();
         return StorageOptions.getDefaultInstance()
                 .getService();
     }
 
     @Bean(BeanNames.SHEETS)
     public Sheets createSheets(NetHttpTransport netHttpTransport, JsonFactory jsonFactory,
-                               HttpRequestInitializer httpRequestInitializer) {
+                               HttpRequestInitializer httpRequestInitializer, EnvironmentUtil environmentUtil) {
+        environmentUtil.checkGoogleApplicationCredentialsEnvironmentVariable();
         return new Sheets.Builder(netHttpTransport, jsonFactory, httpRequestInitializer)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
