@@ -12,16 +12,25 @@ import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.util.LoggerUtil;
 import com.google.api.services.gmail.model.Message;
+import com.google.api.services.gmail.model.ModifyMessageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Component
 public class GmailMessageHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageHandler.class);
+    private static final ModifyMessageRequest MODIFY_MESSAGE_REQUEST_REMOVE_UNREAD_LABEL;
+
+    static {
+        MODIFY_MESSAGE_REQUEST_REMOVE_UNREAD_LABEL = new ModifyMessageRequest();
+        MODIFY_MESSAGE_REQUEST_REMOVE_UNREAD_LABEL.set("removeLabelIds", List.of("UNREAD"));
+    }
+
 
     private final LoggerUtil loggerUtil;
 
@@ -33,13 +42,16 @@ public class GmailMessageHandler {
 
     private final GmailMessageSender gmailMessageSender;
 
+    private final GmailMessageModifier gmailMessageModifier;
+
     @Inject
-    public GmailMessageHandler(LoggerUtil loggerUtil, MessageAnalyser messageAnalyser, AssociateBo associateBo, GmailMessageComposer gmailMessageComposer, GmailMessageSender gmailMessageSender) {
+    public GmailMessageHandler(LoggerUtil loggerUtil, MessageAnalyser messageAnalyser, AssociateBo associateBo, GmailMessageComposer gmailMessageComposer, GmailMessageSender gmailMessageSender, GmailMessageModifier gmailMessageModifier) {
         this.loggerUtil = loggerUtil;
         this.messageAnalyser = messageAnalyser;
         this.associateBo = associateBo;
         this.gmailMessageComposer = gmailMessageComposer;
         this.gmailMessageSender = gmailMessageSender;
+        this.gmailMessageModifier = gmailMessageModifier;
     }
 
     public void handle(Message message) throws RegistrantException {
@@ -57,6 +69,7 @@ public class GmailMessageHandler {
                 associateBo.put(associate);
                 Message answerEmail = gmailMessageComposer.compose(email, associate);
                 gmailMessageSender.send(answerEmail);
+                gmailMessageModifier.modify(message.getId(), MODIFY_MESSAGE_REQUEST_REMOVE_UNREAD_LABEL);
                 break;
             case UNDEFINED:
                 throw new RegistrantException(ErrorMessage.INVALID_MESSAGE_ANALYSIS_STATUS_RESULT, messageAnalysisResult.getStatus());

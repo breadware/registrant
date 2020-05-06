@@ -53,6 +53,7 @@ public class GmailInboxHistoryEventMessageReceiver implements MessageReceiver {
             Set<Message> messages = gmailHistoryBo.retrieveMessages(histories);
 
             removeAlreadyHandledMessages(messages);
+            gmailMessageBo.removeSentMessages(messages);
 
             messages.forEach(gmailMessageBo::handle);
 

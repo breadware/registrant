@@ -30,7 +30,7 @@ public class GcpConfiguration {
     public static final String USER_ID = "me";
 
     public static final List<String> SCOPES = List
-            .of(GmailScopes.GMAIL_READONLY, GmailScopes.GMAIL_COMPOSE, SheetsScopes.SPREADSHEETS);
+            .of(GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_COMPOSE, SheetsScopes.SPREADSHEETS);
 
     private static final String APPLICATION_NAME = "registrant";
 

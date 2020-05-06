@@ -3,10 +3,12 @@ package br.com.breadware.bo;
 import br.com.breadware.dao.LastHistoryEventDao;
 import br.com.breadware.exception.DataAccessException;
 import br.com.breadware.exception.GmailHistoryRetrievalException;
+import br.com.breadware.exception.RegistrantRuntimeException;
 import br.com.breadware.google.mail.GmailHistoryRetriever;
 import br.com.breadware.model.GmailHistoryEvent;
 import br.com.breadware.model.mapper.ObjectToDataMapMapper;
 import br.com.breadware.model.mapper.PubSubMessageToGmailHistoryEventMapper;
+import br.com.breadware.model.message.ErrorMessage;
 import br.com.breadware.model.message.LoggerMessage;
 import br.com.breadware.properties.google.GcpAuthorizationProperties;
 import br.com.breadware.util.LoggerUtil;
@@ -56,20 +58,30 @@ public class GmailHistoryBo {
         return objectToDataMapMapper.mapFrom(dataMap, GmailHistoryEvent.class);
     }
 
-    public void setLastHandledEvent(GmailHistoryEvent gmailHistoryEvent) throws DataAccessException {
+    public GmailHistoryEvent setLastHandledEvent(GmailHistoryEvent gmailHistoryEvent) throws DataAccessException {
         Map<String, Object> dataMap = objectToDataMapMapper.mapTo(gmailHistoryEvent);
         lastHistoryEventDao.set(gcpAuthorizationProperties.getAuthorizedUser(), dataMap);
+        return gmailHistoryEvent;
     }
 
     public GmailHistoryEvent getLastHandledEvent(GmailHistoryEvent gmailHistoryEvent) throws DataAccessException {
 
         GmailHistoryEvent lastHistoryEvent = getLastHandledEvent();
 
-        if (!Objects.isNull(gmailHistoryEvent) && gmailHistoryEvent.getId()
-                .compareTo(lastHistoryEvent.getId()) < 0) {
-            loggerUtil.warn(LOGGER, LoggerMessage.EVENT_ID_RECEIVED_IS_PREVIOUS_TO_THE_LAST_ID, gmailHistoryEvent.getId(), lastHistoryEvent.getId());
-            setLastHandledEvent(gmailHistoryEvent);
-            lastHistoryEvent = gmailHistoryEvent;
+        if (Objects.isNull(gmailHistoryEvent) && Objects.isNull(lastHistoryEvent)) {
+            throw new RegistrantRuntimeException(ErrorMessage.UNDEFINED_LAST_HISTORY_EVENT_ID);
+        }
+
+        if (!Objects.isNull(gmailHistoryEvent)) {
+            if (!Objects.isNull(lastHistoryEvent)) {
+                if (gmailHistoryEvent.getId()
+                        .compareTo(lastHistoryEvent.getId()) < 0) {
+                    loggerUtil.warn(LOGGER, LoggerMessage.EVENT_ID_RECEIVED_IS_PREVIOUS_TO_THE_LAST_ID, gmailHistoryEvent.getId(), lastHistoryEvent.getId());
+                    lastHistoryEvent = setLastHandledEvent(gmailHistoryEvent);
+                }
+            } else {
+                lastHistoryEvent = setLastHandledEvent(gmailHistoryEvent);
+            }
         }
 
         return lastHistoryEvent;
