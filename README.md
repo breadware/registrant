@@ -47,20 +47,31 @@ Com isto será possível reduzir a quantidade de etapas manuais necessárias par
 
 Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro do Trello da Praia de Porto Alegre](http://google.com).
 
-## 2. Tecnologias utilizadas
+## 2. Tecnologias
 
+### 2.1. Tecnologias necessárias no ambiente de execução
 - Java 11 ou superior
 - Apache Maven 3.6.3
 
 **Observações:**
 - O sistema foi testado utilizando Oracle JVM versão 13.0.2 2020-01-14.
 
+### 2.2. Tecnologias utilizadas como solução no programa
+- Spring Boot 2.2.5
+- Google Cloud Platform
+    - Pub/Sub
+    - Firestore
+    - App Engine
+    - Storage
+    - IAM & Admin
+    - GMail API
+
 ## 3. Como instalar o ambiente de desenvolvimento
 
 Algumas instruções abaixo referem-se a comandos a serem realizados no terminal por ser um ponto comum entre diversos sistemas operacionais. Fique a vontade em utilizar outro programa, mas esteja ciente de que resultados obtidos devem ser os mesmos. 
 
 ### 3.1. Instalar os softwares necessários
-Antes de iniciar a instalação, certifique-se de que você possui instalado os programas indicados no item [tecnologias utilizadas][2].
+Antes de iniciar a instalação, certifique-se de que você possui instalado os programas indicados no item [tecnologias necessárias no ambiente de execução][2].
 
 ### 3.2. Clonar o repositório Git
 
@@ -73,7 +84,9 @@ Antes de iniciar a instalação, certifique-se de que você possui instalado os 
 
 Para que o sistema possa trabalhar com os dados do usuário, o Google Cloud Platform (GCP) exige que o sistema solicite em tempo de execução uma autorização ao cliente. Para realizar esta solicitação, é necessário utilizar uma credenciação OAuth 2.0 para que o GCP reconheça o sistema solicitante.
 
-**Observação**: Caso você seja apenas o contribuinte, solicite estas credenciais ao atual líder do projeto.
+**Observações**: 
+ - Caso você seja apenas o contribuinte, solicite estas credenciais ao atual líder do projeto.
+ - O sistema também permite a busca do arquivo de credenciais no Google Cloud Storage. Fale com o atual líder de projeto para verificar como isto pode ser feito.
 
 3.3.1. Acesse o console do [Google Cloud Platform](https://console.cloud.google.com) utilizando as credenciais da conta Google do projeto.
 
@@ -223,18 +236,24 @@ Clique em "Continue" para continuar a criação da credencial.
 No campo `Main class` informe `br.com.breadware.Registrant`.
 
 <p align="center">
-<img width="600" alt="Tela &quot;Run/Debug Configurations&quot; com um exemplo de preenchimento dos campos &quot;Name&quot; e &quot;Main class&quot;." src="https://user-images.githubusercontent.com/13152452/78395221-75951b00-75c3-11ea-8b83-8a87e83479c3.png">
+<img width="600" alt="Tela &quot;Run/Debug Configuration&quot; com um exemplo de preenchimento dos campos &quot;Name&quot; e &quot;Main Class&quot;." src="https://user-images.githubusercontent.com/13152452/78395223-76c64800-75c3-11ea-8c2a-21c561a7a9bc.png">
 </p>
 
 3.6.4. No campo `Environment variables`, crie as variáveis de ambientes necessárias conforme indicado no [item 3.7][3.7]. Utilize o botão `Browse` no final do campo para facilitar a visualização e preenchimento.
 
 <p align="center">
-<img width="600" alt="Tela &quot;Environment Variables&quot; com um exemplo de preenchimento das variáveis de ambiente." src="https://user-images.githubusercontent.com/13152452/78395223-76c64800-75c3-11ea-8c2a-21c561a7a9bc.png">
+<img width="600" alt="Tela &quot;Run/Debug Configurations&quot; com o botão de inclusão de variáveis de ambiente selecionado." src="https://user-images.githubusercontent.com/13152452/81333950-a6151c80-907b-11ea-8c61-99f9a6fb8c8d.png">
 </p>
 
-Clique em `Ok` para salvar a nova configuração.
+3.6.5. Na tela `Environment variables`, clique no botão `+` para criar uma nova variável de ambiente para a execução. Crie as variáveis de ambientes necessárias conforme indicado no [item 3.7][3.7]. Ao final, clique em `Ok` para concluir a edição das variáveis de ambiente.
 
-3.6.5. Na tela principal do IntelliJ, abra o menu de seleção de configuração de execução e selecione a nova configuração criada.
+<p align="center">
+<img width="600" alt="Tela &quot;Environment Variables&quot; com o botão de criação de variáveis de ambiente selecionado." src="https://user-images.githubusercontent.com/13152452/81334178-0906b380-907c-11ea-9b0e-e092407b6d11.png">
+</p>
+
+Na tela de `Run/Debug Configurations` Clique em `Ok` para salvar a nova configuração.
+
+3.6.6. Na tela principal do IntelliJ, abra o menu de seleção de configuração de execução e selecione a nova configuração criada.
 
 <p align="center">
 <img width="600" alt="Localização do menu de seleção de configuração de execução na tela principal do IntelliJ." src="https://user-images.githubusercontent.com/13152452/78723491-e446e100-7901-11ea-991f-22ba373953be.png">
@@ -248,17 +267,32 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 
 - GOOGLE_APPLICATION_CREDENTIALS
 - GOOGLE_CLIENT_ID
+- REGISTRANT_EMAIL_SENDER
 
-3.7.1. A propriedade `GOOGLE_APPLICATION_CREDENTIALS` é utilizada pelas bibliotecas de API da Google para localizar o arquivo que contém as credenciais de conta de serviços criadas no [item 3.4][3.4].
+3.7.1. A variável `GOOGLE_APPLICATION_CREDENTIALS` é utilizada pelas bibliotecas de API da Google para localizar o arquivo que contém as credenciais de conta de serviços criadas no [item 3.4][3.4].
 
 `GOOGLE_APPLICATION_CREDENTIALS=/Users/marceloleite2604/Documents/Breadware/Files/service-account-key.json`
 
-3.7.2. A propriedade `GOOGLE_CLIEND_ID` é utilizada pelo programa para localizar o arquivo criado no [item 3.3][3.3] que contém as credenciais as informações de identificação o cliente ao solicitar a chave de autorização para o servidor OAuth2.
+**Observação:**
+- Caso o programa esteja rodando dentro do Google App Engine, não é necessário criar esta variável. O próprio ambiente possui uma forma de identificação do programa.
+
+3.7.2. A variável `GOOGLE_CLIEND_ID` é utilizada pelo programa para localizar o arquivo criado no [item 3.3][3.3] que contém as credenciais as informações de identificação o cliente ao solicitar a chave de autorização para o servidor OAuth2.
 
 `GOOGLE_CLIEND_ID=/Users/marceloleite2604/Documents/Breadware/Files/client-id.json`
 
+**Observação:**
+- Caso o arquivo de credenciais esteja armazenado no Google Cloud Storage, basta informar a URI do objeto.
+
+`GOOGLE_CLIEND_ID=gs://my-bucket/directory/client-id-registrant.json`
+
+3.7.3. A variável `REGISTRANT_EMAIL_SENDER` é opcional e serve para sobrescrever o endereço de e-mail do qual o programa irá aguardar o envio de dados de cadastro. Útil quando um colaborador deseja testar a execução do programa utilizando sua própria conta de e-mail.
+
+`REGISTRANT_EMAIL_SENDER=my-email@company.com`
+
 [1]: #1-apresentação
 [2]: #2-tecnologias-utilizadas
+[2.1]: #21-tecnologias-necessrias-no-ambiente-de-execução
+[2.2]: #22-tecnologias-utilizadas-como-solução-no-programa
 [3]: #3-como-instalar-o-ambiente-de-desenvolvimento
 [3.1]: #31-instalar-os-softwares-necessários
 [3.2]: #32-clonar-o-repositório-git
