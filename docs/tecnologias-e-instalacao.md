@@ -239,3 +239,16 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 3.7.3. A variável `REGISTRANT_EMAIL_SENDER` é opcional e serve para sobrescrever o endereço de e-mail do qual o programa irá aguardar o envio de dados de cadastro. Útil quando um colaborador deseja testar a execução do programa utilizando sua própria conta de e-mail.
 
 `REGISTRANT_EMAIL_SENDER=my-email@company.com`
+
+[1]: #1-apresentação
+[2]: ./docs/tecnologias-e-instalacao.md#2-tecnologias-utilizadas
+[2.1]: ./docs/tecnologias-e-instalacao.md#21-tecnologias-necessrias-no-ambiente-de-execução
+[2.2]: ./docs/tecnologias-e-instalacao.md#22-tecnologias-utilizadas-como-solução-no-programa
+[3]: ./docs/tecnologias-e-instalacao.md#3-como-instalar-o-ambiente-de-desenvolvimento
+[3.1]: ./docs/tecnologias-e-instalacao.md#31-instalar-os-softwares-necessários
+[3.2]: ./docs/tecnologias-e-instalacao.md#32-clonar-o-repositório-git
+[3.3]: ./docs/tecnologias-e-instalacao.md#33-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform
+[3.4]: ./docs/tecnologias-e-instalacao.md#34-criar-ou-solicitar-as-credenciais-de-conta-de-serviços-no-google-cloud-platform
+[3.5]: ./docs/tecnologias-e-instalacao.md#35-importar-o-projeto-no-intellij-ide
+[3.6]: ./docs/tecnologias-e-instalacao.md#36-criar-a-configuração-de-execução-do-sistema
+[3.7]: ./docs/tecnologias-e-instalacao.md#37-definir-variáveis-de-ambiente
