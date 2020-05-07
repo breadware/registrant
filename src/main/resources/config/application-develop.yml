@@ -3,6 +3,7 @@ registrant:
   zone-id: "America/Sao_Paulo"
   messages:
     file-base-directory-path: "file:src/main/resources/i18n/messages"
+    handled-ids-retention-time-days: 1
   google:
     cloud-platform:
       authorization:

@@ -7,11 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.inject.Inject;
 
 @SpringBootApplication(exclude = {ThymeleafAutoConfiguration.class})
 @ConfigurationPropertiesScan("br.com.breadware.properties")
+@EnableScheduling
 public class Registrant implements CommandLineRunner {
 
     private final WatchRequester watchRequester;

@@ -26,8 +26,10 @@ import java.util.stream.Collectors;
 @Component
 public class GmailMessageBo {
 
-    public static final String LABEL_ID_SENT = "SENT";
     private static final Logger LOGGER = LoggerFactory.getLogger(GmailMessageBo.class);
+
+    private static final String LABEL_ID_SENT = "SENT";
+
     private final HandledGmailMessageDao handledGmailMessageDao;
 
     private final ObjectToDataMapMapper objectToDataMapMapper;
@@ -67,12 +69,18 @@ public class GmailMessageBo {
     }
 
     private Set<String> getHandledGmailMessageIds() throws DataAccessException {
-        return handledGmailMessageDao.getAll()
-                .stream()
-                .map(dataMap -> objectToDataMapMapper.mapFrom(dataMap, HandledGmailMessage.class))
+        return getHandledGmailMessages().stream()
                 .map(HandledGmailMessage::getId)
                 .collect(Collectors.toSet());
     }
+
+    public Set<HandledGmailMessage> getHandledGmailMessages() throws DataAccessException {
+        return handledGmailMessageDao.getAll()
+                .stream()
+                .map(dataMap -> objectToDataMapMapper.mapFrom(dataMap, HandledGmailMessage.class))
+                .collect(Collectors.toSet());
+    }
+
 
     public void handle(Message message) {
         try {
@@ -95,5 +103,9 @@ public class GmailMessageBo {
 
         addHandledGmailMessage(handledGmailMessage);
         loggerUtil.info(LOGGER, LoggerMessage.GMAIL_MESSAGE_HAS_BEEN_HANDLED, message.getId());
+    }
+
+    public void deleteHandledMessagesByIds(Set<String> handledGmailMessageIds) throws DataAccessException {
+        handledGmailMessageDao.delete(handledGmailMessageIds);
     }
 }
