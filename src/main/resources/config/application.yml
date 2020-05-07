@@ -10,6 +10,7 @@ registrant:
   association-name: "Breadware"
   messages:
     file-base-directory-path: "classpath:/i18n/messages"
+    handled-ids-retention-time-days: 30
   email:
     sender: "marcelo.leite@thoughtworks.com"
   google:

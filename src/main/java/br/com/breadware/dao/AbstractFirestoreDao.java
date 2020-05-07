@@ -8,6 +8,7 @@ import com.google.cloud.firestore.Firestore;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,26 @@ public abstract class AbstractFirestoreDao {
             throw new DataAccessException(exception, ErrorMessage.ERROR_WHILE_GETTING_DATA, getDocumentName());
         } catch (ExecutionException exception) {
             throw new DataAccessException(exception, ErrorMessage.ERROR_WHILE_GETTING_DATA, getDocumentName());
+        }
+    }
+
+    public void delete(Set<String> ids) throws DataAccessException {
+        for (String id : ids) {
+            delete(id);
+        }
+    }
+
+    public void delete(String id) throws DataAccessException {
+        try {
+            collectionReference.document(id)
+                    .delete()
+                    .get();
+        } catch (InterruptedException exception) {
+            Thread.currentThread()
+                    .interrupt();
+            throw new DataAccessException(exception, ErrorMessage.ERROR_WHILE_DELETING_DATA, getDocumentName());
+        } catch (ExecutionException exception) {
+            throw new DataAccessException(exception, ErrorMessage.ERROR_WHILE_DELETING_DATA, getDocumentName());
         }
     }
 
