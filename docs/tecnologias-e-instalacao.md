@@ -5,7 +5,7 @@
 - Apache Maven 3.6.3
 
 **Observações:**
-- O sistema foi testado utilizando Oracle JVM versão 13.0.2 2020-01-14.
+- O programa foi testado utilizando Oracle JVM versão 13.0.2 2020-01-14.
 
 ### 2.2. Tecnologias utilizadas como solução no programa
 - Spring Boot 2.2.5
@@ -33,11 +33,11 @@ Antes de iniciar a instalação, certifique-se de que você possui instalado os 
 
 ### 3.3. Criar ou solicitar as credenciais do programa no Google Cloud Platform
 
-Para que o sistema possa trabalhar com os dados do usuário, o Google Cloud Platform (GCP) exige que o sistema solicite em tempo de execução uma autorização ao cliente. Para realizar esta solicitação, é necessário utilizar uma credenciação OAuth 2.0 para que o GCP reconheça o sistema solicitante.
+Para que o programa possa trabalhar com os dados do usuário, o Google Cloud Platform (GCP) exige que o programa solicite em tempo de execução uma autorização ao cliente. Para realizar esta solicitação, é necessário utilizar uma credenciação OAuth 2.0 para que o GCP reconheça o programa solicitante.
 
 **Observações**: 
  - Caso você seja apenas o contribuinte, solicite estas credenciais ao atual líder do projeto.
- - O sistema também permite a busca do arquivo de credenciais no Google Cloud Storage. Fale com o atual líder de projeto para verificar como isto pode ser feito.
+ - O programa também permite a busca do arquivo de credenciais no Google Cloud Storage. Fale com o atual líder de projeto para verificar como isto pode ser feito.
 
 3.3.1. Acesse o console do [Google Cloud Platform](https://console.cloud.google.com) utilizando as credenciais da conta Google do projeto.
 
@@ -168,7 +168,7 @@ Clique em "Continue" para continuar a criação da credencial.
 <img width="600" alt="Tela &quot;Import Project&quot; com a opção &quot;Maven&quot; selecionada." src="https://user-images.githubusercontent.com/13152452/77968868-be488d80-72be-11ea-9880-2a74a114cdfd.png">
 </p>
 
-### 3.6. Criar a configuração de execução do sistema
+### 3.6. Criar a configuração de execução do programa
 
 3.6.1. Com o projeto aberto no IntelliJ, abra o menu `Run` e selecione a opção `Edit Configurations...`.
 
@@ -214,7 +214,7 @@ Clique no botão ▶️ para executar o programa.
 
 ### 3.7. Definir variáveis de ambiente
 
-As variáveis de ambiente são utilizadas para definir propriedades particulares de um ambiente de execução ou de informações sensíveis que não podem ficar expostas no servidor de controle de código. O sistema atualmente conta com a utilização das seguintes variáveis de ambiente:
+As variáveis de ambiente são utilizadas para definir propriedades particulares de um ambiente de execução ou de informações sensíveis que não podem ficar expostas no servidor de controle de código. O programa atualmente conta com a utilização das seguintes variáveis de ambiente:
 
 - GOOGLE_APPLICATION_CREDENTIALS
 - GOOGLE_CLIENT_ID
@@ -240,7 +240,7 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 
 `REGISTRANT_EMAIL_SENDER=my-email@company.com`
 
-[1]: ../REAME.md/#1-apresentação
+[1]: ../REAME.md#1-apresentação
 [2]: #2-tecnologias-utilizadas
 [2.1]: #21-tecnologias-necessrias-no-ambiente-de-execução
 [2.2]: #22-tecnologias-utilizadas-como-solução-no-programa
@@ -250,5 +250,8 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 [3.3]: #33-criar-ou-solicitar-as-credenciais-do-programa-no-google-cloud-platform
 [3.4]: #34-criar-ou-solicitar-as-credenciais-de-conta-de-serviços-no-google-cloud-platform
 [3.5]: #35-importar-o-projeto-no-intellij-ide
-[3.6]: #36-criar-a-configuração-de-execução-do-sistema
+[3.6]: #36-criar-a-configuração-de-execução-do-programa
 [3.7]: #37-definir-variáveis-de-ambiente
+[4]: ./como-executar-o-programa#4-como-executar-o-programa
+[4.1]: ./como-executar-o-programa#41-executando-o-programa-via-intellij
+[4.2]: ./como-executar-o-programa#42-executando-o-programa-via-linha-de-comando
