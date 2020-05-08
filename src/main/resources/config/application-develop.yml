@@ -1,6 +1,15 @@
 registrant:
   locale: "en"
   zone-id: "America/Sao_Paulo"
-  google-cloud-platform:
-    authorization:
-      credentials-file-path: "/Users/lamarceloleite2604/Documents/ThoughtWorks/Projetos/Breadware/Arquivos/client-id-registrant.json"
+  messages:
+    file-base-directory-path: "file:src/main/resources/i18n/messages"
+    handled-ids-retention-time-days: 1
+  google:
+    cloud-platform:
+      authorization:
+        tokens-storage-path: "tokens/"
+  thymeleaf:
+    cache: false
+    template-prefix: "file:src/main/resources/thymeleaf/templates/"
+  email:
+    sender: "${REGISTRANT_EMAIL_SENDER:marcelo.leite@thoughtworks.com}"

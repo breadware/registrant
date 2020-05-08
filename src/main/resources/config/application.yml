@@ -1,17 +1,48 @@
 spring:
+  profiles:
+    active:
+      - "@spring.active-profile@"
   main:
-    web-application-type: NONE
+    web-application-type: "NONE"
 registrant:
-  locale: "en"
+  locale: "pt-BR"
   zone-id: "America/Sao_Paulo"
-  google-cloud-platform:
-    project-id: "register-272219"
-    topic-id: "gmail_inbox_topic"
-    subscription-id: "gmail_inbox_subscription"
-    authorization:
-      local-server-receiver-port: 8888
-      authorized-user: "tw.breadware@gmail.com"
-      tokens-directory-path: "tokens"
-      credentials-file-path: "/Users/lamarceloleite2604/Documents/ThoughtWorks/Projetos/Breadware/Arquivos/client-id-registrant.json"
+  association-name: "Breadware"
   messages:
-    file-base-directory-path: "file:src/main/resources/i18n/messages"
+    file-base-directory-path: "classpath:/i18n/messages"
+    handled-ids-retention-time-days: 30
+  email:
+    sender: "marcelo.leite@thoughtworks.com"
+  google:
+    cloud-platform:
+      project-id: "register-272219"
+      pub-sub:
+        topic-id: "gmail_inbox_topic"
+        subscription-id: "gmail_inbox_subscription"
+      authorization:
+        local-server-receiver-port: 8888
+        authorized-user: "tw.breadware@gmail.com"
+        tokens-storage-path: "gs://breadware-registrant/authentication/tokens"
+    sheets:
+      spreadsheet-id: "1_SgDEroVR6XCavQCFe5GIfxVQvXA_DLfYgDfuodYpe8"
+      sheet-name: "Dados"
+  thymeleaf:
+    cache: true
+    template-prefix: "classpath:/thymeleaf/templates/"
+    template-resolvers:
+      html:
+        mode: "HTML"
+        prefix: "html/"
+        resolvable-patterns:
+          - "*.html"
+      text:
+        mode: "TEXT"
+        prefix: "text/"
+        resolvable-patterns:
+          - "*.txt"
+  receiver-bank-account:
+    bank-name: Banco do Brasil
+    bank-agency: Agência 001
+    account-number: 11.222-3
+    account-owner: Marcelo de Moraes Leite
+    cpf: 123.456.789-10

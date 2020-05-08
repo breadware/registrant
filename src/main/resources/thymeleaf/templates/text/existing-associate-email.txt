@@ -1,0 +1,21 @@
+Muito obrigado por se inscrever na [(${association})], [(${associate.firstName})].
+
+Nosso clube produz toda semana dois deliciosos pães artesanais de 500 gramas: um tradicional e um
+        diferenciado. Nosso pão tradicional é elaborado com farinha de trigo orgânica, fermentação natural, água e
+        sal marinho. O nosso pão diferenciado é uma experimentação com novos sabores. Já produzimos pães de batata
+        doce, de aipim, de milho, de chocolate, com multigrãos, integral com linhaça e muitos outros. Toda semana
+        uma novidade.
+
+Para concluir o seu cadastro, basta escolher um dos planos abaixo.
+
+- Coleta em um dos nossos pontos de distribuição:
+    Toda quinta-feira seus pães estarão disponíveis em um dos nossos pontos de distribuição (a combinar). Basta ir lá, se apresentar e receber os pães.
+    Investimento mensal: R$ 45,00
+
+- Entrega na sua porta:
+    Semanalmente um dos nossos colaboradores irá em um ponto de entrega (a combinar) lhe entregar os pães da semana. Uma facilidade para o seu dia-a-dia.
+    Investimento mensal: R$ 55,00
+
+Os pagamentos podem ser realizados através de depósito no [(${receiverBankAccount.bankName})], [(${receiverBankAccount.bankAgency})], conta [(${receiverBankAccount.accountNumber})] em nome de [(${receiverBankAccount.accountOwner})], detentor do CPF [(${receiverBankAccount.cpf})].
+
+A [(${association})] e todo o seu time agradece o seu apoio. Bem-vindo ao clube!
