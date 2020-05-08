@@ -1,6 +1,6 @@
 # 5. Como contribuir com o projeto
 
-Obrigado pelo interesse em colaborar com o projeto. Todos os pontos de melhoria estão mapeados nas [issues](../issues) do repositório no GitHub. 
+Obrigado pelo interesse em colaborar com o projeto. Todos os pontos de melhoria estão mapeados nas [issues](/breadware/registrant/issues) do repositório no GitHub. 
 
 <p align="center">
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430970-c48c1e00-9136-11ea-9c2c-bc574cff9f28.png">
