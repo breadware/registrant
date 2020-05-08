@@ -61,7 +61,7 @@ O projeto existente neste repositório visa melhorar o processo de ingresso de n
 
 Com isto será possível reduzir a quantidade de etapas manuais necessárias para a conclusão do processo e também o tempo de resposta do cadastro ao novo associado.
 
-Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro do Trello da Praia de Porto Alegre](http://google.com).
+Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro do Trello da Praia de Porto Alegre](https://trello.com/c/BAIyF51g/1-projeto-amada-massa).
 
 [1]: #1-apresentação
 [2]: ./docs/tecnologias-e-instalacao.md#2-tecnologias-utilizadas
