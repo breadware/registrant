@@ -26,11 +26,19 @@ Programa para cadastro automático das informações de novos associados da Brea
 
 [4. Como executar o programa][4]
 
-&nbsp;&nbsp;&nbsp;&nbsp;[Executando o programa via IntelliJ][4.1]
+&nbsp;&nbsp;&nbsp;&nbsp;[4.1. Executando o programa via IntelliJ][4.1]
 
-&nbsp;&nbsp;&nbsp;&nbsp;[Executando o programa via linha de comando][4.2]
+&nbsp;&nbsp;&nbsp;&nbsp;[4.2. Executando o programa via linha de comando][4.2]
 
-&nbsp;&nbsp;&nbsp;&nbsp;[Executando o programa através do Google App Engine][4.3]
+&nbsp;&nbsp;&nbsp;&nbsp;[4.3. Executando o programa através do Google App Engine][4.3]
+
+[5. Como contribuir com o projeto][5]
+
+&nbsp;&nbsp;&nbsp;&nbsp;[5.1. Selecionando uma issue para trabalhar][5.1]
+
+&nbsp;&nbsp;&nbsp;&nbsp;[5.2. Implementando a issue no ambiente de desenvolvimento][5.2]
+
+&nbsp;&nbsp;&nbsp;&nbsp;[5.3. Encaminhando a sua implementação para revisão][5.3]
 
 ## 1. Apresentação
 
