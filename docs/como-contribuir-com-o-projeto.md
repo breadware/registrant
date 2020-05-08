@@ -134,4 +134,4 @@ Clique em `Create pull request` para concluir a solicitação.
 [5]: #5-como-contribuir-com-o-projeto
 [5.1]: #51-selecionando-uma-issue-para-trabalhar
 [5.2]: #52-implementando-a-issue-no-ambiente-de-desenvolvimento
-[5.3]: #53-encaminhando-a-sua-implementao-para-revisão
+[5.3]: #53-encaminhando-a-sua-implementação-para-revisão

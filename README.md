@@ -82,4 +82,4 @@ Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro 
 [5]: ./docs/como-contribuir-com-o-projeto.md#5-como-contribuir-com-o-projeto
 [5.1]: ./docs/como-contribuir-com-o-projeto.md#51-selecionando-uma-issue-para-trabalhar
 [5.2]: ./docs/como-contribuir-com-o-projeto.md#52-implementando-a-issue-no-ambiente-de-desenvolvimento
-[5.3]: ./docs/como-contribuir-com-o-projeto.md#53-encaminhando-a-sua-implementao-para-revisão
+[5.3]: ./docs/como-contribuir-com-o-projeto.md#53-encaminhando-a-sua-implementação-para-revisão
