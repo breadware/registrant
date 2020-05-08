@@ -120,3 +120,7 @@ Aguarde até que o status da versão seja alterado para `serving` e tente realiz
 [4.1]: #41-executando-o-programa-via-intellij
 [4.2]: #42-executando-o-programa-via-linha-de-comando
 [4.3]: #43-executando-o-programa-através-do-google-app-engine
+[5]: ./como-contribuir-com-o-projeto.md#5-como-contribuir-com-o-projeto
+[5.1]: ./como-contribuir-com-o-projeto.md#51-selecionando-uma-issue-para-trabalhar
+[5.2]: ./como-contribuir-com-o-projeto.md#52-implementando-a-issue-no-ambiente-de-desenvolvimento
+[5.3]: ./como-contribuir-com-o-projeto.md#53-encaminhando-a-sua-implementao-para-revisão

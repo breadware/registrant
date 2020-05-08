@@ -256,3 +256,7 @@ As variáveis de ambiente são utilizadas para definir propriedades particulares
 [4.1]: ./como-executar-o-programa.md#41-executando-o-programa-via-intellij
 [4.2]: ./como-executar-o-programa.md#42-executando-o-programa-via-linha-de-comando
 [4.3]: ./como-executar-o-programa.md#43-executando-o-programa-através-do-google-app-engine
+[5]: ./como-contribuir-com-o-projeto.md#5-como-contribuir-com-o-projeto
+[5.1]: ./como-contribuir-com-o-projeto.md#51-selecionando-uma-issue-para-trabalhar
+[5.2]: ./como-contribuir-com-o-projeto.md#52-implementando-a-issue-no-ambiente-de-desenvolvimento
+[5.3]: ./como-contribuir-com-o-projeto.md#53-encaminhando-a-sua-implementao-para-revisão
