@@ -67,23 +67,23 @@ No exemplo acima, o comando de criação da branch seria:
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430990-c950d200-9136-11ea-8d3e-7798e75e59d5.png">
 </p>
 
-5.2.5. Em seguida, basta começar a trabalhar na issue para implementar a melhoria. Uma vez que você queira subir as alterações será necessário definir a branch no servidor Git para a qual as alterações serão salvas.
+5.2.6. Em seguida, basta começar a trabalhar na issue para implementar a melhoria. Uma vez que você queira subir as alterações será necessário definir a branch no servidor Git para a qual as alterações serão salvas.
 
 `git push -u origin issue/<NUMERO>`
 
-5.2.6. Uma vez definida a branch, basta encaminhar os commits realizados através do comando de pull.
+5.2.7. Uma vez definida a branch, basta encaminhar os commits realizados através do comando de pull.
 
 `git pull`
 
 ## 5.3. Encaminhando a sua implementação para revisão
 
-Após concluir a implementação da melhoria e encaminhá-las para o servidor, abra um pull request solicitando a revisão e o aceite das melhorias.
+5.3.1. Após concluir a implementação da melhoria e encaminhá-las para o servidor, abra um pull request solicitando a revisão e o aceite das melhorias.
 
 <p align="center">
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430989-c8b83b80-9136-11ea-81ec-0e351cf0e633.png">
 </p>
 
-Ao selecionar a branch base, não esqueça de selecionar a branch `develop`. Na branch `compare`, selecione a branch na qual você estava trabalhando.
+5.3.2. Ao selecionar a branch base, não esqueça de selecionar a branch `develop`. Na branch `compare`, selecione a branch na qual você estava trabalhando.
 
 <p align="center">
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430992-c9e96880-9136-11ea-9afb-6c1c2347882d.png">
@@ -97,13 +97,13 @@ Clique no botão `Create pull request` para criar a solicitação.
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430993-ca81ff00-9136-11ea-9115-1775cb4daf5e.png">
 </p>
 
-Na descrição do PR, coloque a issue que está sendo resolvida.
+5.3.3. Na descrição do PR, coloque a issue que está sendo resolvida.
 
 <p align="center">
 <img width="400" alt="" src="https://user-images.githubusercontent.com/13152452/81430994-ca81ff00-9136-11ea-93a1-4048d69b2e22.png">
 </p>
 
-Na área lateral direita, coloque o seu nome na área `Assignees`.
+5.3.4. Na área lateral direita, coloque o seu nome na área `Assignees`.
 
 <p align="center">
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430997-cb1a9580-9136-11ea-870d-954484e0c438.png">
@@ -113,7 +113,7 @@ Na área lateral direita, coloque o seu nome na área `Assignees`.
 <img width="600" alt="" src="https://user-images.githubusercontent.com/13152452/81430999-cbb32c00-9136-11ea-8bd2-4b8e8f3aeb58.png">
 </p>
 
-Clique em `Create pull request` para concluir a solicitação.
+5.3.5. Clique em `Create pull request` para concluir a solicitação.
 
 [1]: ../REAME.md#1-apresentação
 [2]: ./tecnologias-e-instalacao.md#2-tecnologias-utilizadas
