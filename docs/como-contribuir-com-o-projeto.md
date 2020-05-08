@@ -21,3 +21,18 @@ Caso ainda não tenha feito, siga os passos descritos no [item 3][3] para criar 
 
 No diretório raiz do projeto, faça o check-out da branch `develop`.
 
+`git checkout develop`
+
+**Observação**: Caso ainda não tenha a branch `develop` no seu ambiente, faça o seu check-out do servidor remoto.
+
+`git checkout -b develop origin/develop`
+
+Realize um `pull` para certificar-se de que você está com as últimas alterações na sua branch local.
+
+`git pull`
+
+Crie uma nova branch para começar a trabalhar na issue selecionada. Para identificar qual a issue a branch está associada, o padrão de nome é `issue/<NUMERO>`, onde `<NUMERO>` é o número da issue.
+
+*imagem 5*
+
+``
