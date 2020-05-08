@@ -67,6 +67,6 @@ Mais informações sobre o projeto podem ser obtidas no [card do projeto dentro 
 [3.5]: ./docs/tecnologias-e-instalacao.md#35-importar-o-projeto-no-intellij-ide
 [3.6]: ./docs/tecnologias-e-instalacao.md#36-criar-a-configuração-de-execução-do-programa
 [3.7]: ./docs/tecnologias-e-instalacao.md#37-definir-variáveis-de-ambiente
-[4]: ./docs/como-executar-o-programa#4-como-executar-o-programa
-[4.1]: ./docs/como-executar-o-programa#41-executando-o-programa-via-intellij
-[4.2]: ./docs/como-executar-o-programa#42-executando-o-programa-via-linha-de-comando
+[4]: ./docs/como-executar-o-programa.md#4-como-executar-o-programa
+[4.1]: ./docs/como-executar-o-programa.md#41-executando-o-programa-via-intellij
+[4.2]: ./docs/como-executar-o-programa.md#42-executando-o-programa-via-linha-de-comando
