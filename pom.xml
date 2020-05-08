@@ -6,7 +6,7 @@
 
     <groupId>br.com.breadware</groupId>
     <artifactId>registrant</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>registrant</name>
     <description>Sistema para cadastro automático das informações de novos associados da Breadware.</description>
