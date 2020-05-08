@@ -2,7 +2,7 @@
 A forma de executar o programa depende do ambiente e ferramenta utilizada.
  
 ## 4.1. Executando o programa via IntelliJ
-Para executar o programa através da IDE IntelliJ, basta seguir os passos da [instalação do ambiente de desenvolvimento][3], em especial os itens [importar o projeto no IntelliJ IDE][3.5] e [criar a configuração de execução do sistema][3.6].
+Para executar o programa através da IDE IntelliJ, basta seguir os passos da [instalação do ambiente de desenvolvimento][3], em especial os itens [importar o projeto no IntelliJ IDE][3.5] e [criar a configuração de execução do programa][3.6].
 
 ## 4.2. Executando o programa via linha de comando
 
@@ -28,7 +28,7 @@ Não esquecendo de substituir `<VERSAO>` pela versão atual do projeto.
 
 ## 4.3. Executando o programa através do Google App Engine
 
-**Importante: O free-tier do Google App Engine permite que o programa seja executado até oito horas por dia. A partir disso a sua execução é cobrada. Logo, certifique-se de encerrar a sua execução através do Google Cloud Platform Console antes destes tempo ou quando ela não for mais necessária.** 
+**Importante: O free-tier do Google App Engine permite que o programa seja executado até oito horas por dia. A partir disso a sua execução é cobrada. Logo, certifique-se de encerrar a sua execução através do Google Cloud Platform Console antes deste tempo ou quando ela não for mais necessária.** 
 
 4.3.1. Para realizar o deploy do programa no Google App Engine, é necessário instalar no ambiente o [Google Cloud SDK](https://cloud.google.com/sdk).
 
@@ -38,13 +38,13 @@ Não esquecendo de substituir `<VERSAO>` pela versão atual do projeto.
 
 **Observação**: A conta utilizada no login deve ter autorização para realizar deploy de aplicações no projeto do Google Cloud Platform em uso.
 
-4.3.1. Dentro do diretório raiz do projeto utilize o Maven para para gerar um JAR executável do programa através da seguinte linha de comando.
+4.3.3. Dentro do diretório raiz do projeto utilize o Maven para para gerar um JAR executável do programa através da seguinte linha de comando.
 
 `mvn clean package`
 
-4.3.2. Em seguida, execute o comando abaixo para fazer o deploy no Google App Engine.
+4.3.4. Em seguida, execute o comando abaixo para fazer o deploy no Google App Engine.
 
-`mvn -P appengine clean appengine:deploy`
+`mvn -P appengine appengine:deploy`
 
 **Observação**: 
 Caso o deploy apresente o seguinte erro: 
@@ -76,31 +76,31 @@ INFO] GCLOUD: ERROR: (gcloud.app.deploy) Your deployment has succeeded, but prom
 Acesse o GCP Console, menu `App Engine`, item `Versions`.
 
 <p align="center">
-<img alt="Menu lateral do Google Cloud Platform apresentando os itens &quot;App Engine&quot; e &quot;Versions&quot; em destaque." src="https://user-images.githubusercontent.com/13152452/81411928-70267580-9119-11ea-8a02-3605c5cf3b53.png">
+<img width="400" alt="Menu lateral do Google Cloud Platform apresentando os itens &quot;App Engine&quot; e &quot;Versions&quot; em destaque." src="https://user-images.githubusercontent.com/13152452/81411928-70267580-9119-11ea-8a02-3605c5cf3b53.png">
 </p>
 
 Verifique se a versão atual está parada. Caso positivo, o deploy retorna o erro acima informando que não foi possível redirecionar o tráfego para a nova versão.
 
 <p align="center">
-<img alt="Informações da versão atual do programa apresentando que ela está parada." src="https://user-images.githubusercontent.com/13152452/81412077-ae239980-9119-11ea-9684-821ba8780786.png">
+<img width="600" alt="Informações da versão atual do programa apresentando que ela está parada." src="https://user-images.githubusercontent.com/13152452/81412077-ae239980-9119-11ea-9684-821ba8780786.png">
 </p>
 
 Selecione o checkbox ao lado da versão e clique em `Start` para rodar a aplicação.
 
 <p align="center">
-<img alt="Informações da versão atual com o checkbox de seleção marcado e o botão &quot;start&quot; destacado." src="https://user-images.githubusercontent.com/13152452/81412329-14a8b780-911a-11ea-9f72-f8e279d68be9.png">
+<img width="600" alt="Informações da versão atual com o checkbox de seleção marcado e o botão &quot;start&quot; destacado." src="https://user-images.githubusercontent.com/13152452/81412329-14a8b780-911a-11ea-9f72-f8e279d68be9.png">
 </p>
 
 Confirme a inicialização clicando em `Start version`.
 
 <p align="center">
-<img alt="Mensagem de confirmação da inicialização do serviço com a opção &quot;start version&quot; destacada." src="https://user-images.githubusercontent.com/13152452/81412536-63565180-911a-11ea-8a94-f94d9a6511b3.png">
+<img width="400" alt="Mensagem de confirmação da inicialização do serviço com a opção &quot;start version&quot; destacada." src="https://user-images.githubusercontent.com/13152452/81412536-63565180-911a-11ea-8a94-f94d9a6511b3.png">
 </p>
 
-Aguarde até que o status da versão seja alterado para `Serving` e tente realizar o comando de deploy novamente.
+Aguarde até que o status da versão seja alterado para `serving` e tente realizar o comando de deploy novamente.
 
 <p align="center">
-<img alt="Informações da versão atual do programa apresentando que ela está em execução." src="https://user-images.githubusercontent.com/13152452/81412712-a44e6600-911a-11ea-8dfb-0a94ce588d3e.png">
+<img width="600" alt="Informações da versão atual do programa apresentando que ela está em execução." src="https://user-images.githubusercontent.com/13152452/81412712-a44e6600-911a-11ea-8dfb-0a94ce588d3e.png">
 </p>
 
 
